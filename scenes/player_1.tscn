@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b6bc8d472cfxd" path="res://assets/SpriteP1.png" id="1_rfmnd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gneq0"]
-size = Vector2(59, 28)
+size = Vector2(59, 53)
 
 [node name="player1" type="CharacterBody2D"]
 position = Vector2(13, 49)
@@ -15,5 +15,8 @@ position = Vector2(0, -16)
 texture = ExtResource("1_rfmnd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-4.5, 1)
+position = Vector2(-4.5, -11.5)
 shape = SubResource("RectangleShape2D_gneq0")
+
+[node name="shooting_point" type="Marker2D" parent="."]
+position = Vector2(16, -38)

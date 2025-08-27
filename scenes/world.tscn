@@ -3,40 +3,41 @@
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nnsk1"]
-size = Vector2(1152, 20)
+size = Vector2(1952, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
-size = Vector2(20, 688)
+size = Vector2(22, 1003)
 
 [node name="world" type="Node2D"]
 
 [node name="player1" parent="." instance=ExtResource("1_nnsk1")]
-position = Vector2(130, 194)
+position = Vector2(104, 374)
+rotation = 1.57079
 
 [node name="walls" type="Node2D" parent="."]
 
 [node name="wall" type="StaticBody2D" parent="walls"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall"]
-position = Vector2(576, -10)
+position = Vector2(953.75, -10)
 shape = SubResource("RectangleShape2D_nnsk1")
 
 [node name="wall2" type="StaticBody2D" parent="walls"]
 position = Vector2(0, 668)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall2"]
-position = Vector2(576, -10)
+position = Vector2(954, 305)
 shape = SubResource("RectangleShape2D_nnsk1")
 
 [node name="wall3" type="StaticBody2D" parent="walls"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall3"]
-position = Vector2(-10, 324)
+position = Vector2(-11, 481.5)
 shape = SubResource("RectangleShape2D_rwgxs")
 
 [node name="wall4" type="StaticBody2D" parent="walls"]
 position = Vector2(1172, 4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall4"]
-position = Vector2(-10, 320)
+position = Vector2(747, 477.5)
 shape = SubResource("RectangleShape2D_rwgxs")
