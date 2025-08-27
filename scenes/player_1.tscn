@@ -7,7 +7,7 @@
 size = Vector2(59, 28)
 
 [node name="player1" type="CharacterBody2D"]
-position = Vector2(13, 49)
+rotation = 1.57079
 script = ExtResource("1_gneq0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -17,3 +17,6 @@ texture = ExtResource("1_rfmnd")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4.5, 1)
 shape = SubResource("RectangleShape2D_gneq0")
+
+[node name="shoot_point" type="Marker2D" parent="."]
+position = Vector2(16.0001, -37)
