@@ -10,14 +10,16 @@ size = Vector2(59, 28)
 rotation = 4.71239
 script = ExtResource("1_s551d")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Player2Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(0, -16)
+rotation = 1.57079
 texture = ExtResource("2_yjax8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-4.5, 1)
+position = Vector2(-15, -20)
+rotation = 4.71238
 shape = SubResource("RectangleShape2D_gneq0")
 
 [node name="shoot_point" type="Marker2D" parent="."]
-position = Vector2(16.0001, -37)
+position = Vector2(22, -2.10047e-05)

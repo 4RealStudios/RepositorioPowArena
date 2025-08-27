@@ -15,7 +15,7 @@ size = Vector2(20, 688)
 position = Vector2(87, 229)
 
 [node name="player2" parent="." instance=ExtResource("2_rwgxs")]
-position = Vector2(280, 220)
+position = Vector2(244, 230)
 rotation = -1.5708
 
 [node name="walls" type="Node2D" parent="."]
