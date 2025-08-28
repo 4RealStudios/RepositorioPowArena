@@ -74,6 +74,7 @@ position = Vector2(291, 4)
 rotation = -1.5708
 
 [node name="N2D_limitmap" type="Node2D" parent="."]
+visible = false
 position = Vector2(-1, 0)
 
 [node name="wall" type="StaticBody2D" parent="N2D_limitmap"]
@@ -104,6 +105,7 @@ position = Vector2(-867, 58.25)
 shape = SubResource("RectangleShape2D_rwgxs")
 
 [node name="N2D_MainEstructure" type="Node2D" parent="."]
+visible = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="N2D_MainEstructure"]
 
