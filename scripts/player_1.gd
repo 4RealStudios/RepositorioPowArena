@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
-@export var speed: float = 300
+@export var speed: float = 85
 #@export var spread: float = 0.15
 @export var BULLET = preload("res://scenes/bullet.tscn")
-@onready var shoot_point: Marker2D = $shoot_point
+@onready var shooting_point: Marker2D = $ShootingPointP1
 
 var input_vector: Vector2 = Vector2.ZERO
 var aim_dir: Vector2 = Vector2.RIGHT
@@ -24,8 +24,7 @@ func _physics_process(_delta: float) -> void:
 
 func shoot():
 	var bullet = BULLET.instantiate()
-	bullet.global_position = shoot_point.global_position
+	bullet.global_position = shooting_point.global_position
 	bullet.direction = aim_dir
-	#if aim_dir != Vector2.ZERO:
-	#$BulletSprite2D.rotation = aim_dir.angle() - PI/90
+	bullet.global_position += aim_dir.normalized()
 	get_parent().add_child(bullet)

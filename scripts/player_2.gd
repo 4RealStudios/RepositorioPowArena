@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed: float = 300
+@export var speed: float = 85
 #@export var spread: float = 0.15
 @export var BULLET = preload("res://scenes/bullet.tscn")
 @onready var shoot_point: Marker2D = $shoot_point
@@ -18,7 +18,7 @@ func _physics_process(_delta: float) -> void:
 	velocity = input_vector * speed
 	move_and_slide()
 	if input_vector != Vector2.ZERO:
-		$Player2Sprite2D.rotation = aim_dir.angle() - PI/1
+		$Player2Sprite2D.rotation = aim_dir.angle() - PI/90
 	if Input.is_action_just_pressed("p2_shoot"):
 		shoot()
 
@@ -26,6 +26,4 @@ func shoot():
 	var bullet = BULLET.instantiate()
 	bullet.global_position = shoot_point.global_position
 	bullet.direction = aim_dir
-	#if aim_dir != Vector2.ZERO:
-	#$BulletSprite2D.rotation = aim_dir.angle() - PI/90
 	get_parent().add_child(bullet)

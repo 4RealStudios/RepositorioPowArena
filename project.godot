@@ -13,7 +13,6 @@ config_version=5
 config/name="Pow!Arena"
 run/main_scene="uid://l5jts8o0sprl"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
 
 [display]
 
