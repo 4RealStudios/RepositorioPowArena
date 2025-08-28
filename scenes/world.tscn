@@ -1,22 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=6 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
 [ext_resource type="PackedScene" uid="uid://cktvsan1pxk0e" path="res://scenes/player_2.tscn" id="2_rwgxs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nnsk1"]
-size = Vector2(1152, 20)
+size = Vector2(362, 27)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
-size = Vector2(20, 688)
+size = Vector2(24, 211.5)
+
+[sub_resource type="TileSet" id="TileSet_rwgxs"]
+tile_size = Vector2i(5, 5)
 
 [node name="world" type="Node2D"]
-position = Vector2(-43, 51)
+position = Vector2(24, 31)
 
 [node name="player1" parent="." instance=ExtResource("1_nnsk1")]
-position = Vector2(87, 229)
+position = Vector2(-6, -10)
 
 [node name="player2" parent="." instance=ExtResource("2_rwgxs")]
-position = Vector2(244, 230)
+position = Vector2(290, 117)
 rotation = -1.5708
 
 [node name="walls" type="Node2D" parent="."]
@@ -24,25 +27,34 @@ rotation = -1.5708
 [node name="wall" type="StaticBody2D" parent="walls"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall"]
-position = Vector2(576, -10)
+position = Vector2(142, -46)
 shape = SubResource("RectangleShape2D_nnsk1")
 
 [node name="wall2" type="StaticBody2D" parent="walls"]
 position = Vector2(0, 668)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall2"]
-position = Vector2(576, -10)
+position = Vector2(144, -508)
+scale = Vector2(1, 0.719195)
 shape = SubResource("RectangleShape2D_nnsk1")
 
 [node name="wall3" type="StaticBody2D" parent="walls"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall3"]
-position = Vector2(-10, 324)
+position = Vector2(-37, 55)
 shape = SubResource("RectangleShape2D_rwgxs")
 
 [node name="wall4" type="StaticBody2D" parent="walls"]
 position = Vector2(1172, 4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall4"]
-position = Vector2(-10, 320)
+position = Vector2(-863, 59.25)
 shape = SubResource("RectangleShape2D_rwgxs")
+
+[node name="TilemapLayers" type="Node2D" parent="."]
+
+[node name="Background" type="TileMapLayer" parent="TilemapLayers"]
+position = Vector2(15, -7)
+tile_set = SubResource("TileSet_rwgxs")
+
+[node name="Foreground" type="TileMapLayer" parent="TilemapLayers"]
