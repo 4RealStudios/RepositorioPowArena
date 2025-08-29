@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
 @export var speed: float = 85
-#@export var spread: float = 0.15
 @export var BULLET = preload("res://scenes/bullet.tscn")
 @onready var shooting_point: Marker2D = $ShootingPointP2
 @export var dash_speed: float = 200

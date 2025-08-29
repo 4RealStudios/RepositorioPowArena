@@ -17,3 +17,5 @@ texture = ExtResource("2_y25gk")
 position = Vector2(2.82526e-05, 3.92013e-07)
 rotation = -1.57079
 shape = SubResource("RectangleShape2D_y25gk")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
