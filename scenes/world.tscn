@@ -68,6 +68,11 @@ tile_set = SubResource("TileSet_71j4m")
 
 [node name="player1" parent="N2D_TilemapLayers" instance=ExtResource("1_nnsk1")]
 position = Vector2(9, 150)
+speed = null
+BULLET = null
+dash_speed = null
+dash_duration = null
+dash_cooldown = null
 
 [node name="player2" parent="N2D_TilemapLayers" instance=ExtResource("2_rwgxs")]
 position = Vector2(291, 4)

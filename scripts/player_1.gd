@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var speed: float = 85
+#@export var spread: float = 0.15
 @export var BULLET = preload("res://scenes/bullet.tscn")
 @onready var shooting_point: Marker2D = $ShootingPointP1
 @export var dash_speed: float = 200
@@ -12,7 +13,7 @@ var aim_dir: Vector2 = Vector2.RIGHT
 var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
-#var blocking: bool = false
+var is_locked: bool = false
 
 func _physics_process(delta: float) -> void:
 	input_vector.x = Input.get_action_strength("p1_right") - Input.get_action_strength("p1_left")
@@ -33,8 +34,8 @@ func _physics_process(delta: float) -> void:
 			dash_cooldown_timer = dash_cooldown
 	else:
 		velocity = input_vector * speed
-	if Input.is_action_just_pressed("p1_dash") and dash_cooldown_timer <= 0 and input_vector != Vector2.ZERO:
-		start_dash()
+		if Input.is_action_just_pressed("p1_dash") and dash_cooldown_timer <= 0 and input_vector != Vector2.ZERO:
+			start_dash()
 	move_and_slide()
 	if Input.is_action_just_pressed("p1_shoot"): #disparo
 		shoot()
@@ -43,9 +44,8 @@ func start_dash():
 	is_dashing = true
 	dash_timer = dash_duration
 
-func shoot(): #programacion del disparo
+func shoot():
 	var bullet = BULLET.instantiate()
 	bullet.global_position = shooting_point.global_position
 	bullet.direction = aim_dir
-	bullet.global_position += aim_dir.normalized()
 	get_parent().add_child(bullet)
