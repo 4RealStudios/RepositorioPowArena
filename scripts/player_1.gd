@@ -13,7 +13,6 @@ var aim_dir: Vector2 = Vector2.RIGHT
 var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
-var is_locked: bool = false
 
 func _physics_process(delta: float) -> void:
 	input_vector.x = Input.get_action_strength("p1_right") - Input.get_action_strength("p1_left")
