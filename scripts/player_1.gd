@@ -10,6 +10,7 @@ extends CharacterBody2D
 
 var lives: int = 3
 var spawn_position: Vector2
+var shoot_local_offset: Vector2
 var input_vector: Vector2 = Vector2.ZERO 
 var aim_dir: Vector2 = Vector2.RIGHT 
 var is_dashing: bool = false  #VARIABLE PARA EL DASH
@@ -43,6 +44,7 @@ func _physics_process(delta: float) -> void:
 
 func _ready() -> void:
 	spawn_position = global_position #guarda el punto de spawn inicial
+	shoot_local_offset = shooting_point.position
 
 func take_damage():
 	lives -= 1
@@ -56,6 +58,9 @@ func start_dash(): #FUNCION DEL DASH
 
 func shoot(): #FUNCION DEL DISPARO
 	var bullet = BULLET.instantiate()
-	bullet.global_position = shooting_point.global_position
-	bullet.direction = aim_dir
-	get_parent().add_child(bullet)
+	var dir := aim_dir.normalized()
+	var rotated_offset := shoot_local_offset.rotated(dir.angle() - PI)
+	bullet.global_position = global_position + rotated_offset
+	bullet.direction = aim_dir.normalized()
+	bullet.rotation = aim_dir.angle()
+	get_tree().current_scene.add_child(bullet)

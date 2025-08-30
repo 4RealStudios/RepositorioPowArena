@@ -1,59 +1,17 @@
-[gd_scene load_steps=16 format=4 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=7 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
 [ext_resource type="PackedScene" uid="uid://cktvsan1pxk0e" path="res://scenes/player_2.tscn" id="2_rwgxs"]
-[ext_resource type="Texture2D" uid="uid://bsegrjr8q53s7" path="res://assets/tileset (1).png" id="3_4wyf3"]
-[ext_resource type="Texture2D" uid="uid://ckm2ithceymbs" path="res://assets/background.png" id="3_k0juu"]
 [ext_resource type="Script" uid="uid://ccjtq0iws17x4" path="res://scripts/UI.gd" id="4_qfnet"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_71j4m"]
-texture = ExtResource("3_k0juu")
-texture_region_size = Vector2i(64, 64)
-0:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_rwgxs"]
-tile_size = Vector2i(64, 64)
-sources/0 = SubResource("TileSetAtlasSource_71j4m")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k0juu"]
-texture = ExtResource("3_4wyf3")
-texture_region_size = Vector2i(5, 5)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_71j4m"]
-tile_size = Vector2i(5, 5)
-sources/3 = SubResource("TileSetAtlasSource_k0juu")
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nnsk1"]
-size = Vector2(340, 11.5653)
+size = Vector2(329, 6.09637)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
-size = Vector2(11, 199.5)
+size = Vector2(4.375, 180.094)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qfnet"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_i7141"]
-size = Vector2(10, 30)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4mrxx"]
-size = Vector2(30, 10)
-
-[node name="world" type="Node2D"]
-position = Vector2(21, 26)
+[node name="Word" type="Node2D"]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_71j4m")
@@ -73,106 +31,38 @@ offset_top = 26.0
 offset_right = 61.0
 offset_bottom = 49.0
 
-[node name="N2D_TilemapLayers" type="Node2D" parent="."]
-position = Vector2(-9, -13)
+[node name="LimitMap" type="Node2D" parent="."]
 
-[node name="TML_Background" type="TileMapLayer" parent="N2D_TilemapLayers"]
-position = Vector2(15, -7)
-tile_map_data = PackedByteArray("AAD+////AAAAAAAAAAD+/wAAAAAAAAAAAAD+/wEAAAAAAAAAAAD+/wIAAAAAAAAAAAD+/wMAAAAAAAAAAAD/////AAAAAAAAAAD//wAAAAAAAAAAAAD//wEAAAAAAAAAAAD//wIAAAAAAAAAAAD//wMAAAAAAAAAAAAAAP//AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAP//AAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAP//AAAAAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAP//AAAAAAAAAAADAAAAAAAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAAEAP//AAAAAAAAAAAEAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAAEAAIAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAP//AAAAAAAAAAAFAAAAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAIAAAAAAAAAAAAFAAMAAAAAAAAAAAABAAAAAAAAAAAAAAADAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
-tile_set = SubResource("TileSet_rwgxs")
+[node name="wall" type="StaticBody2D" parent="LimitMap"]
 
-[node name="TML_Foreground" type="TileMapLayer" parent="N2D_TilemapLayers"]
-position = Vector2(-12, -13)
-tile_map_data = PackedByteArray("AAANAA4AAwAAAAAAAAAPAAwAAwAAAAAAAAAQAAsAAwAAAAAAAAASAAkAAwAAAAAAAAATAAgAAwAAAAAAAAAsABwAAwAAAAAAADAtABsAAwAAAAAAADAvABkAAwAAAAAAADAwABgAAwAAAAAAADAyABYAAwAAAAAAADANAA0AAwAAAAAAAAANABQAAwAAAAAAAGANABUAAwAAAAAAAGAOAAwAAwAAAAAAAAAOAA0AAwAAAAAAAAAOABUAAwAAAAAAAGAOABYAAwAAAAAAAGAPABYAAwAAAAAAAGAQAAoAAwAAAAAAAAAQABcAAwAAAAAAAGAQABgAAwAAAAAAAGARAAkAAwAAAAAAAAARAAoAAwAAAAAAAAARABgAAwAAAAAAAGARABkAAwAAAAAAAGASABkAAwAAAAAAAGATAAcAAwAAAAAAAAATABoAAwAAAAAAAGATABsAAwAAAAAAAGAUAAYAAwAAAAAAAAAUAAcAAwAAAAAAAAAUABsAAwAAAAAAAGAUABwAAwAAAAAAAGAVAAYAAwAAAAAAAAAVABwAAwAAAAAAAGArAAYAAwAAAAAAAFArABwAAwAAAAAAADAsAAYAAwAAAAAAAFAsAAcAAwAAAAAAAFAsABsAAwAAAAAAADAtAAcAAwAAAAAAAFAtAAgAAwAAAAAAAFAtABoAAwAAAAAAADAuAAkAAwAAAAAAAFAuABkAAwAAAAAAADAvAAkAAwAAAAAAAFAvAAoAAwAAAAAAAFAvABgAAwAAAAAAADAwAAoAAwAAAAAAAFAwAAsAAwAAAAAAAFAwABcAAwAAAAAAADAxAAwAAwAAAAAAAFAxABYAAwAAAAAAADAyAAwAAwAAAAAAAFAyAA0AAwAAAAAAAFAyABUAAwAAAAAAADAzAA0AAwAAAAAAAFAzAA4AAwAAAAAAAFAzABQAAwAAAAAAADAzABUAAwAAAAAAADAfAA4AAwAAAAAAAAAgABAAAwAAAAAAAAAgABEAAwAAAAAAAAAfABEAAwAAAAAAAAAdAA8AAwAAAAAAAAAeAA8AAwAAAAAAAAAfAA8AAwAAAAAAAAAgAA8AAwAAAAAAAAAhAA8AAwAAAAAAAAAhABAAAwAAAAAAAAAiAA8AAwAAAAAAAAAiAA4AAwAAAAAAAAAhAA0AAwAAAAAAAAAgAA0AAwAAAAAAAAAfAA0AAwAAAAAA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AAAWACMAAwAAAAEAAAAVACMAAwAAAAEAAAAUACMAAwAAAAEAAAATACMAAwAAAAEAAAASACMAAwAAAAEAAAARACMAAwAAAAEAAAAQACMAAwAAAAEAAAAPACMAAwAAAAEAAAAOACMAAwAAAAEAAAANACMAAwAAAAEAAAAMACMAAwAAAAEAAAALACMAAwAAAAEAAAAKACMAAwAAAAEAAAAJACMAAwAAAAEAAAAIACMAAwAAAAEAAAAHACMAAwAAAAEAAAAGACMAAwAAAAEAAAAFACMAAwAAAAEAAAAEACMAAwAAAAEAAAADACMAAwAAAAEAAAACACMAAwAAAAEAAAABACMAAwAAAAEAAAAAACMAAwAAAAEAAAAAACIAAwAAAAEAAAAAACEAAwAAAAEAAAAAACAAAwAAAAEAAAAAAB8AAwAAAAEAAAAAAB4AAwAAAAEAAAAAAB0AAwAAAAEAAAAAABwAAwAAAAEAAAAAABsAAwAAAAEAAAAAABoAAwAAAAEAAAAAABkAAwAAAAEAAAAAABgAAwAAAAEAAAAAABcAAwAAAAEAAAAAABYAAwAAAAEAAAAAABUAAwAAAAEAAAAAABQAAwAAAAEAAAAAABMAAwAAAAEAAAAAABIAAwAAAAEAAAAAABEAAwAAAAEAAAAAABAAAwAAAAEAAAAAAA8AAwAAAAEAAAAAAA4AAwAAAAEAAAAAAA0AAwAAAAEAAAAAAAwAAwAAAAEAAAAAAAsAAwAAAAEAAAAAAAoAAwAAAAEAAAAAAAkAAwAAAAEAAAAAAAgAAwAAAAEAAAAAAAcAAwAAAAEAAAAAAAYAAwAAAAEAAAAAAAUAAwAAAAEAAAAAAAQAAwAAAAEAAAAAAAMAAwAAAAEAAAA=")
-tile_set = SubResource("TileSet_71j4m")
-
-[node name="N2D_limitmap" type="Node2D" parent="."]
-visible = false
-position = Vector2(-1, 0)
-
-[node name="wall" type="StaticBody2D" parent="N2D_limitmap"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="N2D_limitmap/wall"]
-position = Vector2(140, -32)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitMap/wall"]
+position = Vector2(160, -3.04819)
 shape = SubResource("RectangleShape2D_nnsk1")
 
-[node name="wall2" type="StaticBody2D" parent="N2D_limitmap"]
+[node name="wall2" type="StaticBody2D" parent="LimitMap"]
 position = Vector2(0, 668)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="N2D_limitmap/wall2"]
-position = Vector2(143, -510)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitMap/wall2"]
+position = Vector2(160, -485.773)
 scale = Vector2(1, 0.719195)
 shape = SubResource("RectangleShape2D_nnsk1")
 
-[node name="wall3" type="StaticBody2D" parent="N2D_limitmap"]
+[node name="wall3" type="StaticBody2D" parent="LimitMap"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="N2D_limitmap/wall3"]
-position = Vector2(-25.5, 63.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitMap/wall3"]
+position = Vector2(-2.125, 90)
 shape = SubResource("RectangleShape2D_rwgxs")
 
-[node name="wall4" type="StaticBody2D" parent="N2D_limitmap"]
+[node name="wall4" type="StaticBody2D" parent="LimitMap"]
 position = Vector2(1172, 4)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="N2D_limitmap/wall4"]
-position = Vector2(-867, 58.25)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitMap/wall4"]
+position = Vector2(-849.813, 86.0469)
 shape = SubResource("RectangleShape2D_rwgxs")
 
-[node name="N2D_MainEstructure" type="Node2D" parent="."]
-visible = false
-
-[node name="StaticBody2D" type="StaticBody2D" parent="N2D_MainEstructure"]
-
-[node name="Main1" type="CollisionShape2D" parent="N2D_MainEstructure/StaticBody2D"]
-position = Vector2(139, 49)
-shape = SubResource("RectangleShape2D_qfnet")
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="N2D_MainEstructure"]
-
-[node name="Main2" type="CollisionShape2D" parent="N2D_MainEstructure/StaticBody2D2"]
-position = Vector2(139, 49)
-shape = SubResource("RectangleShape2D_i7141")
-
-[node name="StaticBody2D3" type="StaticBody2D" parent="N2D_MainEstructure"]
-
-[node name="Main3" type="CollisionShape2D" parent="N2D_MainEstructure/StaticBody2D3"]
-position = Vector2(139, 49)
-shape = SubResource("RectangleShape2D_4mrxx")
-
-[node name="StaticBody2D13" type="StaticBody2D" parent="N2D_MainEstructure"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="N2D_MainEstructure/StaticBody2D13"]
-position = Vector2(79, 109)
-build_mode = 1
-polygon = PackedVector2Array(10, 10, 10, 5, 5, 5, 5, 0, 0, 0, 0, -5, -5, -5, -15, -5, -15, -10, -20, -10, -20, -20, -30, -20, -30, -25, -35, -25, -35, -35, -30, -35, -30, -31, -30, -31, -30, -30, -25, -30, -25, -26, -25, -25, -20, -25, -20, -20, -15, -20, -15, -15, -10, -15, -10, -10, -6, -10, -5, -10, -5, -6, -5, 5, 0, 5, 0, 10)
-
-[node name="StaticBody2D4" type="StaticBody2D" parent="N2D_MainEstructure"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="N2D_MainEstructure/StaticBody2D4"]
-visible = false
-position = Vector2(204, 14)
-rotation = 3.13581
-build_mode = 1
-polygon = PackedVector2Array(10, 10, 10, 5, 5, 5, 5, 0, 0, 0, 0, -5, -5, -5, -15, -5, -15, -10, -20, -10, -20, -20, -30, -20, -30, -25, -35, -25, -35, -35, -30, -35, -30, -31, -30, -31, -30, -30, -25, -30, -25, -26, -25, -25, -20, -25, -20, -20, -15, -20, -15, -15, -10, -15, -10, -10, -6, -10, -5, -10, -5, -6, -5, 5, 0, 5, 0, 10)
-
-[node name="StaticBody2D5" type="StaticBody2D" parent="N2D_MainEstructure"]
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="N2D_MainEstructure/StaticBody2D5"]
-position = Vector2(54, 39)
-rotation = 1.56815
-build_mode = 1
-polygon = PackedVector2Array(10, 10, 10, 5, 5, 5, 5, 0, 0, 0, 0, -5, -5, -5, -15, -5, -15, -10, -20, -10, -20, -20, -30, -20, -30, -25, -35, -25, -35, -35, -30, -35, -30, -31, -30, -31, -30, -30, -25, -30, -25, -26, -25, -25, -20, -25, -20, -20, -15, -20, -15, -15, -10, -15, -10, -10, -6, -10, -5, -10, -5, -6, -5, 5, 0, 5, 0, 10)
-
-[node name="StaticBody2D6" type="StaticBody2D" parent="N2D_MainEstructure"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="N2D_MainEstructure/StaticBody2D6"]
-position = Vector2(229, 84)
-rotation = -1.57922
-build_mode = 1
-polygon = PackedVector2Array(10, 10, 10, 5, 5, 5, 5, 0, 0, 0, 0, -5, -5, -5, -15, -5, -15, -10, -20, -10, -20, -20, -30, -20, -30, -25, -35, -25, -35, -35, -30, -35, -30, -31, -30, -31, -30, -30, -25, -30, -25, -26, -25, -25, -20, -25, -20, -20, -15, -20, -15, -15, -10, -15, -10, -10, -6, -10, -5, -10, -5, -6, -5, 5, 0, 5, 0, 10)
+[node name="player1" parent="." groups=["Players"] instance=ExtResource("1_nnsk1")]
+position = Vector2(26, 157)
 
 [node name="player2" parent="." groups=["Players"] instance=ExtResource("2_rwgxs")]
-position = Vector2(282, -9)
+position = Vector2(277, 25)
 rotation = -1.5708
-
-[node name="player1" parent="." groups=["Players"] instance=ExtResource("1_nnsk1")]
-position = Vector2(0, 137)

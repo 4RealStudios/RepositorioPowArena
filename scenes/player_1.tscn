@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://hd1738v1htu7" path="res://assets/p1.png" id="2_gneq0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gneq0"]
-size = Vector2(16, 16)
+size = Vector2(16, 7)
 
 [node name="player1" type="CharacterBody2D"]
 rotation = 1.57079
@@ -15,10 +15,10 @@ rotation = -1.57079
 texture = ExtResource("2_gneq0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.05909e-11, -2.38419e-07)
+position = Vector2(5, 3.13719e-05)
 rotation = 1.57079
 shape = SubResource("RectangleShape2D_gneq0")
 
 [node name="ShootingPointP1" type="Marker2D" parent="."]
-position = Vector2(-5.99997, -5.00004)
+position = Vector2(-11, -5.00007)
 gizmo_extents = 1.0
