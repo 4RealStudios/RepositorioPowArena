@@ -8,6 +8,7 @@ extends CharacterBody2D
 @export var dash_duration: float = 0.2 #DURACION DEL DASH
 @export var dash_cooldown: float = 1.5 #COOLDOWN DEL DASH
 
+var can_move = true
 var lives: int = 3
 var spawn_position: Vector2
 var shoot_local_offset: Vector2
@@ -24,6 +25,8 @@ func _ready() -> void:
 	shoot_local_offset = shooting_point.position
 
 func _physics_process(delta: float) -> void:
+	if not can_move:
+		return
 	input_vector.x = Input.get_action_strength("p2_right") - Input.get_action_strength("p2_left")
 	input_vector.y = Input.get_action_strength("p2_down") - Input.get_action_strength("p2_up")
 	input_vector = input_vector.normalized()
@@ -36,9 +39,6 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		if input_vector != Vector2.ZERO:
 			aim_dir = input_vector
-	#if input_vector != Vector2.ZERO:
-		#aim_dir = input_vector
-	#velocity = input_vector * speed
 	if aim_dir != Vector2.ZERO: #ROTACION DEL SPRITE SEGUN A DONDE SE MUEVE
 		$Player2Sprite2D.rotation = aim_dir.angle() - PI/90
 	if dash_cooldown_timer > 0: #COOLDOWN DEL DASH

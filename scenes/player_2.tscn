@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dj4khbfnc5pjm" path="res://scripts/player_2.gd" id="1_s551d"]
 [ext_resource type="Texture2D" uid="uid://7k8ytnqwrnxc" path="res://assets/p2.png" id="2_s551d"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gneq0"]
-size = Vector2(16, 6.99998)
+[sub_resource type="CircleShape2D" id="CircleShape2D_s551d"]
+radius = 9.0
 
 [node name="player2" type="CharacterBody2D"]
 rotation = 1.57079
@@ -15,9 +15,9 @@ rotation = 1.57079
 texture = ExtResource("2_s551d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(4.50001, -6.13512e-05)
+position = Vector2(0, -3.63798e-12)
 rotation = -1.57081
-shape = SubResource("RectangleShape2D_gneq0")
+shape = SubResource("CircleShape2D_s551d")
 
 [node name="ShootingPointP2" type="Marker2D" parent="."]
 position = Vector2(-12, -5.00008)

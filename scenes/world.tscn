@@ -16,14 +16,29 @@ size = Vector2(4.375, 180.094)
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_71j4m")
 
+[node name="CountdownTimer" type="Timer" parent="GameManager"]
+
+[node name="CountdownLabel" type="Label" parent="GameManager"]
+offset_left = 135.0
+offset_top = 68.0
+offset_right = 175.0
+offset_bottom = 91.0
+
+[node name="player1" parent="GameManager" groups=["Players"] instance=ExtResource("1_nnsk1")]
+position = Vector2(26, 165)
+
+[node name="player2" parent="GameManager" groups=["Players"] instance=ExtResource("2_rwgxs")]
+position = Vector2(294, 15)
+rotation = -1.5708
+
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("4_qfnet")
 
 [node name="Player1Lives" type="Label" parent="UI"]
-offset_left = 15.0
-offset_top = 7.0
-offset_right = 66.0
-offset_bottom = 30.0
+offset_left = 23.0
+offset_top = 8.0
+offset_right = 74.0
+offset_bottom = 31.0
 language = "es_AR"
 
 [node name="Player2Lives" type="Label" parent="UI"]
@@ -60,10 +75,3 @@ position = Vector2(1172, 4)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitMap/wall4"]
 position = Vector2(-849.813, 86.0469)
 shape = SubResource("RectangleShape2D_rwgxs")
-
-[node name="player1" parent="." groups=["Players"] instance=ExtResource("1_nnsk1")]
-position = Vector2(26, 165)
-
-[node name="player2" parent="." groups=["Players"] instance=ExtResource("2_rwgxs")]
-position = Vector2(294, 15)
-rotation = -1.5708
