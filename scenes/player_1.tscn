@@ -15,10 +15,10 @@ rotation = -1.57079
 texture = ExtResource("2_gneq0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(5, 3.13719e-05)
+position = Vector2(4.5, 2.83976e-05)
 rotation = 1.57079
 shape = SubResource("RectangleShape2D_gneq0")
 
 [node name="ShootingPointP1" type="Marker2D" parent="."]
-position = Vector2(-11, -5.00007)
+position = Vector2(-12, -5.00008)
 gizmo_extents = 1.0

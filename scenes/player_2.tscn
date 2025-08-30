@@ -20,5 +20,5 @@ rotation = -1.57081
 shape = SubResource("RectangleShape2D_gneq0")
 
 [node name="ShootingPointP2" type="Marker2D" parent="."]
-position = Vector2(-11, -5.00007)
+position = Vector2(-12, -5.00008)
 gizmo_extents = 1.0
