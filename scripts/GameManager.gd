@@ -7,8 +7,8 @@ extends Node2D
 
 var countdown_value = 3
 var is_counting_down := false
-var spawn_p1 := Vector2(16, 164)
-var spawn_p2 := Vector2(304, 16)
+var spawn_p1 := Vector2(16, 90)
+var spawn_p2 := Vector2(304, 90)
 var rounds_p1: int = 0
 var rounds_p2: int = 0
 var max_rounds_to_win: int = 3
@@ -46,9 +46,6 @@ func end_match():
 		countdown_label.text = "Jugador 2 Gana!"
 	else:
 		countdown_label.text = "Empate!"
-
-func update_rounds(p1_rounds: int, p2_rounds: int):
-	$Rounds
 
 func reset_round():
 		#reinicia las vidas de los jugadores

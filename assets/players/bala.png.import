@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckm2ithceymbs"
-path="res://.godot/imported/background.png-1fdba8b6a966ce2c2ffc607f7c096e95.ctex"
+uid="uid://d2lkj5qq4kewq"
+path="res://.godot/imported/bala.png-26c1f6828ef1756ffb7535db0f694c0a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/background.png"
-dest_files=["res://.godot/imported/background.png-1fdba8b6a966ce2c2ffc607f7c096e95.ctex"]
+source_file="res://assets/players/bala.png"
+dest_files=["res://.godot/imported/bala.png-26c1f6828ef1756ffb7535db0f694c0a.ctex"]
 
 [params]
 
