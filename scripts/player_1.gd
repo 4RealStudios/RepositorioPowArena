@@ -8,7 +8,7 @@ extends CharacterBody2D
 @export var dash_duration: float = 0.2 #DURACION DEL DASH
 @export var dash_cooldown: float = 1.5 #COOLDOWN DEL DASH
 
-var can_move = true
+var can_move: bool = true
 var lives: int = 3
 var spawn_position: Vector2
 var shoot_local_offset: Vector2

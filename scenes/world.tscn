@@ -6,10 +6,10 @@
 [ext_resource type="Script" uid="uid://ccjtq0iws17x4" path="res://scripts/UI.gd" id="4_qfnet"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nnsk1"]
-size = Vector2(329, 6.09637)
+size = Vector2(329.75, 6.09637)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
-size = Vector2(4.375, 180.094)
+size = Vector2(4.62524, 180)
 
 [node name="Word" type="Node2D"]
 
@@ -34,6 +34,18 @@ rotation = -1.5708
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource("4_qfnet")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+offset_left = 135.0
+offset_top = 130.0
+offset_right = 175.0
+offset_bottom = 170.0
+
+[node name="RoundsLabelP1" type="Label" parent="UI/HBoxContainer"]
+layout_mode = 2
+
+[node name="RoundsLabelP2" type="Label" parent="UI/HBoxContainer"]
+layout_mode = 2
+
 [node name="Player1Lives" type="Label" parent="UI"]
 offset_left = 23.0
 offset_top = 8.0
@@ -52,26 +64,26 @@ offset_bottom = 34.0
 [node name="wall" type="StaticBody2D" parent="LimitMap"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitMap/wall"]
-position = Vector2(160, -3.04819)
+position = Vector2(160.25, -3.04819)
 shape = SubResource("RectangleShape2D_nnsk1")
 
 [node name="wall2" type="StaticBody2D" parent="LimitMap"]
 position = Vector2(0, 668)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitMap/wall2"]
-position = Vector2(160, -485.773)
+position = Vector2(160.125, -485.773)
 scale = Vector2(1, 0.719195)
 shape = SubResource("RectangleShape2D_nnsk1")
 
 [node name="wall3" type="StaticBody2D" parent="LimitMap"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitMap/wall3"]
-position = Vector2(-2.125, 90)
+position = Vector2(-2.31262, 90)
 shape = SubResource("RectangleShape2D_rwgxs")
 
 [node name="wall4" type="StaticBody2D" parent="LimitMap"]
 position = Vector2(1172, 4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitMap/wall4"]
-position = Vector2(-849.813, 86.0469)
+position = Vector2(-849.5, 86)
 shape = SubResource("RectangleShape2D_rwgxs")
