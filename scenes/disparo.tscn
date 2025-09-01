@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://bech2dsheinxj" path="res://scripts/disparo.gd" id="1_6jt3u"]
 [ext_resource type="Texture2D" uid="uid://d2lkj5qq4kewq" path="res://assets/players/bala.png" id="1_qxw2w"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6jt3u"]
-size = Vector2(4, 4)
+[sub_resource type="CircleShape2D" id="CircleShape2D_6jt3u"]
+radius = 2.0
 
 [node name="disparo" type="CharacterBody2D"]
 script = ExtResource("1_6jt3u")
@@ -13,4 +13,4 @@ script = ExtResource("1_6jt3u")
 texture = ExtResource("1_qxw2w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_6jt3u")
+shape = SubResource("CircleShape2D_6jt3u")

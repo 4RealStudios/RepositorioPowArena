@@ -7,6 +7,7 @@ extends CharacterBody2D
 @export var dash_speed: float = 200 #VELOCIDAD DEL DASH
 @export var dash_duration: float = 0.2 #DURACION DEL DASH
 @export var dash_cooldown: float = 1.5 #COOLDOWN DEL DASH
+@onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2DP1
 
 var can_move: bool = true
 var lives: int = 3
@@ -18,7 +19,6 @@ var is_dashing: bool = false  #VARIABLE PARA EL DASH
 var dash_timer: float = 0.0 #VARIABLE PARA EL COOLDOWN DEL DASH
 var dash_cooldown_timer: float = 0.0  #VARIABLE PARA EL COOLDOWN DEL DASH
 var is_locking: bool = false
-var move_input: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	spawn_position = global_position #guarda el punto de spawn inicial
@@ -34,13 +34,9 @@ func _physics_process(delta: float) -> void:
 	if not is_locking:
 		if input_vector != Vector2.ZERO:
 			aim_dir = input_vector
-		velocity = input_vector * speed
 	else:
-		velocity = Vector2.ZERO
 		if input_vector != Vector2.ZERO:
 			aim_dir = input_vector
-	if aim_dir != Vector2.ZERO: #ROTACION DEL SPRITE SEGUN A DONDE SE MUEVE
-		$Player1Sprite2D.rotation = aim_dir.angle() - PI/90
 	if dash_cooldown_timer > 0: #COOLDOWN DEL DASH
 		dash_cooldown_timer -= delta
 	if is_dashing:
@@ -52,12 +48,24 @@ func _physics_process(delta: float) -> void:
 	else:
 		if not is_locking:
 			velocity = input_vector * speed
+		else:
+			velocity = Vector2.ZERO
 		if Input.is_action_just_pressed("p1_dash") and dash_cooldown_timer <= 0 and input_vector != Vector2.ZERO: #DASH
 			start_dash()
+	if is_dashing or velocity.length() > 0:
+		if anim_sprite.animation != "walk":
+			anim_sprite.play("walk")
+	else:
+		if anim_sprite.animation != "idle":
+			anim_sprite.play("idle")
+	if aim_dir != Vector2.ZERO:
+		anim_sprite.rotation = aim_dir.angle() - PI/90
 	move_and_slide()
 	if Input.is_action_just_pressed("p1_shoot"): #DISPARO
 		shoot()
-
+# ============================
+# FUNCIONES
+# ============================
 func take_damage():
 	lives -= 1
 	get_tree().call_group("ui", "update_lives", player_id, lives)
