@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var speed: float = 85 #VELOCIDAD DEL PERSONAJE
-@export var BULLET = preload("res://scenes/bullet.tscn")
+@export var DISPARO = preload("res://scenes/disparo.tscn")
 @onready var shooting_point: Marker2D = $ShootingPointP1
 @export var player_id: int = 1 
 @export var dash_speed: float = 200 #VELOCIDAD DEL DASH
@@ -68,11 +68,11 @@ func start_dash(): #FUNCION DEL DASH
 	is_dashing = true
 	dash_timer = dash_duration
 
-func shoot(): #FUNCION DEL DISPAROwa
-	var bullet = BULLET.instantiate()
+func shoot(): #FUNCION DEL DISPARO
+	var disparo = DISPARO.instantiate()
 	var dir := aim_dir.normalized()
 	var rotated_offset := shoot_local_offset.rotated(dir.angle() - PI)
-	bullet.global_position = global_position + rotated_offset
-	bullet.direction = aim_dir.normalized()
-	bullet.rotation = aim_dir.angle()
-	get_tree().current_scene.add_child(bullet)
+	disparo.global_position = global_position + rotated_offset
+	disparo.direction = aim_dir.normalized()
+	disparo.rotation = aim_dir.angle()
+	get_tree().current_scene.add_child(disparo)
