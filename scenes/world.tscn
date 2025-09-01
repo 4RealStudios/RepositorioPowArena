@@ -64,7 +64,7 @@ size = Vector2(329.75, 5.96272)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
 size = Vector2(4.71893, 180)
 
-[node name="Word" type="Node2D"]
+[node name="Map1" type="Node2D"]
 
 [node name="TileMapLayers" type="Node2D" parent="."]
 
@@ -124,6 +124,7 @@ offset_right = 292.0
 offset_bottom = 32.0
 
 [node name="LimitMap" type="Node2D" parent="."]
+position = Vector2(0, 1)
 
 [node name="wall" type="StaticBody2D" parent="LimitMap"]
 
