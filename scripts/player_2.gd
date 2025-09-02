@@ -3,9 +3,9 @@ extends CharacterBody2D
 @export var speed: float = 85 #VELOCIDAD DEL PERSONAJE
 @export var DISPARO = preload("res://scenes/disparo.tscn")
 @onready var shooting_point: Marker2D = $ShootingPointP2
-@export var player_id: int = 2
-@export var dash_speed: float = 200 #VELOCIDAD DEL DASH
-@export var dash_duration: float = 0.2 #DURACION DEL DASH
+@export var player_id: int = 12
+@export var dash_speed: float = 300 #VELOCIDAD DEL DASH
+@export var dash_duration: float = 0.1 #DURACION DEL DASH
 @export var dash_cooldown: float = 1.5 #COOLDOWN DEL DASH
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2DP2
 
@@ -19,6 +19,8 @@ var is_dashing: bool = false  #VARIABLE PARA EL DASH
 var dash_timer: float = 0.0 #VARIABLE PARA EL COOLDOWN DEL DASH
 var dash_cooldown_timer: float = 0.0  #VARIABLE PARA EL COOLDOWN DEL DASH
 var is_locking: bool = false
+var max_bounces: int = 1
+var current_bounces: int = 1
 
 func _ready() -> void:
 	spawn_position = global_position #guarda el punto de spawn inicial
@@ -84,3 +86,7 @@ func shoot(): #FUNCION DEL DISPARO
 	disparo.direction = aim_dir.normalized()
 	disparo.rotation = aim_dir.angle()
 	get_tree().current_scene.add_child(disparo)
+
+func reset_powerups() -> void:
+	max_bounces = 1
+	current_bounces = 1
