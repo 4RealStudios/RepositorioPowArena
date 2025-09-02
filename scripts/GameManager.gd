@@ -46,6 +46,11 @@ func end_match():
 		countdown_label.text = "Jugador 2 Gana!"
 	else:
 		countdown_label.text = "Empate!"
+	await  get_tree().create_timer(2.0).timeout
+	rounds_p1 = 0
+	rounds_p2 = 0
+	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
+	start_round()
 
 func reset_round():
 		#reinicia las vidas de los jugadores
