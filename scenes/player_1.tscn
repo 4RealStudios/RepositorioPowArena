@@ -31,7 +31,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 6.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -59,15 +59,14 @@ rotation = 1.57079
 script = ExtResource("1_gneq0")
 
 [node name="AnimatedSprite2DP1" type="AnimatedSprite2D" parent="."]
-position = Vector2(-5.96046e-08, -5.96046e-08)
+position = Vector2(-2.99999, -2.00002)
 rotation = -1.57079
-scale = Vector2(0.875, 0.833333)
 sprite_frames = SubResource("SpriteFrames_7m5b5")
 animation = &"walk"
-frame_progress = 0.45844
+frame_progress = 0.394388
 
 [node name="ShootingPointP1" type="Marker2D" parent="."]
-position = Vector2(-11, -3.00007)
+position = Vector2(-9.99997, -5.00006)
 gizmo_extents = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
