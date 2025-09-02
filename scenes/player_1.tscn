@@ -59,11 +59,10 @@ rotation = 1.57079
 script = ExtResource("1_gneq0")
 
 [node name="AnimatedSprite2DP1" type="AnimatedSprite2D" parent="."]
-position = Vector2(-2.99999, -2.00002)
 rotation = -1.57079
 sprite_frames = SubResource("SpriteFrames_7m5b5")
 animation = &"walk"
-frame_progress = 0.394388
+frame_progress = 0.870479
 
 [node name="ShootingPointP1" type="Marker2D" parent="."]
 position = Vector2(-9.99997, -5.00006)

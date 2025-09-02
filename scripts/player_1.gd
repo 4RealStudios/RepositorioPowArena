@@ -4,13 +4,15 @@ extends CharacterBody2D
 @export var DISPARO = preload("res://scenes/disparo.tscn")
 @onready var shooting_point: Marker2D = $ShootingPointP1
 @export var player_id: int = 1 
-@export var dash_speed: float = 200 #VELOCIDAD DEL DASH
-@export var dash_duration: float = 0.2 #DURACION DEL DASH
+@export var dash_speed: float = 350 #VELOCIDAD DEL DASH
+@export var dash_duration: float = 0.08 #DURACION DEL DASH
 @export var dash_cooldown: float = 1.5 #COOLDOWN DEL DASH
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2DP1
+@export var shoot_cooldown := 0.4
 
 var can_move: bool = true
 var lives: int = 3
+var is_dead:= false
 var spawn_position: Vector2
 var shoot_local_offset: Vector2
 var input_vector: Vector2 = Vector2.ZERO 
@@ -19,6 +21,7 @@ var is_dashing: bool = false  #VARIABLE PARA EL DASH
 var dash_timer: float = 0.0 #VARIABLE PARA EL COOLDOWN DEL DASH
 var dash_cooldown_timer: float = 0.0  #VARIABLE PARA EL COOLDOWN DEL DASH
 var is_locking: bool = false
+var last_shoot_time := 0.0
 
 func _ready() -> void:
 	spawn_position = global_position #guarda el punto de spawn inicial
@@ -67,6 +70,8 @@ func _physics_process(delta: float) -> void:
 # FUNCIONES
 # ============================
 func take_damage():
+	if is_dead:
+		return
 	lives -= 1
 	get_tree().call_group("ui", "update_lives", player_id, lives)
 	if lives <= 0:
@@ -77,6 +82,10 @@ func start_dash(): #FUNCION DEL DASH
 	dash_timer = dash_duration
 
 func shoot(): #FUNCION DEL DISPARO
+	var now = Time.get_ticks_msec() / 1000.0
+	if now - last_shoot_time < shoot_cooldown:
+		return
+	last_shoot_time = now
 	var disparo = DISPARO.instantiate()
 	var dir := aim_dir.normalized()
 	var rotated_offset := shoot_local_offset.rotated(dir.angle() - PI)

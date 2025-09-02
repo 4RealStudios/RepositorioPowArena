@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export_flags_2d_physics var hit_mask: int = 1    # capas con las que debe colisionar (ej: World + Players)
 var direction: Vector2 = Vector2.ZERO
 
-const MAX_BOUNCES := 1
+const MAX_BOUNCES := 3
 var bounces := 0
 
 func _physics_process(delta: float) -> void:

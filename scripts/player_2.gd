@@ -4,13 +4,15 @@ extends CharacterBody2D
 @export var DISPARO = preload("res://scenes/disparo.tscn")
 @onready var shooting_point: Marker2D = $ShootingPointP2
 @export var player_id: int = 2
-@export var dash_speed: float = 200 #VELOCIDAD DEL DASH
-@export var dash_duration: float = 0.2 #DURACION DEL DASH
+@export var dash_speed: float = 350 #VELOCIDAD DEL DASH
+@export var dash_duration: float = 0.08 #DURACION DEL DASH
 @export var dash_cooldown: float = 1.5 #COOLDOWN DEL DASH
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2DP2
+@export var shoot_cooldown := 0.4
 
 var can_move: bool = true
 var lives: int = 3
+var is_dead:= false
 var spawn_position: Vector2
 var shoot_local_offset: Vector2
 var input_vector: Vector2 = Vector2.ZERO 
@@ -19,6 +21,7 @@ var is_dashing: bool = false  #VARIABLE PARA EL DASH
 var dash_timer: float = 0.0 #VARIABLE PARA EL COOLDOWN DEL DASH
 var dash_cooldown_timer: float = 0.0  #VARIABLE PARA EL COOLDOWN DEL DASH
 var is_locking: bool = false
+var last_shoot_time := 0.0
 
 func _ready() -> void:
 	spawn_position = global_position #guarda el punto de spawn inicial
@@ -59,7 +62,7 @@ func _physics_process(delta: float) -> void:
 		if anim_sprite.animation != "idle":
 			anim_sprite.play("idle")
 	if aim_dir != Vector2.ZERO:
-		anim_sprite.rotation = aim_dir.angle() - PI/90
+		anim_sprite.rotation = aim_dir.angle() - PI/1
 	move_and_slide()
 	if Input.is_action_just_pressed("p2_shoot"): #DISPARO
 		shoot()
@@ -73,10 +76,16 @@ func take_damage():
 		get_tree().call_group("game", "player_died", player_id)
 
 func start_dash(): #FUNCION DEL DASH
+	if is_dead:
+		return
 	is_dashing = true
 	dash_timer = dash_duration
 
 func shoot(): #FUNCION DEL DISPARO
+	var now = Time.get_ticks_msec() / 1000.0
+	if now - last_shoot_time < shoot_cooldown:
+		return
+	last_shoot_time = now
 	var disparo = DISPARO.instantiate()
 	var dir := aim_dir.normalized()
 	var rotated_offset := shoot_local_offset.rotated(dir.angle() - PI)

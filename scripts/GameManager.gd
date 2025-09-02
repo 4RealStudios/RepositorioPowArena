@@ -11,7 +11,7 @@ var spawn_p1 := Vector2(16, 90)
 var spawn_p2 := Vector2(304, 90)
 var rounds_p1: int = 0
 var rounds_p2: int = 0
-var max_rounds_to_win: int = 3
+var max_rounds_to_win: int = 5
 
 func _ready() -> void:
 	add_to_group("game")
@@ -51,6 +51,8 @@ func reset_round():
 		#reinicia las vidas de los jugadores
 	player1.lives = 3
 	player2.lives = 3
+	player1.is_dead = false
+	player2.is_dead = false
 		#respawnea a los jugadores en las posiciones iniciales
 	player1.global_position = spawn_p1
 	player2.global_position = spawn_p2
