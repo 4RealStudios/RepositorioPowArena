@@ -4,11 +4,11 @@ extends CharacterBody2D
 @export var DISPARO = preload("res://scenes/disparo.tscn")
 @onready var shooting_point: Marker2D = $ShootingPointP2
 @export var player_id: int = 2
-@export var dash_speed: float = 350 #VELOCIDAD DEL DASH
-@export var dash_duration: float = 0.08 #DURACION DEL DASH
+@export var dash_speed: float = 300 #VELOCIDAD DEL DASH
+@export var dash_duration: float = 0.1 #DURACION DEL DASH
 @export var dash_cooldown: float = 1.5 #COOLDOWN DEL DASH
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2DP2
-@export var shoot_cooldown := 0.4
+@export var shoot_cooldown := 0.5
 
 var can_move: bool = true
 var lives: int = 3
