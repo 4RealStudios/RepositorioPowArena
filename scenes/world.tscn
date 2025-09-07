@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
-[ext_resource type="Texture2D" uid="uid://b5q3dx77vvmu0" path="res://assets/maps/background.png" id="1_qfnet"]
-[ext_resource type="Texture2D" uid="uid://cbqjrjxme5dd0" path="res://assets/maps/tileset.png" id="2_i7141"]
+[ext_resource type="Texture2D" uid="uid://b5q3dx77vvmu0" path="res://assets/TileMaps/background.png" id="1_qfnet"]
+[ext_resource type="Texture2D" uid="uid://cbqjrjxme5dd0" path="res://assets/TileMaps/tileset.png" id="2_i7141"]
 [ext_resource type="PackedScene" uid="uid://cktvsan1pxk0e" path="res://scenes/player_2.tscn" id="2_rwgxs"]
 [ext_resource type="Script" uid="uid://ccjtq0iws17x4" path="res://scripts/UI.gd" id="4_qfnet"]
 
