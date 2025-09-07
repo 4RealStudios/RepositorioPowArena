@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var maps: Array[PackedScene]
+var current_map: Node = null
 @onready var player1 = $player1
 @onready var player2 = $player2
 @onready var countdown_label = $CountdownLabel
@@ -7,8 +9,6 @@ extends Node2D
 
 var countdown_value = 3
 var is_counting_down := false
-var spawn_p1 := Vector2(16, 90)
-var spawn_p2 := Vector2(304, 90)
 var rounds_p1: int = 0
 var rounds_p2: int = 0
 var max_rounds_to_win: int = 5
@@ -40,17 +40,28 @@ func end_match():
 	player1.can_move = false
 	player2.can_move = false
 	countdown_label.visible = true
+	
 	if rounds_p1 > rounds_p2:
 		countdown_label.text = "Jugador 1 Gana!"
 	elif rounds_p2 > rounds_p1:
 		countdown_label.text = "Jugador 2 Gana!"
 	else:
 		countdown_label.text = "Empate!"
+	
 	await  get_tree().create_timer(2.0).timeout
+	
 	rounds_p1 = 0
 	rounds_p2 = 0
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
 	start_round()
+
+func load_map(round_number: int):
+	if current_map:
+		current_map.queue_free()
+	var index = round_number % maps.size()
+	current_map = maps[index].instantiate()
+	add_child(current_map)
+	current_map.z_index = -1
 
 func reset_round():
 		#reinicia las vidas de los jugadores
@@ -58,9 +69,12 @@ func reset_round():
 	player2.lives = 3
 	player1.is_dead = false
 	player2.is_dead = false
-		#respawnea a los jugadores en las posiciones iniciales
-	player1.global_position = spawn_p1
-	player2.global_position = spawn_p2
+	
+	var spawn_p1 = current_map.get_node("SpawnP1")
+	var spawn_p2 = current_map.get_node("SpawnP2")
+	player1.global_position = spawn_p1.global_position
+	player2.global_position = spawn_p2.global_position
+
 		#actualiza el UI del juego
 	get_tree().call_group("ui", "update_lives", 1, player1.lives)
 	get_tree().call_group("ui", "update_lives", 2, player2.lives)
@@ -83,6 +97,9 @@ func start_round():
 	countdown_label.text = "POW!"
 	await  get_tree().create_timer(0.5).timeout
 	countdown_label.visible = false
+	
+	load_map(rounds_p1 + rounds_p2)
+	
 	reset_round()
 	player1.can_move = true
 	player2.can_move = true
