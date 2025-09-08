@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=10 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
 [ext_resource type="PackedScene" uid="uid://sy2lna8eygog" path="res://maps/map1.tscn" id="2_71j4m"]
 [ext_resource type="PackedScene" uid="uid://cktvsan1pxk0e" path="res://scenes/player_2.tscn" id="2_rwgxs"]
+[ext_resource type="PackedScene" uid="uid://dgt1eq4u57als" path="res://maps/map2.tscn" id="3_qfnet"]
+[ext_resource type="PackedScene" uid="uid://bfx2te4m6d68r" path="res://maps/map3.tscn" id="4_i7141"]
 [ext_resource type="Script" uid="uid://ccjtq0iws17x4" path="res://scripts/UI.gd" id="4_qfnet"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nnsk1"]
@@ -16,7 +18,7 @@ size = Vector2(4.71893, 180)
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_71j4m")
-maps = Array[PackedScene]([ExtResource("2_71j4m"), null, null])
+maps = Array[PackedScene]([ExtResource("2_71j4m"), ExtResource("3_qfnet"), ExtResource("4_i7141")])
 
 [node name="CountdownTimer" type="Timer" parent="GameManager"]
 
