@@ -1,6 +1,8 @@
 extends Node2D
 
-@export var maps: Array[PackedScene]
+@export var easy_maps: Array[PackedScene]
+@export var midium_maps: Array[PackedScene]
+@export var hard_maps: Array[PackedScene]
 var current_map: Node = null
 @onready var player1 = $player1
 @onready var player2 = $player2
@@ -58,8 +60,16 @@ func end_match():
 func load_map(round_number: int):
 	if current_map:
 		current_map.queue_free()
-	var index = round_number % maps.size()
-	current_map = maps[index].instantiate()
+	var pool: Array[PackedScene] = []
+	if round_number < 4:
+		pool = easy_maps
+	elif round_number < 7:
+		pool = midium_maps
+	else:
+		pool = hard_maps
+	if  pool.size() > 0:
+		var scene = pool[randi() % pool.size()]
+		current_map = scene.instantiate()
 	add_child(current_map)
 	current_map.z_index = -1
 

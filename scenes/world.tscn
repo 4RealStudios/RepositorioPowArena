@@ -18,7 +18,9 @@ size = Vector2(4.71893, 180)
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_71j4m")
-maps = Array[PackedScene]([ExtResource("2_71j4m"), ExtResource("3_qfnet"), ExtResource("4_i7141")])
+easy_maps = Array[PackedScene]([ExtResource("2_71j4m")])
+midium_maps = Array[PackedScene]([ExtResource("3_qfnet")])
+hard_maps = Array[PackedScene]([ExtResource("4_i7141")])
 
 [node name="CountdownTimer" type="Timer" parent="GameManager"]
 

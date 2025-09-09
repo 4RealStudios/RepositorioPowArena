@@ -85,4 +85,4 @@ shape = SubResource("RectangleShape2D_vh3fo")
 position = Vector2(30, 85)
 
 [node name="SpawnP2" type="Marker2D" parent="."]
-position = Vector2(320, 170)
+position = Vector2(284, 87)
