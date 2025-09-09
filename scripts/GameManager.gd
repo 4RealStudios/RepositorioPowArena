@@ -61,9 +61,9 @@ func load_map(round_number: int):
 	if current_map:
 		current_map.queue_free()
 	var pool: Array[PackedScene] = []
-	if round_number < 4:
+	if round_number < 3:
 		pool = easy_maps
-	elif round_number < 7:
+	elif round_number < 6:
 		pool = midium_maps
 	else:
 		pool = hard_maps
