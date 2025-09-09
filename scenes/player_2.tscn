@@ -139,11 +139,11 @@ rotation = 1.57079
 script = ExtResource("1_s551d")
 
 [node name="AnimatedSprite2DP2" type="AnimatedSprite2D" parent="."]
-position = Vector2(-0.999994, -1.00001)
+position = Vector2(-1.99999, -2.00001)
 rotation = -1.57079
 sprite_frames = SubResource("SpriteFrames_ne6jw")
-animation = &"shooting"
-frame_progress = 0.851799
+animation = &"idle"
+frame_progress = 0.802456
 
 [node name="ShootingPointP2" type="Marker2D" parent="."]
 position = Vector2(-12, -5)
