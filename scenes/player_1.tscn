@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bhkidw16jmgu8"]
+[gd_scene load_steps=20 format=3 uid="uid://bhkidw16jmgu8"]
 
 [ext_resource type="Script" uid="uid://1pmmyw8djety" path="res://scripts/player_1.gd" id="1_gneq0"]
 [ext_resource type="Texture2D" uid="uid://c2qfy1jrh10mb" path="res://assets/players/AnimacionesP1.png" id="2_vod78"]
@@ -30,18 +30,6 @@ region = Rect2(24, 0, 24, 24)
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfu11"]
 atlas = ExtResource("2_vod78")
 region = Rect2(48, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f7tsm"]
-atlas = ExtResource("2_vod78")
-region = Rect2(288, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_61r2x"]
-atlas = ExtResource("2_vod78")
-region = Rect2(312, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8o4l0"]
-atlas = ExtResource("2_vod78")
-region = Rect2(336, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ngimn"]
 atlas = ExtResource("2_vod78")
@@ -94,20 +82,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_f7tsm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_61r2x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8o4l0")
-}],
-"loop": true,
-"name": &"shooting",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_ngimn")
 }, {
 "duration": 1.0,
@@ -124,6 +98,35 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_gneq0"]
+atlas = ExtResource("2_vod78")
+region = Rect2(288, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7tsm"]
+atlas = ExtResource("2_vod78")
+region = Rect2(312, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vod78"]
+atlas = ExtResource("2_vod78")
+region = Rect2(336, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wqd30"]
+animations = [{
+"frames": [{
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_gneq0")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_f7tsm")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_vod78")
+}],
+"loop": true,
+"name": &"shooting",
+"speed": 5.0
+}]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_gneq0"]
 radius = 9.0
 
@@ -135,8 +138,13 @@ script = ExtResource("1_gneq0")
 position = Vector2(-1.99999, -2.00001)
 rotation = -1.57079
 sprite_frames = SubResource("SpriteFrames_7m5b5")
+animation = &"walk"
+
+[node name="ShootAnimP1" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3.99998, -3.00003)
+rotation = -1.57079
+sprite_frames = SubResource("SpriteFrames_wqd30")
 animation = &"shooting"
-frame_progress = 0.408953
 
 [node name="ShootingPointP1" type="Marker2D" parent="."]
 position = Vector2(-12, -5.00008)
@@ -145,3 +153,5 @@ gizmo_extents = 1.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.57079
 shape = SubResource("CircleShape2D_gneq0")
+
+[connection signal="animation_finished" from="AnimatedSprite2DP1" to="." method="_on_animated_sprite_2dp_1_animation_finished"]
