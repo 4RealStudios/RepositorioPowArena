@@ -100,16 +100,16 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_x4ukj")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_t4bc4")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_wtgcc")
 }],
-"loop": true,
+"loop": false,
 "name": &"shooting",
 "speed": 5.0
 }, {
@@ -142,8 +142,7 @@ script = ExtResource("1_s551d")
 position = Vector2(-1.99999, -2.00001)
 rotation = -1.57079
 sprite_frames = SubResource("SpriteFrames_ne6jw")
-animation = &"idle"
-frame_progress = 0.802456
+animation = &"shooting"
 
 [node name="ShootingPointP2" type="Marker2D" parent="."]
 position = Vector2(-12, -5)
@@ -153,3 +152,5 @@ gizmo_extents = 1.0
 position = Vector2(-1.65436e-24, 0)
 rotation = -1.57081
 shape = SubResource("CircleShape2D_s551d")
+
+[connection signal="animation_finished" from="AnimatedSprite2DP2" to="." method="_on_animated_sprite_2dp_2_animation_finished"]

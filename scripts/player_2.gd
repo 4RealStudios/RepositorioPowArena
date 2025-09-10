@@ -18,6 +18,7 @@ var shoot_local_offset: Vector2
 var input_vector: Vector2 = Vector2.ZERO 
 var aim_dir: Vector2 = Vector2.RIGHT 
 var is_dashing: bool = false  #VARIABLE PARA EL DASH
+var is_shooting: bool = false
 var dash_timer: float = 0.0 #VARIABLE PARA EL COOLDOWN DEL DASH
 var dash_cooldown_timer: float = 0.0  #VARIABLE PARA EL COOLDOWN DEL DASH
 var is_locking: bool = false
@@ -55,6 +56,8 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector2.ZERO
 		if Input.is_action_just_pressed("p2_dash") and dash_cooldown_timer <= 0 and input_vector != Vector2.ZERO: #DASH
 			start_dash()
+	if is_shooting:
+		return
 	if is_dashing or velocity.length() > 0:
 		if anim_sprite.animation != "walk":
 			anim_sprite.play("walk")
@@ -70,14 +73,14 @@ func _physics_process(delta: float) -> void:
 # FUNCIONES
 # ============================
 func take_damage():
+	if is_dead:
+		return
 	lives -= 1
 	get_tree().call_group("ui", "update_lives", player_id, lives)
 	if lives <= 0:
 		get_tree().call_group("game", "player_died", player_id)
 
 func start_dash(): #FUNCION DEL DASH
-	if is_dead:
-		return
 	is_dashing = true
 	dash_timer = dash_duration
 
@@ -93,3 +96,9 @@ func shoot(): #FUNCION DEL DISPARO
 	disparo.direction = aim_dir.normalized()
 	disparo.rotation = aim_dir.angle()
 	get_tree().current_scene.add_child(disparo)
+	is_shooting = true
+	anim_sprite.play("shooting")
+
+func _on_animated_sprite_2dp_2_animation_finished() -> void:
+	if anim_sprite.animation == "shooting":
+		is_shooting = false

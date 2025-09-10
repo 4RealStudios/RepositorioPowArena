@@ -93,16 +93,16 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_f7tsm")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_61r2x")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_8o4l0")
 }],
-"loop": true,
+"loop": false,
 "name": &"shooting",
 "speed": 5.0
 }, {
@@ -136,7 +136,6 @@ position = Vector2(-1.99999, -2.00001)
 rotation = -1.57079
 sprite_frames = SubResource("SpriteFrames_7m5b5")
 animation = &"shooting"
-frame_progress = 0.408953
 
 [node name="ShootingPointP1" type="Marker2D" parent="."]
 position = Vector2(-12, -5.00008)
@@ -145,3 +144,5 @@ gizmo_extents = 1.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.57079
 shape = SubResource("CircleShape2D_gneq0")
+
+[connection signal="animation_finished" from="AnimatedSprite2DP1" to="." method="_on_animated_sprite_2dp_1_animation_finished"]
