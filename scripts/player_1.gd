@@ -12,6 +12,8 @@ extends CharacterBody2D
 
 var can_move: bool = true
 var lives: int = 3
+var is_invulnerable: bool = false
+var invuln_time: float = 2.0
 var is_dead:= false
 var spawn_position: Vector2
 var shoot_local_offset: Vector2
@@ -73,12 +75,35 @@ func _physics_process(delta: float) -> void:
 # FUNCIONES
 # ============================
 func take_damage():
-	if is_dead:
+	if is_dead or is_invulnerable:
 		return
 	lives -= 1
 	get_tree().call_group("ui", "update_lives", player_id, lives)
 	if lives <= 0:
 		get_tree().call_group("game", "player_died", player_id)
+		return
+	is_invulnerable = true
+	if anim_sprite.animation != "hurt":
+		anim_sprite.play("hurt")
+		await get_tree().create_timer(0.2).timeout
+		if not is_dead:
+			anim_sprite.play("idle")
+		start_blinking()
+	await  get_tree().create_timer(2.0).timeout
+	is_invulnerable = false
+	anim_sprite.visible = true
+
+func start_blinking():
+	var blink_timer = Timer.new()
+	blink_timer.wait_time = 0.1
+	blink_timer.one_shot = false
+	add_child(blink_timer)
+	blink_timer.start()
+	blink_timer.timeout.connect(func():
+		anim_sprite.visible = !anim_sprite.visible)
+	await get_tree().create_timer(invuln_time).timeout
+	blink_timer.queue_free()
+	anim_sprite.visible = true
 
 func start_dash(): #FUNCION DEL DASH
 	is_dashing = true

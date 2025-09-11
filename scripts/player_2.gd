@@ -98,7 +98,6 @@ func shoot(): #FUNCION DEL DISPARO
 	get_tree().current_scene.add_child(disparo)
 	is_shooting = true
 	anim_sprite.play("shooting")
-
 func _on_animated_sprite_2dp_2_animation_finished() -> void:
 	if anim_sprite.animation == "shooting":
 		is_shooting = false

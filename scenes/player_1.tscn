@@ -62,19 +62,19 @@ region = Rect2(168, 0, 24, 24)
 [sub_resource type="SpriteFrames" id="SpriteFrames_7m5b5"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 1.3,
 "texture": SubResource("AtlasTexture_wqd30")
 }, {
-"duration": 1.0,
+"duration": 1.3,
 "texture": SubResource("AtlasTexture_f2c3w")
 }, {
-"duration": 1.0,
+"duration": 1.3,
 "texture": SubResource("AtlasTexture_jkihx")
 }, {
-"duration": 1.0,
+"duration": 1.3,
 "texture": SubResource("AtlasTexture_qgfdq")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt",
 "speed": 5.0
 }, {
@@ -135,7 +135,7 @@ script = ExtResource("1_gneq0")
 position = Vector2(-1.99999, -2.00001)
 rotation = -1.57079
 sprite_frames = SubResource("SpriteFrames_7m5b5")
-animation = &"shooting"
+animation = &"hurt"
 
 [node name="ShootingPointP1" type="Marker2D" parent="."]
 position = Vector2(-12, -5.00008)
