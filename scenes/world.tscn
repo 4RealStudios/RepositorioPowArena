@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=10 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://dgt1eq4u57als" path="res://maps/mapas faciles/map2.tscn" id="3_qfnet"]
 [ext_resource type="PackedScene" uid="uid://bfx2te4m6d68r" path="res://maps/mapas faciles/map3.tscn" id="4_i7141"]
 [ext_resource type="Script" uid="uid://ccjtq0iws17x4" path="res://scripts/UI.gd" id="4_qfnet"]
-[ext_resource type="PackedScene" uid="uid://bexylu8mxo8fl" path="res://scenes/disparo.tscn" id="6_4mrxx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nnsk1"]
 size = Vector2(329.75, 5.96272)
@@ -33,13 +32,6 @@ offset_bottom = 91.0
 
 [node name="player1" parent="GameManager" groups=["Players"] instance=ExtResource("1_nnsk1")]
 position = Vector2(16, 89)
-speed = 85.0
-DISPARO = ExtResource("6_4mrxx")
-player_id = 1
-dash_speed = 300.0
-dash_duration = 0.1
-dash_cooldown = 1.5
-shoot_cooldown = 0.5
 
 [node name="player2" parent="GameManager" groups=["Players"] instance=ExtResource("2_rwgxs")]
 position = Vector2(299, 90)

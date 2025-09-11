@@ -71,9 +71,11 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	if Input.is_action_just_pressed("p1_shoot"): #DISPARO
 		shoot()
+
 # ============================
 # FUNCIONES
 # ============================
+
 func take_damage():
 	if is_dead or is_invulnerable:
 		return
@@ -83,26 +85,23 @@ func take_damage():
 		get_tree().call_group("game", "player_died", player_id)
 		return
 	is_invulnerable = true
-	if anim_sprite.animation != "hurt":
-		anim_sprite.play("hurt")
-		await get_tree().create_timer(0.2).timeout
-		if not is_dead:
-			anim_sprite.play("idle")
-		start_blinking()
-	await  get_tree().create_timer(2.0).timeout
+	anim_sprite.play("hurt")
+	start_blinking()
+	star_invulnerability()
+
+func star_invulnerability():
+	await get_tree().create_timer(0.2).timeout
+	if not is_dead:
+		anim_sprite.play("idle")
+	await get_tree().create_timer(2.0).timeout
 	is_invulnerable = false
 	anim_sprite.visible = true
 
 func start_blinking():
-	var blink_timer = Timer.new()
-	blink_timer.wait_time = 0.1
-	blink_timer.one_shot = false
-	add_child(blink_timer)
-	blink_timer.start()
-	blink_timer.timeout.connect(func():
-		anim_sprite.visible = !anim_sprite.visible)
-	await get_tree().create_timer(invuln_time).timeout
-	blink_timer.queue_free()
+	var blink_timer := get_tree().create_timer(0.1, true)
+	while is_invulnerable and is_instance_valid(anim_sprite):
+		anim_sprite.visible = not anim_sprite.visible
+		await blink_timer.timeout
 	anim_sprite.visible = true
 
 func start_dash(): #FUNCION DEL DASH
