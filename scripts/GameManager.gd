@@ -112,24 +112,33 @@ func start_round():
 	
 	_safe_set_can_move(player1, false)
 	_safe_set_can_move(player2, false)
+	_safe_set_can_shoot(player1, false)
+	_safe_set_can_shoot(player2, false)
 
 	countdown_label.visible = true
-		#bucle 3,2,1
-	for i in range(3,0,-1): #3,2,1
+
+	for i in range(3,0,-1): 
 		countdown_label.text = str(i)
 		await get_tree().create_timer(1.0).timeout
-		#POW!
 	countdown_label.text = "POW!"
 	await  get_tree().create_timer(0.5).timeout
 	countdown_label.visible = false
 	
 	load_map(rounds_p1 + rounds_p2)
+	await get_tree().process_frame
 	reset_round()
 	
 	_safe_set_can_move(player1, true)
 	_safe_set_can_move(player2, true)
+	_safe_set_can_shoot(player1, true)
+	_safe_set_can_shoot(player2, true)
 	is_counting_down = false
 
 func _safe_set_can_move(player: Node,enable: bool) -> void:
 	if player and player.has_method("set_can_move"):
 		player.set_can_move(enable)
+
+func _safe_set_can_shoot(player: Node, enable: bool) -> void:
+	if player and player.has_method("set_can_shoot"):
+		player.set_can_shoot(enable)
+ 

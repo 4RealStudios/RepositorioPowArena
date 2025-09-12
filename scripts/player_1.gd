@@ -38,22 +38,21 @@ var is_shooting: bool = false
 var last_shoot_time: float = -9999.0
 
 func _ready() -> void:
+	can_move = false
+	anim_sprite.play("idle")
 	spawn_position = global_position
 	shoot_local_offset = shooting_point.position
 	if anim_sprite:
-		anim_sprite.connect("animation_finished", Callable(self, "_on_anim_finished"))
+		anim_sprite.connect("animation_finished", Callable(self, "_on_animated_sprite_2dp_1_animation_finished"))
 
 func _physics_process(delta: float) -> void:
-	# si está muerto no procesamos
-	if is_dead:
+	if not can_move or is_dead:
 		return
 
-	# --- input (siempre leemos el stick para poder apuntar aunque 'can_move' sea false) ---
 	input_vector.x = Input.get_action_strength("p1_right") - Input.get_action_strength("p1_left")
 	input_vector.y = Input.get_action_strength("p1_down")  - Input.get_action_strength("p1_up")
 	input_vector = input_vector.normalized()
 
-	# bloqueo con el botón (hold) — si está presionado no se mueve, pero SÍ actualiza aim_dir
 	var blocking := Input.is_action_pressed("p1_block")
 	if input_vector != Vector2.ZERO:
 		aim_dir = input_vector
@@ -69,11 +68,9 @@ func _physics_process(delta: float) -> void:
 			is_dashing = false
 			dash_cooldown_timer = dash_cooldown
 	else:
-		# si can_move es false, no se mueve (ej: durante cuenta regresiva del GameManager)
 		if not can_move:
 			velocity = Vector2.ZERO
 		else:
-			# si está blockeando con el botón, no nos movemos (pero seguimos apuntando)
 			if blocking:
 				velocity = Vector2.ZERO
 			else:
@@ -81,19 +78,13 @@ func _physics_process(delta: float) -> void:
 			# iniciar dash si corresponde
 			if Input.is_action_just_pressed("p1_dash") and dash_cooldown_timer <= 0.0 and input_vector != Vector2.ZERO:
 				start_dash()
-
-	# rotación del sprite para apuntar
 	if aim_dir != Vector2.ZERO:
 		anim_sprite.rotation = aim_dir.angle() - PI/90
-
-	# --- animaciones (no bloqueamos movimiento por is_shooting) ---
-	# mostrar walk/idle salvo que esté en "hurt" o "shooting"
 	if not is_dead:
 		if anim_sprite.animation == "hurt":
 			# dejamos la animación de daño intacta
 			pass
 		elif is_shooting:
-			# dejamos que "shooting" se muestre completa (pero NO bloquea movimiento)
 			pass
 		else:
 			if velocity.length() > 0.0:
@@ -102,26 +93,17 @@ func _physics_process(delta: float) -> void:
 			else:
 				if anim_sprite.animation != "idle":
 					anim_sprite.play("idle")
-
 	move_and_slide()
-
-	# --- disparo ---
 	if Input.is_action_just_pressed("p1_shoot"):
 		shoot()
 
 func shoot() -> void:
-	if not can_shoot:
+	if not can_shoot or is_dead:
 		return
-		
 	var now = Time.get_ticks_msec() / 1000.0
 	if now - last_shoot_time < shoot_cooldown:
 		return
 	last_shoot_time = now
-	
-	if anim_sprite.animation != "shooting":
-		anim_sprite.play("shooting")
-	is_shooting = true
-	
 	var disparo = DISPARO.instantiate()
 	var dir := aim_dir.normalized()
 	var rotated_offset := shoot_local_offset.rotated(dir.angle() - PI)
@@ -129,13 +111,29 @@ func shoot() -> void:
 	disparo.direction = dir
 	disparo.rotation = dir.angle()
 	get_tree().current_scene.add_child(disparo)
+	is_shooting = true
+	anim_sprite.play("shooting")
 
 func _on_animated_sprite_2dp_1_animation_finished(anim_name: String) -> void:
 	if anim_name == "shooting":
 		is_shooting = false
+		_update_animation()
 	
 	if anim_name == "hurt" and not is_dead:
-		anim_sprite.play("idle")
+		_update_animation()
+
+func _update_animation() -> void:
+	if is_dead:
+		return
+	if is_shooting:
+		if anim_sprite.animation != "shooting":
+			anim_sprite.play("shooting")
+	elif velocity.length() > 0:
+		if anim_sprite.animation != "walk":
+			anim_sprite.play("walk")
+	else:
+		if anim_sprite.animation != "idle":
+			anim_sprite.play("idle")
 
 func start_dash() -> void:
 	is_dashing = true
@@ -178,7 +176,6 @@ func start_invulnerability() -> void:
 		anim_sprite.play("idle")
 
 func reset_for_round() -> void:
-	# llamado por GameManager al comenzar la ronda (asegura limpieza de flags)
 	lives = 3
 	is_dead = false
 	is_invulnerable = false
@@ -190,7 +187,9 @@ func reset_for_round() -> void:
 	velocity = Vector2.ZERO
 	anim_sprite.visible = true
 	anim_sprite.play("idle")
-	# can_move lo manejará el GameManager (puede dejarlo false hasta el pow)
 
 func set_can_move(enable: bool) -> void:
 	can_move = enable
+
+func set_can_shoot(enable: bool) -> void:
+	can_shoot = enable
