@@ -1,6 +1,4 @@
-
 extends CharacterBody2D
-
 
 @export var speed: float = 85.0
 @export var DISPARO: PackedScene = preload("res://scenes/disparo.tscn")
@@ -42,11 +40,12 @@ func _ready() -> void:
 	anim_sprite.play("idle")
 	spawn_position = global_position
 	shoot_local_offset = shooting_point.position
-	if anim_sprite:
-		anim_sprite.connect("animation_finished", Callable(self, "_on_animated_sprite_2dp_1_animation_finished"))
 
 func _physics_process(delta: float) -> void:
 	if not can_move or is_dead:
+		velocity = Vector2.ZERO
+		_update_animation()
+		move_and_slide()
 		return
 
 	input_vector.x = Input.get_action_strength("p1_right") - Input.get_action_strength("p1_left")
@@ -68,24 +67,29 @@ func _physics_process(delta: float) -> void:
 			is_dashing = false
 			dash_cooldown_timer = dash_cooldown
 	else:
-		if not can_move:
+		if blocking:
 			velocity = Vector2.ZERO
 		else:
-			if blocking:
-				velocity = Vector2.ZERO
-			else:
-				velocity = input_vector * speed
+			velocity = input_vector * speed
 			# iniciar dash si corresponde
-			if Input.is_action_just_pressed("p1_dash") and dash_cooldown_timer <= 0.0 and input_vector != Vector2.ZERO:
-				start_dash()
+		if Input.is_action_just_pressed("p1_dash") and dash_cooldown_timer <= 0.0 and input_vector != Vector2.ZERO:
+			start_dash()
+		
+		if is_shooting:
+			velocity = Vector2.ZERO
+			if anim_sprite.animation != "shooting":
+				anim_sprite.play("shooting")
+			move_and_slide()
+			return
+			
 	if aim_dir != Vector2.ZERO:
 		anim_sprite.rotation = aim_dir.angle() - PI/90
+		
 	if not is_dead:
 		if anim_sprite.animation == "hurt":
-			# dejamos la animación de daño intacta
 			pass
-		elif is_shooting:
-			pass
+		#if is_shooting:
+			#return
 		else:
 			if velocity.length() > 0.0:
 				if anim_sprite.animation != "walk":
@@ -114,12 +118,11 @@ func shoot() -> void:
 	is_shooting = true
 	anim_sprite.play("shooting")
 
-func _on_animated_sprite_2dp_1_animation_finished(anim_name: String) -> void:
-	if anim_name == "shooting":
+func _on_animated_sprite_2dp_1_animation_finished() -> void:
+	if anim_sprite.animation == "shooting":
 		is_shooting = false
 		_update_animation()
-	
-	if anim_name == "hurt" and not is_dead:
+	elif anim_sprite.animation == "hurt" and not is_dead:
 		_update_animation()
 
 func _update_animation() -> void:
@@ -128,7 +131,9 @@ func _update_animation() -> void:
 	if is_shooting:
 		if anim_sprite.animation != "shooting":
 			anim_sprite.play("shooting")
-	elif velocity.length() > 0:
+		return
+		
+	if velocity.length() > 0:
 		if anim_sprite.animation != "walk":
 			anim_sprite.play("walk")
 	else:
@@ -153,10 +158,8 @@ func take_damage() -> void:
 		get_tree().call_group("game", "player_died", player_id)
 		return
 
-	# daño pero sigue pudiendo moverse; queda invulnerable por invuln_time
 	is_invulnerable = true
 	anim_sprite.play("hurt")
-	# no awaitamos: arranca el coroutine en paralelo
 	start_invulnerability()
 
 func start_invulnerability() -> void:
