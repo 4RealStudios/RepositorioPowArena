@@ -12,13 +12,14 @@ extends CharacterBody2D
 
 # invulnerabilidad / parpadeo
 @export var invuln_time: float = 2.0
-@export var blink_interval: float = 0.10  # tiempo entre toggles de visibilidad
+@export var blink_interval: float = 0.10  
 
 # --- Nodos ---
 @onready var shooting_point: Marker2D = $ShootingPointP1
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2DP1
 
 # --- Estado ---
+var can_shoot: bool = true
 var can_move: bool = true
 var lives: int = 3
 var is_invulnerable: bool = false
@@ -108,47 +109,39 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("p1_shoot"):
 		shoot()
 
-# =====================
-# DISPARO
-# =====================
 func shoot() -> void:
+	if not can_shoot:
+		return
+		
 	var now = Time.get_ticks_msec() / 1000.0
 	if now - last_shoot_time < shoot_cooldown:
 		return
 	last_shoot_time = now
-
+	
+	if anim_sprite.animation != "shooting":
+		anim_sprite.play("shooting")
+	is_shooting = true
+	
 	var disparo = DISPARO.instantiate()
 	var dir := aim_dir.normalized()
 	var rotated_offset := shoot_local_offset.rotated(dir.angle() - PI)
 	disparo.global_position = global_position + rotated_offset
 	disparo.direction = dir
 	disparo.rotation = dir.angle()
-	# si la bala tiene owner_id, setealo (útil para evitar self-hit)
-	if "owner_id" in disparo:
-		disparo.owner_id = player_id
 	get_tree().current_scene.add_child(disparo)
 
-	is_shooting = true
-	anim_sprite.play("shooting")
-
-func _on_anim_finished() -> void:
-	# signal handler para cuando termina cualquier anim. Si terminó "shooting", desactivo la bandera.
-	if anim_sprite.animation == "shooting":
+func _on_animated_sprite_2dp_1_animation_finished(anim_name: String) -> void:
+	if anim_name == "shooting":
 		is_shooting = false
-		# siguiente frame el _physics_process decidirá si poner idle/walk
+	
+	if anim_name == "hurt" and not is_dead:
+		anim_sprite.play("idle")
 
-# =====================
-# DASH
-# =====================
 func start_dash() -> void:
 	is_dashing = true
 	dash_timer = dash_duration
 
-# =====================
-# DAÑO + INVULNERABILIDAD (parpadeo con duración exacta)
-# =====================
 func take_damage() -> void:
-	# si ya está muerto o invulnerable, ignorar
 	if is_dead or is_invulnerable:
 		return
 
@@ -169,25 +162,21 @@ func take_damage() -> void:
 	start_invulnerability()
 
 func start_invulnerability() -> void:
-	# duración exacta (en ms)
-	var end_ms := Time.get_ticks_msec() + int(invuln_time * 1000.0)
-	var blink_timer := get_tree().create_timer(blink_interval, true)
-
-	while Time.get_ticks_msec() < end_ms and is_instance_valid(anim_sprite) and is_invulnerable:
+	is_invulnerable = true
+	var elapsed := 0.0
+	while elapsed < invuln_time and is_instance_valid(anim_sprite) and is_invulnerable:
 		anim_sprite.visible = not anim_sprite.visible
-		await blink_timer.timeout
-
+		await get_tree().create_timer(blink_interval).timeout
+		elapsed += blink_interval
+		
 	# finalizar invulnerabilidad
 	if is_instance_valid(anim_sprite):
 		anim_sprite.visible = true
 	is_invulnerable = false
-	# si no murió, volver a idle si sigue en "hurt"
+
 	if not is_dead and anim_sprite.animation == "hurt":
 		anim_sprite.play("idle")
 
-# =====================
-# RESET / API para GameManager
-# =====================
 func reset_for_round() -> void:
 	# llamado por GameManager al comenzar la ronda (asegura limpieza de flags)
 	lives = 3
