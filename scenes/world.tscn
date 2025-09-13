@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=15 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
@@ -6,7 +6,24 @@
 [ext_resource type="PackedScene" uid="uid://cktvsan1pxk0e" path="res://scenes/player_2.tscn" id="2_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://dgt1eq4u57als" path="res://maps/mapas faciles/map2.tscn" id="3_qfnet"]
 [ext_resource type="PackedScene" uid="uid://bfx2te4m6d68r" path="res://maps/mapas faciles/map3.tscn" id="4_i7141"]
-[ext_resource type="Script" uid="uid://ccjtq0iws17x4" path="res://scripts/UI.gd" id="4_qfnet"]
+[ext_resource type="Script" uid="uid://ccjtq0iws17x4" path="res://scripts/HUD.gd" id="4_qfnet"]
+[ext_resource type="Texture2D" uid="uid://vwsd43ktfayl" path="res://assets/HUD/hud iconos vida.png" id="8_4mrxx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4mrxx"]
+atlas = ExtResource("8_4mrxx")
+region = Rect2(0, 0, 22, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7kh3"]
+atlas = ExtResource("8_4mrxx")
+region = Rect2(0, 24, 11, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3hyu"]
+atlas = ExtResource("8_4mrxx")
+region = Rect2(0, 24, 11, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7r4gi"]
+atlas = ExtResource("8_4mrxx")
+region = Rect2(24, 0, 22, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nnsk1"]
 size = Vector2(329.75, 5.96272)
@@ -37,30 +54,107 @@ position = Vector2(16, 89)
 position = Vector2(299, 90)
 rotation = -1.5708
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("4_qfnet")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Player1_HUD" type="VBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Icon_Player1" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Player1_HUD"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_4mrxx")
+stretch_mode = 2
+
+[node name="Vidas_P1" type="HBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Vida1_P1" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Vidas_P1"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_w7kh3")
+
+[node name="Vida2_P1" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Vidas_P1"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_w7kh3")
+stretch_mode = 1
+
+[node name="Vida3_P1" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Vidas_P1"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_w7kh3")
+
+[node name="Vidas_P2" type="HBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Vida1_P2" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Vidas_P2"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_e3hyu")
+stretch_mode = 2
+
+[node name="Vida2_P2" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Vidas_P2"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_e3hyu")
+stretch_mode = 2
+
+[node name="Vida3_P2" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Vidas_P2"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_e3hyu")
+stretch_mode = 4
+
+[node name="Player2_HUD" type="VBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+
+[node name="Icon_Player2" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Player2_HUD"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = SubResource("AtlasTexture_7r4gi")
+stretch_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD"]
+visible = false
 offset_left = 123.0
 offset_top = -2.0
 offset_right = 334.0
 offset_bottom = 38.0
 scale = Vector2(0.469963, 1)
 
-[node name="RoundsLabelP1" type="Label" parent="UI/HBoxContainer"]
+[node name="RoundsLabelP1" type="Label" parent="HUD/HBoxContainer"]
+visible = false
 layout_mode = 2
 
-[node name="RoundsLabelP2" type="Label" parent="UI/HBoxContainer"]
+[node name="RoundsLabelP2" type="Label" parent="HUD/HBoxContainer"]
+visible = false
 layout_mode = 2
 
-[node name="Player1Lives" type="Label" parent="UI"]
+[node name="Player1Lives" type="Label" parent="HUD"]
+visible = false
 offset_left = 23.0
 offset_top = 8.0
 offset_right = 74.0
 offset_bottom = 31.0
 language = "es_AR"
 
-[node name="Player2Lives" type="Label" parent="UI"]
+[node name="Player2Lives" type="Label" parent="HUD"]
+visible = false
 offset_left = 237.0
 offset_top = 9.0
 offset_right = 292.0

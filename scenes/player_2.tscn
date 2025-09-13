@@ -142,7 +142,7 @@ script = ExtResource("1_s551d")
 position = Vector2(-1.99999, -2.00001)
 rotation = -1.57079
 sprite_frames = SubResource("SpriteFrames_ne6jw")
-animation = &"idle"
+animation = &"shooting"
 
 [node name="ShootingPointP2" type="Marker2D" parent="."]
 position = Vector2(-12, -5)
