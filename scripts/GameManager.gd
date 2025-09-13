@@ -22,20 +22,16 @@ func _ready() -> void:
 	get_tree().call_group("ui", "update_rounds",rounds_p1, rounds_p2)
 	start_round()
 
-func player_died(player_id: int) -> void:
-	var winner_id = 0
-	
-	if player_id == 1:
-		rounds_p2 += 1
-		winner_id = 2
-	elif player_id == 2:
+func player_died(winner_id: int) -> void:
+	if winner_id == 1:
 		rounds_p1 += 1
-		winner_id = 1
+	elif winner_id == 2:
+		rounds_p2 += 1
 
 	# Avisar al HUD que muestre el contador de rondas
 	get_tree().call_group("rounds_ui", "show_results", winner_id)
 
-	# (esto ya lo tenías para actualizar labels viejos, si aún los usás)
+	# (si todavía usás las labels viejas de UI)
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
 
 	if check_match_winner():
@@ -67,6 +63,7 @@ func end_match() -> void:
 	rounds_p1 = 0
 	rounds_p2 = 0
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
+	get_tree().call_group("rounds_ui", "reset_rounds")
 	start_round()
 
 func load_map(round_number: int) -> void:
@@ -151,4 +148,3 @@ func _safe_set_can_move(player: Node,enable: bool) -> void:
 func _safe_set_can_shoot(player: Node, enable: bool) -> void:
 	if player and player.has_method("set_can_shoot"):
 		player.set_can_shoot(enable)
- 

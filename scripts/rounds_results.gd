@@ -8,11 +8,8 @@ var rounds_p2 := 0
 const MAX_ROUNDS := 5
 
 func _ready() -> void:
-	# Aseguramos que arranquen invisibles
-	for slot in p1_slots:
-		slot.visible = false
-	for slot in p2_slots:
-		slot.visible = false
+	reset_rounds()
+	visible = false # Arranca oculto
 
 func add_round_point(player_id: int) -> void:
 	if player_id == 1 and rounds_p1 < MAX_ROUNDS:
@@ -22,8 +19,18 @@ func add_round_point(player_id: int) -> void:
 		p2_slots[rounds_p2].visible = true
 		rounds_p2 += 1
 
-	# Chequeo si alguien ganó la partida
-	if rounds_p1 == MAX_ROUNDS:
-		print("Jugador 1 ganó la partida")
-	elif rounds_p2 == MAX_ROUNDS:
-		print("Jugador 2 ganó la partida")
+func show_results(winner_id: int) -> void:
+	add_round_point(winner_id)
+
+	visible = true
+	await get_tree().create_timer(2.0).timeout
+	visible = false
+
+func reset_rounds() -> void:
+	rounds_p1 = 0
+	rounds_p2 = 0
+	for slot in p1_slots:
+		slot.visible = false
+	for slot in p2_slots:
+		slot.visible = false
+	visible = false
