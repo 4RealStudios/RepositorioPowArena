@@ -83,21 +83,22 @@ stretch_mode = 2
 
 [node name="Vidas_P1" type="HBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
 size_flags_vertical = 0
 
 [node name="Vida1_P1" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Vidas_P1"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_w7kh3")
+stretch_mode = 2
 
 [node name="Vida2_P1" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Vidas_P1"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_w7kh3")
-stretch_mode = 1
+stretch_mode = 2
 
 [node name="Vida3_P1" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Vidas_P1"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_w7kh3")
+stretch_mode = 2
 
 [node name="Vidas_P2" type="HBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -118,12 +119,12 @@ layout_mode = 2
 texture = SubResource("AtlasTexture_e3hyu")
 stretch_mode = 4
 
-[node name="Player2_HUD" type="VBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
+[node name="Player2_HUD" type="VBoxContainer" parent="HUD/MarginContainer/HBoxContainer/Vidas_P2"]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 0
 
-[node name="Icon_Player2" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Player2_HUD"]
+[node name="Icon_Player2" type="TextureRect" parent="HUD/MarginContainer/HBoxContainer/Vidas_P2/Player2_HUD"]
 layout_mode = 2
 size_flags_horizontal = 8
 texture = SubResource("AtlasTexture_7r4gi")
