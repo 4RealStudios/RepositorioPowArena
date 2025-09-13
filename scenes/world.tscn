@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=17 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dgt1eq4u57als" path="res://maps/mapas faciles/map2.tscn" id="3_qfnet"]
 [ext_resource type="PackedScene" uid="uid://bfx2te4m6d68r" path="res://maps/mapas faciles/map3.tscn" id="4_i7141"]
 [ext_resource type="Script" uid="uid://ccjtq0iws17x4" path="res://scripts/HUD.gd" id="4_qfnet"]
+[ext_resource type="PackedScene" uid="uid://c8g30ggrsi6j7" path="res://maps/mapas medios/map4.tscn" id="5_w7kh3"]
+[ext_resource type="PackedScene" uid="uid://oqj8f7sai6ex" path="res://maps/mapas dificiles/map7.tscn" id="6_e3hyu"]
 [ext_resource type="Texture2D" uid="uid://vwsd43ktfayl" path="res://assets/HUD/hud iconos vida.png" id="8_4mrxx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4mrxx"]
@@ -35,9 +37,9 @@ size = Vector2(4.71893, 180)
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_71j4m")
-easy_maps = Array[PackedScene]([ExtResource("2_71j4m")])
-midium_maps = Array[PackedScene]([ExtResource("3_qfnet")])
-hard_maps = Array[PackedScene]([ExtResource("4_i7141")])
+easy_maps = Array[PackedScene]([ExtResource("2_71j4m"), ExtResource("3_qfnet"), ExtResource("4_i7141")])
+midium_maps = Array[PackedScene]([ExtResource("5_w7kh3"), ExtResource("5_w7kh3"), ExtResource("5_w7kh3")])
+hard_maps = Array[PackedScene]([ExtResource("6_e3hyu"), ExtResource("6_e3hyu"), ExtResource("6_e3hyu")])
 
 [node name="CountdownTimer" type="Timer" parent="GameManager"]
 
@@ -131,7 +133,6 @@ texture = SubResource("AtlasTexture_7r4gi")
 stretch_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD"]
-visible = false
 offset_left = 123.0
 offset_top = -2.0
 offset_right = 334.0
@@ -139,11 +140,9 @@ offset_bottom = 38.0
 scale = Vector2(0.469963, 1)
 
 [node name="RoundsLabelP1" type="Label" parent="HUD/HBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="RoundsLabelP2" type="Label" parent="HUD/HBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Player1Lives" type="Label" parent="HUD"]
