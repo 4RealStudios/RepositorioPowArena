@@ -1,0 +1,111 @@
+[gd_scene load_steps=16 format=3 uid="uid://pm6kjgdwltle"]
+
+[ext_resource type="Texture2D" uid="uid://c6bjw7sfccbs" path="res://assets/TileMaps/bloqelec.png" id="1_ahvrn"]
+[ext_resource type="Script" uid="uid://b1qr1k5t3muer" path="res://scripts/hazard_wall.gd" id="1_t63qn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t63qn"]
+size = Vector2(4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ahvrn"]
+atlas = ExtResource("1_ahvrn")
+region = Rect2(15, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t63qn"]
+atlas = ExtResource("1_ahvrn")
+region = Rect2(40, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30bt1"]
+atlas = ExtResource("1_ahvrn")
+region = Rect2(65, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4enca"]
+atlas = ExtResource("1_ahvrn")
+region = Rect2(90, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_um8k0"]
+atlas = ExtResource("1_ahvrn")
+region = Rect2(115, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ie4n0"]
+atlas = ExtResource("1_ahvrn")
+region = Rect2(5, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hs7bu"]
+atlas = ExtResource("1_ahvrn")
+region = Rect2(30, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dh63q"]
+atlas = ExtResource("1_ahvrn")
+region = Rect2(55, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_41gdd"]
+atlas = ExtResource("1_ahvrn")
+region = Rect2(80, 0, 5, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gonn0"]
+atlas = ExtResource("1_ahvrn")
+region = Rect2(105, 0, 5, 5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4enca"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahvrn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t63qn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30bt1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4enca")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um8k0")
+}],
+"loop": true,
+"name": &"Corner",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ie4n0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hs7bu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dh63q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_41gdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gonn0")
+}],
+"loop": true,
+"name": &"Wall",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ahvrn"]
+size = Vector2(5, 5)
+
+[node name="HazardWall" type="StaticBody2D"]
+script = ExtResource("1_t63qn")
+
+[node name="Limite de la pared" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_t63qn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4enca")
+animation = &"Wall"
+frame_progress = 0.0614106
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_ahvrn")

@@ -40,9 +40,9 @@ func player_died(winner_id: int) -> void:
 		start_round()
 
 func check_match_winner() -> bool:
-	if rounds_p1 >= max_rounds_to_win and (rounds_p1 - rounds_p2) >= 2:
+	if rounds_p1 == max_rounds_to_win:
 		return true
-	if rounds_p2 >= max_rounds_to_win and (rounds_p2 - rounds_p1) >= 2:
+	if rounds_p2 == max_rounds_to_win:
 		return true
 	return false
 
@@ -52,11 +52,9 @@ func end_match() -> void:
 	
 	countdown_label.visible = true
 	if rounds_p1 > rounds_p2:
-		countdown_label.text = "Jugador 1 Gana!"
-	elif rounds_p2 > rounds_p1:
 		countdown_label.text = "Jugador 2 Gana!"
-	else:
-		countdown_label.text = "Empate!"
+	elif rounds_p2 > rounds_p1:
+		countdown_label.text = "Jugador 1 Gana!"
 	
 	await  get_tree().create_timer(2.0).timeout
 	
