@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnfw04r4o8naj"
-path="res://.godot/imported/Yu narukami.jpeg-8922e191243d4a0951004ddffd6f3cf4.ctex"
+uid="uid://cpn403yc5v6yf"
+path="res://.godot/imported/controles.png-9d637921c8844151add470041c596ac8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/HUD/Yu narukami.jpeg"
-dest_files=["res://.godot/imported/Yu narukami.jpeg-8922e191243d4a0951004ddffd6f3cf4.ctex"]
+source_file="res://assets/HUD/controles.png"
+dest_files=["res://.godot/imported/controles.png-9d637921c8844151add470041c596ac8.ctex"]
 
 [params]
 

@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://b4h06tr3av61k" path="res://maps/mapas medios/map6.tscn" id="7_o8fc1"]
 [ext_resource type="Texture2D" uid="uid://vwsd43ktfayl" path="res://assets/HUD/hud iconos vida.png" id="8_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://6uhodm3vtat3" path="res://maps/mapas dificiles/map8.tscn" id="9_dss4m"]
-[ext_resource type="Texture2D" uid="uid://dnfw04r4o8naj" path="res://assets/HUD/Yu narukami.jpeg" id="10_dss4m"]
+[ext_resource type="Texture2D" uid="uid://cpn403yc5v6yf" path="res://assets/HUD/controles.png" id="10_dss4m"]
 [ext_resource type="Texture2D" uid="uid://ctt7k3i2xji5r" path="res://assets/HUD/tablero rondas 5r.png" id="11_e3hyu"]
 [ext_resource type="Script" uid="uid://cefemdlqm16qn" path="res://scripts/rounds_results.gd" id="11_q5onr"]
 
