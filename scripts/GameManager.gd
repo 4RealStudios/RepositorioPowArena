@@ -9,6 +9,10 @@ var current_map: Node = null
 @onready var player1 = $player1
 @onready var player2 = $player2
 @onready var countdown_label = $CountdownLabel
+@onready var control_screen = $ControlScreen
+@onready var control_timer = $ControlScreen/Timer
+@onready var hud = $HUD
+@onready var players = [player1, player2]
 
 var is_counting_down := false
 var rounds_p1: int = 0
@@ -20,6 +24,13 @@ func _ready() -> void:
 	randomize()
 	add_to_group("game")
 	get_tree().call_group("ui", "update_rounds",rounds_p1, rounds_p2)
+	
+	control_screen.visible = true
+	hud.visible = false
+	for player in players:
+		player.visible = false
+	control_timer.start()
+	
 	start_round()
 
 func player_died(winner_id: int) -> void:
@@ -133,6 +144,10 @@ func start_round():
 	await get_tree().process_frame
 	reset_round()
 	
+	hud.visible = true
+	for player in players:
+		player.visible = true
+	
 	_safe_set_can_move(player1, true)
 	_safe_set_can_move(player2, true)
 	_safe_set_can_shoot(player1, true)
@@ -146,3 +161,7 @@ func _safe_set_can_move(player: Node,enable: bool) -> void:
 func _safe_set_can_shoot(player: Node, enable: bool) -> void:
 	if player and player.has_method("set_can_shoot"):
 		player.set_can_shoot(enable)
+
+func _on_timer_timeout() -> void:
+	control_screen.visible = false
+	start_round()
