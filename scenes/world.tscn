@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=29 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://b4h06tr3av61k" path="res://maps/mapas medios/map6.tscn" id="7_o8fc1"]
 [ext_resource type="Texture2D" uid="uid://vwsd43ktfayl" path="res://assets/HUD/hud iconos vida.png" id="8_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://6uhodm3vtat3" path="res://maps/mapas dificiles/map8.tscn" id="9_dss4m"]
+[ext_resource type="PackedScene" uid="uid://bqybbvhaekt0c" path="res://maps/mapas dificiles/map9.tscn" id="10_7t5mc"]
 [ext_resource type="Texture2D" uid="uid://cpn403yc5v6yf" path="res://assets/HUD/controles.png" id="10_dss4m"]
 [ext_resource type="Texture2D" uid="uid://ctt7k3i2xji5r" path="res://assets/HUD/tablero rondas 5r.png" id="11_e3hyu"]
 [ext_resource type="Script" uid="uid://cefemdlqm16qn" path="res://scripts/rounds_results.gd" id="11_q5onr"]
@@ -64,7 +65,7 @@ size = Vector2(4.71893, 180)
 script = ExtResource("1_71j4m")
 easy_maps = Array[PackedScene]([ExtResource("2_71j4m"), ExtResource("3_qfnet"), ExtResource("4_i7141")])
 midium_maps = Array[PackedScene]([ExtResource("5_w7kh3"), ExtResource("6_jhx03"), ExtResource("7_o8fc1")])
-hard_maps = Array[PackedScene]([ExtResource("6_e3hyu"), ExtResource("9_dss4m"), null])
+hard_maps = Array[PackedScene]([ExtResource("6_e3hyu"), ExtResource("9_dss4m"), ExtResource("10_7t5mc")])
 
 [node name="ControlScreen" type="Control" parent="GameManager"]
 layout_mode = 3

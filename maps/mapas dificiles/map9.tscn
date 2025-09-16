@@ -79,22 +79,22 @@ size = Vector2(4.16797, 184.5)
 size = Vector2(324, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sq6w5"]
-size = Vector2(20, 15)
+size = Vector2(15, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b5sd0"]
-size = Vector2(15, 20)
+size = Vector2(15, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0p181"]
-size = Vector2(20, 40)
+size = Vector2(20, 35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gn7wh"]
-size = Vector2(40, 20)
+size = Vector2(35, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bhw4d"]
 size = Vector2(320.5, 5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sai7y"]
-size = Vector2(5, 320)
+size = Vector2(5.00101, 320)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r3hmd"]
 size = Vector2(5, 165)
@@ -161,13 +161,13 @@ script = ExtResource("4_gn7wh")
 [node name="Area2D" type="Area2D" parent="DangerWalls/Wall1"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DangerWalls/Wall1/Area2D"]
-position = Vector2(10, 87.5)
+position = Vector2(12.5, 87.5)
 shape = SubResource("RectangleShape2D_sq6w5")
 
 [node name="Area2D2" type="Area2D" parent="DangerWalls/Wall1"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DangerWalls/Wall1/Area2D2"]
-position = Vector2(310, 87.5)
+position = Vector2(307.5, 87.5)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_b5sd0")
 
@@ -176,13 +176,13 @@ shape = SubResource("RectangleShape2D_b5sd0")
 [node name="Area2D" type="Area2D" parent="DangerWalls/Wall2"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DangerWalls/Wall2/Area2D"]
-position = Vector2(160, 20)
+position = Vector2(160, 22.5)
 shape = SubResource("RectangleShape2D_0p181")
 
 [node name="Area2D2" type="Area2D" parent="DangerWalls/Wall2"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DangerWalls/Wall2/Area2D2"]
-position = Vector2(160, 155)
+position = Vector2(160, 152.5)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_gn7wh")
 
