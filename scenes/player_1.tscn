@@ -1,128 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://bhkidw16jmgu8"]
+[gd_scene load_steps=4 format=3 uid="uid://bhkidw16jmgu8"]
 
 [ext_resource type="Script" uid="uid://1pmmyw8djety" path="res://scripts/player_1.gd" id="1_gneq0"]
-[ext_resource type="Texture2D" uid="uid://c2qfy1jrh10mb" path="res://assets/players/AnimacionesP1.png" id="2_vod78"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wqd30"]
-atlas = ExtResource("2_vod78")
-region = Rect2(192, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f2c3w"]
-atlas = ExtResource("2_vod78")
-region = Rect2(216, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jkihx"]
-atlas = ExtResource("2_vod78")
-region = Rect2(240, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qgfdq"]
-atlas = ExtResource("2_vod78")
-region = Rect2(264, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cyakk"]
-atlas = ExtResource("2_vod78")
-region = Rect2(0, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7m5b5"]
-atlas = ExtResource("2_vod78")
-region = Rect2(24, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xfu11"]
-atlas = ExtResource("2_vod78")
-region = Rect2(48, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f7tsm"]
-atlas = ExtResource("2_vod78")
-region = Rect2(288, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_61r2x"]
-atlas = ExtResource("2_vod78")
-region = Rect2(312, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8o4l0"]
-atlas = ExtResource("2_vod78")
-region = Rect2(336, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ngimn"]
-atlas = ExtResource("2_vod78")
-region = Rect2(96, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3wjnj"]
-atlas = ExtResource("2_vod78")
-region = Rect2(120, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3x8tk"]
-atlas = ExtResource("2_vod78")
-region = Rect2(144, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h7q5r"]
-atlas = ExtResource("2_vod78")
-region = Rect2(168, 0, 24, 24)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_7m5b5"]
-animations = [{
-"frames": [{
-"duration": 1.3,
-"texture": SubResource("AtlasTexture_wqd30")
-}, {
-"duration": 1.3,
-"texture": SubResource("AtlasTexture_f2c3w")
-}, {
-"duration": 1.3,
-"texture": SubResource("AtlasTexture_jkihx")
-}, {
-"duration": 1.3,
-"texture": SubResource("AtlasTexture_qgfdq")
-}],
-"loop": false,
-"name": &"hurt",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cyakk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7m5b5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xfu11")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 0.7,
-"texture": SubResource("AtlasTexture_f7tsm")
-}, {
-"duration": 0.7,
-"texture": SubResource("AtlasTexture_61r2x")
-}, {
-"duration": 0.7,
-"texture": SubResource("AtlasTexture_8o4l0")
-}],
-"loop": false,
-"name": &"shooting",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ngimn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3wjnj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3x8tk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h7q5r")
-}],
-"loop": true,
-"name": &"walk",
-"speed": 5.0
-}]
+[ext_resource type="SpriteFrames" uid="uid://bdjjv8ldbbxah" path="res://assets/players/skins/robot.tres" id="2_gneq0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gneq0"]
 radius = 9.0
@@ -132,10 +11,10 @@ rotation = 1.57079
 script = ExtResource("1_gneq0")
 
 [node name="AnimatedSprite2DP1" type="AnimatedSprite2D" parent="."]
-position = Vector2(-1.99999, -2.00001)
+position = Vector2(-6.19888e-06, 1)
 rotation = -1.57079
-sprite_frames = SubResource("SpriteFrames_7m5b5")
-animation = &"hurt"
+sprite_frames = ExtResource("2_gneq0")
+animation = &"dash"
 
 [node name="ShootingPointP1" type="Marker2D" parent="."]
 position = Vector2(-12, -5.00008)
