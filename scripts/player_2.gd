@@ -3,8 +3,8 @@ extends CharacterBody2D
 @export var speed: float = 85.0
 @export var DISPARO: PackedScene = preload("res://scenes/disparo.tscn")
 @export var player_id: int = 2
-@export var dash_speed: float = 300.0
-@export var dash_duration: float = 0.1
+@export var dash_speed: float = 250.0
+@export var dash_duration: float = 0.3
 @export var dash_cooldown: float = 1.5
 @export var shoot_cooldown := 0.5
 
@@ -63,9 +63,16 @@ func _physics_process(delta: float) -> void:
 	if is_dashing:
 		velocity = input_vector * dash_speed
 		dash_timer -= delta
+		if input_vector != Vector2.ZERO:
+			aim_dir = input_vector
+			anim_sprite.rotation = aim_dir.angle() - PI/1
+		if anim_sprite.animation != "dash":
+			anim_sprite.play("dash")
 		if dash_timer <= 0.0:
 			is_dashing = false
 			dash_cooldown_timer = dash_cooldown
+		move_and_slide()
+		return
 	else:
 		if blocking:
 			velocity = Vector2.ZERO
@@ -127,6 +134,12 @@ func _on_animated_sprite_2dp_2_animation_finished() -> void:
 
 func _update_animation() -> void:
 	if is_dead:
+		if anim_sprite.animation != "die":
+			anim_sprite.play("die")
+		return
+	if is_dashing:
+		if anim_sprite.animation != "dash":
+			anim_sprite.play("dash")
 		return
 	if is_shooting:
 		if anim_sprite.animation != "shooting":
