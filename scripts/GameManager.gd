@@ -1,10 +1,13 @@
 extends Node2D
 
+
+@export var PowerUpScene: PackedScene
 @export var easy_maps: Array[PackedScene]
 @export var midium_maps: Array[PackedScene]
 @export var hard_maps: Array[PackedScene]
 
 var current_map: Node = null
+const PowerUp = preload("res://scripts/power_up.gd")
 
 @onready var player1 = $player1
 @onready var player2 = $player2
@@ -13,6 +16,7 @@ var current_map: Node = null
 @onready var control_timer = $ControlScreen/Timer
 @onready var hud = $HUD
 @onready var players = [player1, player2]
+@onready var powerup_timer: Timer = Timer.new()
 
 var is_counting_down := false
 var rounds_p1: int = 0
@@ -30,6 +34,12 @@ func _ready() -> void:
 	for player in players:
 		player.visible = false
 	control_timer.start()
+	
+	powerup_timer.wait_time = 8.0
+	powerup_timer.one_shot = false
+	powerup_timer.autostart = true
+	add_child(powerup_timer)
+	powerup_timer.timeout.connect(spawn_powerup)
 	
 	start_round()
 
@@ -153,6 +163,41 @@ func start_round():
 	_safe_set_can_shoot(player1, true)
 	_safe_set_can_shoot(player2, true)
 	is_counting_down = false
+
+func spawn_powerup():
+	var p = PowerUpScene.instantiate()
+	p.type = randi() % PowerUp.PowerUpType.size()
+	p.connect("picked_up", Callable(self, "_on_powerup_picked"))
+	add_child(p)
+	p.global_position = get_random_spawn_position()
+
+func _on_powerup_picked(player, type):
+	match type:
+		PowerUp.PowerUpType.BOUNCE:
+			player.extra_bounces += 2
+
+func get_random_spawn_position() -> Vector2:
+	var spawn_area = Rect2(Vector2(16, 16), Vector2(320 - 32, 180))
+	var pos: Vector2
+	var tries := 0
+	while tries < 50:  # límite de intentos
+		pos = Vector2(
+			randf_range(spawn_area.position.x, spawn_area.end.x),
+			randf_range(spawn_area.position.y, spawn_area.end.y)
+		)
+		if not is_in_wall(pos):
+			return pos
+		tries += 1
+	return spawn_area.get_center()
+
+func is_in_wall(pos: Vector2) -> bool:
+	var space = get_world_2d().direct_space_state
+	var params = PhysicsPointQueryParameters2D.new()
+	params.position = pos
+	params.collide_with_areas = true
+	params.collide_with_bodies = true
+	var result = space.intersect_point(params, 1)
+	return result.size() > 0
 
 func _safe_set_can_move(player: Node,enable: bool) -> void:
 	if player and player.has_method("set_can_move"):

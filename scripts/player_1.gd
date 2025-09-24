@@ -18,6 +18,7 @@ extends CharacterBody2D
 
 # --- Estado ---
 var can_shoot: bool = true
+var extra_bounces: int = 0
 var can_move: bool = true
 var lives: int = 3
 var is_invulnerable: bool = false
@@ -115,12 +116,17 @@ func shoot() -> void:
 	if now - last_shoot_time < shoot_cooldown:
 		return
 	last_shoot_time = now
+	
 	var disparo = DISPARO.instantiate()
 	var dir := aim_dir.normalized()
 	var rotated_offset := shoot_local_offset.rotated(dir.angle() - PI)
+	
 	disparo.global_position = global_position + rotated_offset
 	disparo.direction = dir
 	disparo.rotation = dir.angle()
+	
+	disparo.max_bounces += extra_bounces
+	
 	get_tree().current_scene.add_child(disparo)
 	is_shooting = true
 	anim_sprite.play("shooting")

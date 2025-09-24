@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export_flags_2d_physics var hit_mask: int = 1    
 var direction: Vector2 = Vector2.ZERO
 
-const MAX_BOUNCES := 3
+var max_bounces := 1
 var bounces := 0
 
 func _physics_process(delta: float) -> void:
@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 				collider.take_damage()
 			queue_free()
 			return
-		if bounces < MAX_BOUNCES:
+		if bounces < max_bounces:
 			direction = direction.bounce(hit.normal).normalized()
 			bounces += 1
 			global_position += direction * 0.5

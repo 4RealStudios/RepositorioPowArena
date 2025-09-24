@@ -1,9 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=29 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
 [ext_resource type="PackedScene" uid="uid://sy2lna8eygog" path="res://maps/mapas faciles/map1.tscn" id="2_71j4m"]
-[ext_resource type="PackedScene" uid="uid://be63ponjlchls" path="res://scenes/PowerUp.tscn" id="2_lakw3"]
 [ext_resource type="PackedScene" uid="uid://cktvsan1pxk0e" path="res://scenes/player_2.tscn" id="2_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://dgt1eq4u57als" path="res://maps/mapas faciles/map2.tscn" id="3_qfnet"]
 [ext_resource type="PackedScene" uid="uid://bfx2te4m6d68r" path="res://maps/mapas faciles/map3.tscn" id="4_i7141"]
@@ -64,7 +63,6 @@ size = Vector2(4.71893, 180)
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_71j4m")
-PowerUpScene = ExtResource("2_lakw3")
 easy_maps = Array[PackedScene]([ExtResource("2_71j4m"), ExtResource("3_qfnet"), ExtResource("4_i7141")])
 midium_maps = Array[PackedScene]([ExtResource("5_w7kh3"), ExtResource("6_jhx03"), ExtResource("7_o8fc1")])
 hard_maps = Array[PackedScene]([ExtResource("6_e3hyu"), ExtResource("9_dss4m"), ExtResource("10_7t5mc")])

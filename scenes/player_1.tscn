@@ -14,7 +14,9 @@ script = ExtResource("1_gneq0")
 position = Vector2(-6.19888e-06, 1)
 rotation = -1.57079
 sprite_frames = ExtResource("2_gneq0")
-animation = &"dash"
+animation = &"hurt"
+frame = 3
+frame_progress = 1.0
 
 [node name="ShootingPointP1" type="Marker2D" parent="."]
 position = Vector2(-12, -5.00008)
