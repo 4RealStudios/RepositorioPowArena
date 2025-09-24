@@ -110,6 +110,9 @@ func reset_round():
 	player1.lives = 3
 	player2.lives = 3
 	
+	for PowerUp in get_tree().get_nodes_in_group("powerups"):
+		PowerUp.queue_free()
+	
 	if player1.has_method("reset_for_round"):
 		player1.reset_for_round()
 	if player2.has_method("reset_for_round"):

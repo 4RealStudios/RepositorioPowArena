@@ -210,6 +210,7 @@ func reset_for_round() -> void:
 	velocity = Vector2.ZERO
 	anim_sprite.visible = true
 	anim_sprite.play("idle")
+	extra_bounces = 0
 
 func set_can_move(enable: bool) -> void:
 	can_move = enable
