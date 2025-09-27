@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=33 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://cpn403yc5v6yf" path="res://assets/HUD/controles.png" id="10_dss4m"]
 [ext_resource type="Texture2D" uid="uid://ctt7k3i2xji5r" path="res://assets/HUD/tablero rondas 5r.png" id="11_e3hyu"]
 [ext_resource type="Script" uid="uid://cefemdlqm16qn" path="res://scripts/rounds_results.gd" id="11_q5onr"]
+[ext_resource type="Script" uid="uid://dnt1lw7cngye7" path="res://scripts/fade_area.gd" id="17_pm21f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4mrxx"]
 atlas = ExtResource("8_4mrxx")
@@ -34,6 +35,12 @@ region = Rect2(0, 24, 11, 11)
 [sub_resource type="AtlasTexture" id="AtlasTexture_7r4gi"]
 atlas = ExtResource("8_4mrxx")
 region = Rect2(24, 0, 22, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2lf6f"]
+size = Vector2(92, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pm21f"]
+size = Vector2(92, 34)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q5onr"]
 atlas = ExtResource("11_e3hyu")
@@ -189,6 +196,22 @@ layout_mode = 2
 size_flags_horizontal = 8
 texture = SubResource("AtlasTexture_7r4gi")
 stretch_mode = 2
+
+[node name="FadeArea" type="Area2D" parent="GameManager/HUD/MarginContainer/HBoxContainer" node_paths=PackedStringArray("hud_root")]
+script = ExtResource("17_pm21f")
+hud_root = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameManager/HUD/MarginContainer/HBoxContainer/FadeArea"]
+position = Vector2(36, 6)
+shape = SubResource("RectangleShape2D_2lf6f")
+
+[node name="FadeArea2" type="Area2D" parent="GameManager/HUD/MarginContainer/HBoxContainer" node_paths=PackedStringArray("hud_root")]
+script = ExtResource("17_pm21f")
+hud_root = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameManager/HUD/MarginContainer/HBoxContainer/FadeArea2"]
+position = Vector2(274, 6)
+shape = SubResource("RectangleShape2D_pm21f")
 
 [node name="RoundsResults" type="Control" parent="GameManager/HUD" groups=["rounds_ui"]]
 layout_mode = 3

@@ -177,7 +177,7 @@ func spawn_powerup():
 func _on_powerup_picked(player, type):
 	match type:
 		PowerUp.PowerUpType.BOUNCE:
-			player.extra_bounces += 2
+			player.extra_bounces = 2
 
 func get_random_spawn_position() -> Vector2:
 	var spawn_area = Rect2(Vector2(16, 16), Vector2(320 - 32, 180))
