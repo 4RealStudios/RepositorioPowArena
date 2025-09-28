@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3nsfibnuwytw"
-path="res://.godot/imported/AnimRobot.png-43719ecdcc0179fd4adbf4be82c5a81e.ctex"
+uid="uid://c6l7et2yoirge"
+path="res://.godot/imported/AnimPanda.png-e0c2ed0cf76992813342f8c52c77e603.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/players/AnimRobot.png"
-dest_files=["res://.godot/imported/AnimRobot.png-43719ecdcc0179fd4adbf4be82c5a81e.ctex"]
+source_file="res://assets/players/AnimPanda.png"
+dest_files=["res://.godot/imported/AnimPanda.png-e0c2ed0cf76992813342f8c52c77e603.ctex"]
 
 [params]
 

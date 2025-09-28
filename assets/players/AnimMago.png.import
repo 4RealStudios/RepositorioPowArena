@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qelykb8majk7"
-path="res://.godot/imported/AnimRobot-ALT.png-2db6643ca952e7c5ab17b2bef9713f64.ctex"
+uid="uid://c156pbtbadvnm"
+path="res://.godot/imported/AnimMago.png-868fab9ae9f7edc7a6b1d3ad7817d371.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/players/AnimRobot-ALT.png"
-dest_files=["res://.godot/imported/AnimRobot-ALT.png-2db6643ca952e7c5ab17b2bef9713f64.ctex"]
+source_file="res://assets/players/AnimMago.png"
+dest_files=["res://.godot/imported/AnimMago.png-868fab9ae9f7edc7a6b1d3ad7817d371.ctex"]
 
 [params]
 

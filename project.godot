@@ -27,6 +27,12 @@ window/stretch/scale_mode="integer"
 
 project/assembly_name="Pow!Arena"
 
+[file_customization]
+
+folder_colors={
+"res://assets/players/skins/": "blue"
+}
+
 [input]
 
 p1_up={

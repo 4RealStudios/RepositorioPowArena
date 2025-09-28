@@ -18,6 +18,7 @@ extends CharacterBody2D
 
 # --- Estado ---
 var can_shoot: bool = true
+var extra_bounces: int = 0
 var can_move: bool = true
 var lives: int = 3
 var is_invulnerable: bool = false
@@ -95,8 +96,6 @@ func _physics_process(delta: float) -> void:
 	if not is_dead:
 		if anim_sprite.animation == "hurt":
 			pass
-		#if is_shooting:
-			#return
 		else:
 			if velocity.length() > 0.0:
 				if anim_sprite.animation != "walk":
@@ -121,6 +120,7 @@ func shoot() -> void:
 	disparo.global_position = global_position + rotated_offset
 	disparo.direction = dir
 	disparo.rotation = dir.angle()
+	disparo.max_bounces += extra_bounces
 	get_tree().current_scene.add_child(disparo)
 	is_shooting = true
 	anim_sprite.play("shooting")
@@ -156,6 +156,7 @@ func _update_animation() -> void:
 func start_dash() -> void:
 	is_dashing = true
 	dash_timer = dash_duration
+	anim_sprite.play("dash")
 
 func take_damage() -> void:
 	if is_dead or is_invulnerable:
@@ -166,8 +167,8 @@ func take_damage() -> void:
 
 	if lives <= 0:
 		is_dead = true
-		anim_sprite.play("hurt")
 		can_move = false
+		anim_sprite.play("die")
 		get_tree().call_group("game", "player_died", player_id)
 		return
 
@@ -203,6 +204,7 @@ func reset_for_round() -> void:
 	velocity = Vector2.ZERO
 	anim_sprite.visible = true
 	anim_sprite.play("idle")
+	extra_bounces = 0
 
 func set_can_move(enable: bool) -> void:
 	can_move = enable
