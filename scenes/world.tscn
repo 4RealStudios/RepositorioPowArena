@@ -369,7 +369,7 @@ position = Vector2(-849.594, 86)
 shape = SubResource("RectangleShape2D_rwgxs")
 
 [node name="Camera2D" type="Camera2D" parent="." groups=["camara"]]
-position = Vector2(163, 86)
+position = Vector2(160, 90)
 script = ExtResource("20_2lf6f")
 
 [connection signal="timeout" from="GameManager/ControlScreen/Timer" to="GameManager" method="_on_timer_timeout"]

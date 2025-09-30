@@ -217,5 +217,5 @@ func _on_timer_timeout() -> void:
 func on_player_hit(player: Node) -> void:
 	var cam = get_tree().get_first_node_in_group("camara")
 	if cam and cam.has_method("shake"):
-		cam.shake(8.0)
+		cam.shake(3.0)
 	get_tree().call_group("ui", "flash_hit", player.get("player_id"))

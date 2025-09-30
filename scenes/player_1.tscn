@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bhkidw16jmgu8"]
 
 [ext_resource type="Script" uid="uid://1pmmyw8djety" path="res://scripts/player_1.gd" id="1_gneq0"]
-[ext_resource type="SpriteFrames" uid="uid://der6u3pih5cxa" path="res://assets/players/skins/mago.tres" id="2_gneq0"]
+[ext_resource type="SpriteFrames" uid="uid://b3211xivgr0xg" path="res://assets/players/skins/panda.tres" id="2_gneq0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gneq0"]
 radius = 9.0
@@ -14,7 +14,6 @@ script = ExtResource("1_gneq0")
 rotation = -1.57079
 sprite_frames = ExtResource("2_gneq0")
 animation = &"walk"
-frame_progress = 0.565262
 
 [node name="ShootingPointP1" type="Marker2D" parent="."]
 position = Vector2(-12, -5.00008)

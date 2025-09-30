@@ -1,7 +1,7 @@
 extends Camera2D
 
 var shake_strength: float = 0.0
-var shake_decay: float = 5.0
+var shake_decay: float = 4.0
 var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
@@ -17,5 +17,5 @@ func _process(delta: float) -> void:
 	else:
 		offset = Vector2.ZERO
 
-func shake(amount: float = 8.0) -> void:
+func shake(amount: float = 5.0) -> void:
 	shake_strength = amount
