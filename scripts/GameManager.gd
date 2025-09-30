@@ -213,3 +213,9 @@ func _safe_set_can_shoot(player: Node, enable: bool) -> void:
 func _on_timer_timeout() -> void:
 	control_screen.visible = false
 	start_round()
+
+func on_player_hit(player: Node) -> void:
+	var cam = get_tree().get_first_node_in_group("camara")
+	if cam and cam.has_method("shake"):
+		cam.shake(8.0)
+	get_tree().call_group("ui", "flash_hit", player.get("player_id"))

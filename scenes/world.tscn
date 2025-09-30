@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=34 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://bhkidw16jmgu8" path="res://scenes/player_1.tscn" id="1_nnsk1"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://ctt7k3i2xji5r" path="res://assets/HUD/tablero rondas 5r.png" id="11_e3hyu"]
 [ext_resource type="Script" uid="uid://cefemdlqm16qn" path="res://scripts/rounds_results.gd" id="11_q5onr"]
 [ext_resource type="Script" uid="uid://dnt1lw7cngye7" path="res://scripts/fade_area.gd" id="17_pm21f"]
+[ext_resource type="Script" uid="uid://d040v84fg8xhj" path="res://scripts/camera_2d.gd" id="20_2lf6f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4mrxx"]
 atlas = ExtResource("8_4mrxx")
@@ -67,7 +68,7 @@ size = Vector2(329.75, 5.96272)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
 size = Vector2(4.71893, 180)
 
-[node name="Word" type="Node2D" groups=["MainCamera"]]
+[node name="Word" type="Node2D"]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_71j4m")
@@ -366,5 +367,9 @@ position = Vector2(1172, 4)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitMap/wall4"]
 position = Vector2(-849.594, 86)
 shape = SubResource("RectangleShape2D_rwgxs")
+
+[node name="Camera2D" type="Camera2D" parent="." groups=["camara"]]
+position = Vector2(163, 86)
+script = ExtResource("20_2lf6f")
 
 [connection signal="timeout" from="GameManager/ControlScreen/Timer" to="GameManager" method="_on_timer_timeout"]

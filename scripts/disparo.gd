@@ -20,6 +20,9 @@ func _physics_process(delta: float) -> void:
 		if collider and collider.is_in_group("Players"):
 			if "take_damage" in collider:
 				collider.take_damage()
+			var gm = get_tree().get_first_node_in_group("game")
+			if gm and gm.has_method("on_player_hit"):
+				gm.on_player_hit(collider)
 			queue_free()
 			return
 		if bounces < max_bounces:
