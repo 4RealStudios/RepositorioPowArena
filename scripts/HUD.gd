@@ -20,7 +20,3 @@ func update_lives(player_id: int, lives: int):
 		]
 		for i in range(hearts.size()):
 			hearts[i].visible = i < lives
-
-func update_rounds(p1_rounds: int, p2_rounds: int):
-	$HBoxContainer/RoundsLabelP1.text = "Rondas: %d" % p1_rounds
-	$HBoxContainer/RoundsLabelP2.text = "Rondas: %d" % p2_rounds
