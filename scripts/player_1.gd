@@ -23,6 +23,7 @@ var can_move: bool = true
 var lives: int = 3
 var is_invulnerable: bool = false
 var is_dead: bool = false
+var is_hurt: bool = false
 
 var input_vector: Vector2 = Vector2.ZERO
 var aim_dir: Vector2 = Vector2.RIGHT
@@ -82,29 +83,12 @@ func _physics_process(delta: float) -> void:
 			# iniciar dash si corresponde
 		if Input.is_action_just_pressed("p1_dash") and dash_cooldown_timer <= 0.0 and input_vector != Vector2.ZERO:
 			start_dash()
-		
-		if is_shooting:
-			velocity = Vector2.ZERO
-			if anim_sprite.animation != "shooting":
-				anim_sprite.play("shooting")
-			move_and_slide()
-			return
 			
 	if aim_dir != Vector2.ZERO:
 		anim_sprite.rotation = aim_dir.angle() - PI/90
 		
-	if not is_dead:
-		if anim_sprite.animation == "hurt":
-			pass
-		#if is_shooting:
-			#return
-		else:
-			if velocity.length() > 0.0:
-				if anim_sprite.animation != "walk":
-					anim_sprite.play("walk")
-			else:
-				if anim_sprite.animation != "idle":
-					anim_sprite.play("idle")
+	_update_animation()
+	
 	move_and_slide()
 	if Input.is_action_just_pressed("p1_shoot"):
 		shoot()
@@ -136,6 +120,7 @@ func _on_animated_sprite_2dp_1_animation_finished() -> void:
 		is_shooting = false
 		_update_animation()
 	elif anim_sprite.animation == "hurt" and not is_dead:
+		is_hurt = false
 		_update_animation()
 
 func _update_animation() -> void:
@@ -143,15 +128,22 @@ func _update_animation() -> void:
 		if anim_sprite.animation != "die":
 			anim_sprite.play("die")
 		return
+	
+	if is_hurt:
+		if anim_sprite.animation != "hurt":
+			anim_sprite.play("hurt")
+		return
+	
 	if is_dashing:
 		if anim_sprite.animation != "dash":
 			anim_sprite.play("dash")
 		return
+	
 	if is_shooting:
 		if anim_sprite.animation != "shooting":
 			anim_sprite.play("shooting")
 		return
-		
+	
 	if velocity.length() > 0:
 		if anim_sprite.animation != "walk":
 			anim_sprite.play("walk")
@@ -179,6 +171,7 @@ func take_damage() -> void:
 		return
 
 	is_invulnerable = true
+	is_hurt = true
 	anim_sprite.play("hurt")
 	start_invulnerability()
 
