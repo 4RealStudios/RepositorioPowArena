@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="Pow!Arena"
-run/main_scene="uid://l5jts8o0sprl"
+run/main_scene="uid://b3ckvrihoqotb"
+run/disable_stderr=true
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
 [display]
