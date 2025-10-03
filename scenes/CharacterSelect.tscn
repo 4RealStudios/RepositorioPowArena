@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=3 uid="uid://dimc45whw7t5a"]
+
+[ext_resource type="Script" uid="uid://dgkoc1rjveebx" path="res://scripts/character_select.gd" id="1_sr2wn"]
+
+[node name="CharacterSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sr2wn")
+
+[node name="Selecciona tu personaje" type="Label" parent="."]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 2.0
+offset_right = 259.0
+offset_bottom = 25.0
+text = "Selecciona tu personaje"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 46.0
+offset_right = 240.0
+offset_bottom = 86.0
+
+[node name="Player1" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Jugador1" type="Label" parent="HBoxContainer/Player1"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Jugador 1"
+
+[node name="TextureButton" type="TextureButton" parent="HBoxContainer/Player1"]
+layout_mode = 2
+
+[node name="Player2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Jugador2" type="Label" parent="HBoxContainer/Player2"]
+layout_mode = 2
+text = "Jugador 2"
+
+[node name="TextureButton" type="TextureButton" parent="HBoxContainer/Player2"]
+layout_mode = 2
+
+[node name="Seleccionar" type="Button" parent="."]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 126.0
+offset_right = 249.0
+offset_bottom = 157.0
+text = "Confirmar seleccion"

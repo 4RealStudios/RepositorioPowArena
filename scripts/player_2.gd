@@ -96,7 +96,7 @@ func _physics_process(delta: float) -> void:
 func shoot() -> void:
 	if not can_shoot or is_dead:
 		return
-	var now = Time.get_ticks_msec() / 1000.0
+	var now = Time.get_ticks_msec() / 1250.0
 	if now - last_shoot_time < shoot_cooldown:
 		return
 	last_shoot_time = now

@@ -15,6 +15,14 @@ run/main_scene="uid://b3ckvrihoqotb"
 run/disable_stderr=true
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
+[autoload]
+
+Global="*res://scripts/Global.gd"
+
+[debug]
+
+settings/stdout/print_fps=true
+
 [display]
 
 window/size/viewport_width=320

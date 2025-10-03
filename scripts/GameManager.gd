@@ -26,6 +26,16 @@ var countdown_value = 3
 
 func _ready() -> void:
 	randomize()
+	
+	if Global.player1_skin != "":
+		var frames1 = load("res://assets/players/skins/%s.tres" % Global.player1_skin)
+		if frames1:
+			player1.get_node("AnimatedSprite2DP1").sprite_frames = frames1
+	if Global.player2_skin != "":
+		var frames2 = load("res://assets/players/skins/%s.tres" % Global.player1_skin)
+		if frames2:
+			player2.get_node("AnimatedSprite2DP2").sprite_frames = frames2
+	
 	add_to_group("game")
 	get_tree().call_group("ui", "update_rounds",rounds_p1, rounds_p2)
 	
