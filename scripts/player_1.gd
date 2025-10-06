@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var speed: float = 85.0
 @export var DISPARO: PackedScene = preload("res://scenes/disparo.tscn")
 @export var player_id: int = 1
+@export var character_name: String = "robot"
 @export var dash_speed: float = 250.0
 @export var dash_duration: float = 0.3
 @export var dash_cooldown: float = 1.5
@@ -37,7 +38,26 @@ var dash_cooldown_timer: float = 0.0
 var is_shooting: bool = false
 var last_shoot_time: float = -9999.0
 
+var characters := {
+	"robot":{
+		"main": preload("res://assets/players/skins/robot.tres"),
+		"alt": preload("res://assets/players/skins/robot_alt.tres")
+	},
+	"mago": {
+		"main": preload("res://assets/players/skins/mago.tres"),
+		"alt": preload("res://assets/players/skins/mago_alt.tres")
+	},
+	"panda": {
+		"main": preload("res://assets/players/skins/panda.tres"),
+		"alt": preload("res://assets/players/skins/panda_alt.tres")
+	}
+}
+
 func _ready() -> void:
+	if player_id == 1:
+		anim_sprite.sprite_frames = characters[character_name]["main"]
+	else:
+		anim_sprite.sprite_frames = characters[character_name]["alt"]
 	can_move = false
 	anim_sprite.play("idle")
 	spawn_position = global_position

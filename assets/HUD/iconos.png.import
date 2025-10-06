@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6l7et2yoirge"
-path="res://.godot/imported/AnimPanda.png-e0c2ed0cf76992813342f8c52c77e603.ctex"
+uid="uid://bha6iuqedau6m"
+path="res://.godot/imported/iconos.png-5c1975e2b2970c59decea498029d738c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/players/AnimPanda.png"
-dest_files=["res://.godot/imported/AnimPanda.png-e0c2ed0cf76992813342f8c52c77e603.ctex"]
+source_file="res://assets/HUD/iconos.png"
+dest_files=["res://.godot/imported/iconos.png-5c1975e2b2970c59decea498029d738c.ctex"]
 
 [params]
 

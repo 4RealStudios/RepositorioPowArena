@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ct1snlxlrawq8"
-path="res://.godot/imported/AnimMago-ALT.png-0eb3c3ce2f59ac34b404030b5d94da37.ctex"
+uid="uid://difbr1pcd8sg1"
+path="res://.godot/imported/mago_preview.png-8a63ea543f48bf0f75187df7ad5b1412.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/players/AnimMago-ALT.png"
-dest_files=["res://.godot/imported/AnimMago-ALT.png-0eb3c3ce2f59ac34b404030b5d94da37.ctex"]
+source_file="res://assets/players/skins/previews/mago_preview.png"
+dest_files=["res://.godot/imported/mago_preview.png-8a63ea543f48bf0f75187df7ad5b1412.ctex"]
 
 [params]
 

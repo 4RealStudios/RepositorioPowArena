@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d35po6cbg4dqb"
-path="res://.godot/imported/AnimRob-ALT.png-c8d7228d434759ef92033d518fe7107d.ctex"
+uid="uid://bvexal13k7dlk"
+path="res://.godot/imported/mago_preview_alt.png-996a730afd484a44e459c8451808ffd9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/players/AnimRob-ALT.png"
-dest_files=["res://.godot/imported/AnimRob-ALT.png-c8d7228d434759ef92033d518fe7107d.ctex"]
+source_file="res://assets/players/skins/previews/mago_preview_alt.png"
+dest_files=["res://.godot/imported/mago_preview_alt.png-996a730afd484a44e459c8451808ffd9.ctex"]
 
 [params]
 

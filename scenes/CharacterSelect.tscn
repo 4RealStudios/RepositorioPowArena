@@ -1,58 +1,56 @@
-[gd_scene load_steps=2 format=3 uid="uid://dimc45whw7t5a"]
+[gd_scene load_steps=8 format=3 uid="uid://dimc45whw7t5a"]
 
 [ext_resource type="Script" uid="uid://dgkoc1rjveebx" path="res://scripts/character_select.gd" id="1_sr2wn"]
+[ext_resource type="Texture2D" uid="uid://wx7yr7nm23q2" path="res://assets/players/skins/backgrounds/background.png" id="2_rpq25"]
+[ext_resource type="Texture2D" uid="uid://dvupgraikno8e" path="res://assets/players/skins/previews/robot_preview.png" id="3_nb21n"]
+[ext_resource type="Texture2D" uid="uid://bgvt6cash2rjo" path="res://assets/players/skins/previews/robot_preview_alt.png" id="4_uq28m"]
+[ext_resource type="Texture2D" uid="uid://bha6iuqedau6m" path="res://assets/HUD/iconos.png" id="5_uq28m"]
 
-[node name="CharacterSelect" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[sub_resource type="AtlasTexture" id="AtlasTexture_uq28m"]
+atlas = ExtResource("5_uq28m")
+region = Rect2(0, 0, 22, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8y2c"]
+atlas = ExtResource("5_uq28m")
+region = Rect2(72, 0, 22, 22)
+
+[node name="CharacterSelect" type="Node2D"]
 script = ExtResource("1_sr2wn")
 
-[node name="Selecciona tu personaje" type="Label" parent="."]
-layout_mode = 0
-offset_left = 76.0
-offset_top = 2.0
-offset_right = 259.0
-offset_bottom = 25.0
-text = "Selecciona tu personaje"
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(160, 90)
+texture = ExtResource("2_rpq25")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 88.0
-offset_top = 46.0
-offset_right = 240.0
-offset_bottom = 86.0
+[node name="preview_player1" type="Sprite2D" parent="."]
+position = Vector2(160, 90)
+texture = ExtResource("3_nb21n")
 
-[node name="Player1" type="VBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
+[node name="preview_player2" type="Sprite2D" parent="."]
+position = Vector2(160, 90)
+texture = ExtResource("4_uq28m")
+flip_h = true
 
-[node name="Jugador1" type="Label" parent="HBoxContainer/Player1"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Jugador 1"
+[node name="GridContainerP1" type="Node2D" parent="."]
 
-[node name="TextureButton" type="TextureButton" parent="HBoxContainer/Player1"]
-layout_mode = 2
+[node name="Icon_robot" type="Sprite2D" parent="GridContainerP1"]
+position = Vector2(126, 153)
+texture = SubResource("AtlasTexture_uq28m")
 
-[node name="Player2" type="VBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
+[node name="Icon_mago" type="Sprite2D" parent="GridContainerP1"]
+position = Vector2(-16, 65)
 
-[node name="Jugador2" type="Label" parent="HBoxContainer/Player2"]
-layout_mode = 2
-text = "Jugador 2"
+[node name="Icon_panda" type="Sprite2D" parent="GridContainerP1"]
+position = Vector2(152, 152)
+texture = SubResource("AtlasTexture_d8y2c")
 
-[node name="TextureButton" type="TextureButton" parent="HBoxContainer/Player2"]
-layout_mode = 2
+[node name="GridContainerP2" type="Node2D" parent="."]
 
-[node name="Seleccionar" type="Button" parent="."]
-layout_mode = 0
-offset_left = 87.0
-offset_top = 126.0
-offset_right = 249.0
-offset_bottom = 157.0
-text = "Confirmar seleccion"
+[node name="Icon_robot" type="Sprite2D" parent="GridContainerP2"]
+
+[node name="Icon_mago" type="Sprite2D" parent="GridContainerP2"]
+
+[node name="Icon_panda" type="Sprite2D" parent="GridContainerP2"]
+
+[node name="CursorP1" type="Sprite2D" parent="."]
+
+[node name="CursorP2" type="Sprite2D" parent="."]

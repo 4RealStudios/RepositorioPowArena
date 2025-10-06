@@ -24,19 +24,14 @@ var rounds_p2: int = 0
 var max_rounds_to_win: int = 5
 var countdown_value = 3
 
+const GAMEOVER_SCENE := "res://scenes/GameOverMenu.tscn"
+
 func _ready() -> void:
 	randomize()
-	
-	if Global.player1_skin != "":
-		var frames1 = load("res://assets/players/skins/%s.tres" % Global.player1_skin)
-		if frames1:
-			player1.get_node("AnimatedSprite2DP1").sprite_frames = frames1
-	if Global.player2_skin != "":
-		var frames2 = load("res://assets/players/skins/%s.tres" % Global.player1_skin)
-		if frames2:
-			player2.get_node("AnimatedSprite2DP2").sprite_frames = frames2
-	
 	add_to_group("game")
+	
+	apply_selected_skins()
+	
 	get_tree().call_group("ui", "update_rounds",rounds_p1, rounds_p2)
 	
 	control_screen.visible = true
@@ -52,6 +47,55 @@ func _ready() -> void:
 	powerup_timer.timeout.connect(spawn_powerup)
 	
 	start_round()
+
+func apply_selected_skins() -> void:
+	var p1_base = Global.player1_choice
+	var p2_base = Global.player2_choice
+	
+	if p1_base == "" and p2_base == "":
+		return
+	
+	var frames1: SpriteFrames = null
+	var frames2: SpriteFrames = null
+	
+	if p1_base != "" and p2_base != "" and p1_base == p2_base:
+		frames1 = load_skin_frames(p1_base, "main")
+		frames2 = load_skin_frames(p2_base, "alt")
+		if frames2 == null:
+			frames2 = load_skin_frames(p2_base, "main")
+	else:
+		if p1_base != "":
+			frames1 = load_skin_frames(p1_base, "main")
+		if p2_base != "":
+			frames2 = load_skin_frames(p2_base, "alt")
+	
+	if frames1:
+		if player1.has_node("AnimatedSprite2DP1"):
+			player1.get_node("AnimatedSprite2DP1").sprite_frames = frames1
+		else:
+			push_warning("player1 no tiene an8imatedprite en la ruta esperada")
+	if frames2:
+		if player2.has_node("AnimatedSprite2DP2"):
+			player2.get_node("AnimatedSprite2DP2").sprite_frames = frames2
+		else:
+			push_warning("player2 no tiene an8imatedprite en la ruta esperada")
+
+# carga un SpriteFrames (variant = "main" or "alt")
+func load_skin_frames(base_name: String, variant: String = "main") -> SpriteFrames:
+	var path := ""
+	if variant == "main":
+		path = Global.SKINS_FOLDER + "%s.tres" % base_name
+	else:
+		path = Global.SKINS_FOLDER + "%s_alt.tres" % base_name
+	
+	var res = ResourceLoader.load(path)
+	if res and res is SpriteFrames:
+		return res
+	if variant == "alt":
+		var fallback = ResourceLoader.load(Global.SKINS_FOLDER + "%s.tres" % base_name)
+		if fallback and fallback is SpriteFrames:
+			return fallback
+	return null
 
 func player_died(winner_id: int) -> void:
 	if winner_id == 1:
@@ -80,19 +124,30 @@ func check_match_winner() -> bool:
 func end_match() -> void:
 	_safe_set_can_move(player1, false)
 	_safe_set_can_move(player2, false)
+	_safe_set_can_shoot(player1, false)
+	_safe_set_can_shoot(player2, false)
 	
-	countdown_label.visible = true
-	if rounds_p1 > rounds_p2:
-		countdown_label.text = "Jugador 2 Gana!"
-	elif rounds_p2 > rounds_p1:
-		countdown_label.text = "Jugador 1 Gana!"
-	
-	await  get_tree().create_timer(2.0).timeout
-	
+	var winner := 1 if rounds_p1 > rounds_p2 else 2
+	show_gameover(winner)
+
+func show_gameover(winner:int) -> void:
+	var scene_res = ResourceLoader.load(GAMEOVER_SCENE)
+	if scene_res == null:
+		push_error("No se encontro " + GAMEOVER_SCENE)
+		return
+	var menu = scene_res.instantiate()
+	add_child(menu)
+	if menu.has_method("setup"):
+		menu.setup(winner)
+
+func restart_match() -> void:
 	rounds_p1 = 0
 	rounds_p2 = 0
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
 	get_tree().call_group("rounds_ui", "reset_rounds")
+
+	apply_selected_skins()
+
 	start_round()
 
 func load_map(round_number: int) -> void:

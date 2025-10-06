@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cktvsan1pxk0e"]
 
 [ext_resource type="Script" uid="uid://dj4khbfnc5pjm" path="res://scripts/player_2.gd" id="1_s551d"]
-[ext_resource type="SpriteFrames" uid="uid://b5jyimg04kx31" path="res://assets/players/skins/robot_alt.tres" id="2_s551d"]
+[ext_resource type="SpriteFrames" uid="uid://der6u3pih5cxa" path="res://assets/players/skins/mago.tres" id="2_s551d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s551d"]
 radius = 9.0
@@ -14,7 +14,9 @@ script = ExtResource("1_s551d")
 position = Vector2(1.19209e-07, 0)
 rotation = -1.57079
 sprite_frames = ExtResource("2_s551d")
-animation = &"shooting"
+animation = &"dash"
+frame = 2
+frame_progress = 1.0
 
 [node name="ShootingPointP2" type="Marker2D" parent="."]
 position = Vector2(-12, -5)

@@ -13,29 +13,29 @@
 [ext_resource type="PackedScene" uid="uid://oqj8f7sai6ex" path="res://maps/mapas dificiles/map7.tscn" id="6_e3hyu"]
 [ext_resource type="PackedScene" uid="uid://db8slb11x77vo" path="res://maps/mapas medios/map5.tscn" id="6_jhx03"]
 [ext_resource type="PackedScene" uid="uid://b4h06tr3av61k" path="res://maps/mapas medios/map6.tscn" id="7_o8fc1"]
+[ext_resource type="Texture2D" uid="uid://vwsd43ktfayl" path="res://assets/HUD/hud iconos vida.png" id="8_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://6uhodm3vtat3" path="res://maps/mapas dificiles/map8.tscn" id="9_dss4m"]
 [ext_resource type="PackedScene" uid="uid://bqybbvhaekt0c" path="res://maps/mapas dificiles/map9.tscn" id="10_7t5mc"]
 [ext_resource type="Texture2D" uid="uid://cpn403yc5v6yf" path="res://assets/HUD/controles.png" id="10_dss4m"]
 [ext_resource type="Texture2D" uid="uid://ctt7k3i2xji5r" path="res://assets/HUD/tablero rondas 5r.png" id="11_e3hyu"]
 [ext_resource type="Script" uid="uid://cefemdlqm16qn" path="res://scripts/rounds_results.gd" id="11_q5onr"]
-[ext_resource type="Texture2D" uid="uid://bha6iuqedau6m" path="res://assets/HUD/iconos.png" id="17_7iits"]
 [ext_resource type="Script" uid="uid://dnt1lw7cngye7" path="res://scripts/fade_area.gd" id="17_pm21f"]
 [ext_resource type="Script" uid="uid://d040v84fg8xhj" path="res://scripts/camera_2d.gd" id="20_2lf6f"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oo54l"]
-atlas = ExtResource("17_7iits")
+[sub_resource type="AtlasTexture" id="AtlasTexture_4mrxx"]
+atlas = ExtResource("8_4mrxx")
 region = Rect2(0, 0, 22, 22)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w7kh3"]
-atlas = ExtResource("17_7iits")
+atlas = ExtResource("8_4mrxx")
 region = Rect2(0, 24, 11, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e3hyu"]
-atlas = ExtResource("17_7iits")
+atlas = ExtResource("8_4mrxx")
 region = Rect2(0, 24, 11, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7r4gi"]
-atlas = ExtResource("17_7iits")
+atlas = ExtResource("8_4mrxx")
 region = Rect2(24, 0, 22, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2lf6f"]
@@ -48,19 +48,19 @@ size = Vector2(92, 34)
 atlas = ExtResource("11_e3hyu")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jhx03"]
-atlas = ExtResource("17_7iits")
-region = Rect2(144, 0, 14, 18)
+atlas = ExtResource("8_4mrxx")
+region = Rect2(72, 0, 14, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o8fc1"]
-atlas = ExtResource("17_7iits")
-region = Rect2(160, 0, 14, 18)
+atlas = ExtResource("8_4mrxx")
+region = Rect2(88, 0, 14, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xo05s"]
-atlas = ExtResource("17_7iits")
+atlas = ExtResource("8_4mrxx")
 region = Rect2(0, 50, 8, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dss4m"]
-atlas = ExtResource("17_7iits")
+atlas = ExtResource("8_4mrxx")
 region = Rect2(10, 50, 8, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nnsk1"]
@@ -148,7 +148,7 @@ size_flags_vertical = 0
 
 [node name="Icon_Player1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Player1_HUD"]
 layout_mode = 2
-texture = SubResource("AtlasTexture_oo54l")
+texture = SubResource("AtlasTexture_4mrxx")
 stretch_mode = 2
 
 [node name="Vidas_P1" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer"]

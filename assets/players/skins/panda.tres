@@ -1,6 +1,6 @@
-[gd_resource type="SpriteFrames" load_steps=29 format=3 uid="uid://b3211xivgr0xg"]
+[gd_resource type="SpriteFrames" load_steps=28 format=3 uid="uid://b3211xivgr0xg"]
 
-[ext_resource type="Texture2D" uid="uid://c6l7et2yoirge" path="res://assets/players/AnimPanda.png" id="1_acuub"]
+[ext_resource type="Texture2D" uid="uid://co61c0ewythkd" path="res://assets/players/skins/Panda.png" id="1_acuub"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ltblh"]
 atlas = ExtResource("1_acuub")
@@ -18,37 +18,33 @@ region = Rect2(384, 0, 24, 24)
 atlas = ExtResource("1_acuub")
 region = Rect2(408, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_acuub"]
-atlas = ExtResource("1_acuub")
-region = Rect2(672, 0, 24, 24)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_wre2u"]
 atlas = ExtResource("1_acuub")
-region = Rect2(696, 0, 24, 24)
+region = Rect2(600, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3qrqe"]
 atlas = ExtResource("1_acuub")
-region = Rect2(720, 0, 24, 24)
+region = Rect2(624, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g33hk"]
 atlas = ExtResource("1_acuub")
-region = Rect2(744, 0, 24, 24)
+region = Rect2(648, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qjj8n"]
 atlas = ExtResource("1_acuub")
-region = Rect2(768, 0, 24, 24)
+region = Rect2(672, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5wt1o"]
 atlas = ExtResource("1_acuub")
-region = Rect2(792, 0, 24, 24)
+region = Rect2(696, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q7lg1"]
 atlas = ExtResource("1_acuub")
-region = Rect2(816, 0, 24, 24)
+region = Rect2(720, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0rvh0"]
 atlas = ExtResource("1_acuub")
-region = Rect2(648, 0, 24, 24)
+region = Rect2(744, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k3snt"]
 atlas = ExtResource("1_acuub")
@@ -130,9 +126,6 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_acuub")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wre2u")
 }, {

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vwsd43ktfayl"
-path="res://.godot/imported/hud iconos vida.png-23a8ac164c3b1528a68305a374ef8003.ctex"
+uid="uid://bqou7tk4n6jwv"
+path="res://.godot/imported/Robot.png-c602247b0f2521b503516ff24ca8ffc0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/HUD/hud iconos vida.png"
-dest_files=["res://.godot/imported/hud iconos vida.png-23a8ac164c3b1528a68305a374ef8003.ctex"]
+source_file="res://assets/players/skins/Robot.png"
+dest_files=["res://.godot/imported/Robot.png-c602247b0f2521b503516ff24ca8ffc0.ctex"]
 
 [params]
 

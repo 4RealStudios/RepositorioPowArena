@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c156pbtbadvnm"
-path="res://.godot/imported/AnimMago.png-868fab9ae9f7edc7a6b1d3ad7817d371.ctex"
+uid="uid://dv1w6ef5e0kfp"
+path="res://.godot/imported/Panda_alt.png-1b5c0c895100393c1fcc5fea1f635fc2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/players/AnimMago.png"
-dest_files=["res://.godot/imported/AnimMago.png-868fab9ae9f7edc7a6b1d3ad7817d371.ctex"]
+source_file="res://assets/players/skins/Panda_alt.png"
+dest_files=["res://.godot/imported/Panda_alt.png-1b5c0c895100393c1fcc5fea1f635fc2.ctex"]
 
 [params]
 
