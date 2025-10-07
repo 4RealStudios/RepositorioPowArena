@@ -23,29 +23,25 @@ var rounds_p1: int = 0
 var rounds_p2: int = 0
 var max_rounds_to_win: int = 5
 var countdown_value = 3
+var match_over: bool = false
 
 const GAMEOVER_SCENE := "res://scenes/GameOverMenu.tscn"
 
 func _ready() -> void:
 	randomize()
 	add_to_group("game")
-	
 	apply_selected_skins()
-	
 	get_tree().call_group("ui", "update_rounds",rounds_p1, rounds_p2)
-	
 	control_screen.visible = true
 	hud.visible = false
 	for player in players:
 		player.visible = false
 	control_timer.start()
-	
 	powerup_timer.wait_time = 8.0
 	powerup_timer.one_shot = false
 	powerup_timer.autostart = true
 	add_child(powerup_timer)
 	powerup_timer.timeout.connect(spawn_powerup)
-	
 	start_round()
 
 func apply_selected_skins() -> void:
@@ -96,15 +92,14 @@ func load_skin_frames(base_name: String, variant: String = "main") -> SpriteFram
 	return null
 
 func player_died(winner_id: int) -> void:
+	if match_over:
+		return
+		
 	if winner_id == 1:
 		rounds_p1 += 1
 	elif winner_id == 2:
 		rounds_p2 += 1
-
-	# Avisar al HUD que muestre el contador de rondas
 	get_tree().call_group("rounds_ui", "show_results", winner_id)
-
-	# (si todavía usás las labels viejas de UI)
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
 
 	if check_match_winner():
@@ -120,6 +115,7 @@ func check_match_winner() -> bool:
 	return false
 
 func end_match() -> void:
+	match_over = true
 	_safe_set_can_move(player1, false)
 	_safe_set_can_move(player2, false)
 	_safe_set_can_shoot(player1, false)
@@ -139,6 +135,7 @@ func show_gameover(winner:int) -> void:
 		menu.setup(winner)
 
 func restart_match() -> void:
+	match_over = false
 	rounds_p1 = 0
 	rounds_p2 = 0
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
@@ -198,6 +195,9 @@ func reset_round():
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
 
 func start_round():
+	if match_over:
+		return
+		
 	if is_counting_down:
 		return
 	is_counting_down = true
@@ -274,6 +274,8 @@ func _safe_set_can_shoot(player: Node, enable: bool) -> void:
 		player.set_can_shoot(enable)
 
 func _on_timer_timeout() -> void:
+	if match_over:
+		return
 	control_screen.visible = false
 	start_round()
 

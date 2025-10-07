@@ -23,9 +23,8 @@ grow_vertical = 2
 
 [node name="JUGAR" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "jugar"
+text = "jugar (X)"
 
 [node name="SALIR" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "salir
-"
+text = "salir (O)"

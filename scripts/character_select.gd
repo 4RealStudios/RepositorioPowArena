@@ -94,8 +94,8 @@ func _lock_player(player:int) -> void:
 	_check_ready_state()
 
 func _check_ready_state() -> void:
-	if has_node("PressStartLabel"):
-		$PressStartLabel.visible = p1_locked and p2_locked
+	if is_instance_valid(presstartlabel):
+		presstartlabel.visible = p1_locked and p2_locked
 
 func _move_index(player:int, delta:int) -> void:
 	if player == 1:

@@ -100,17 +100,17 @@ scale = Vector2(0.669, 0.659)
 texture = SubResource("AtlasTexture_qwdye")
 
 [node name="PressStartLabel" type="Label" parent="."]
-visible = false
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 112.0
-offset_top = 7.0
-offset_right = 207.0
-offset_bottom = 30.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 71.0
+offset_top = 4.0
+offset_right = 248.0
+offset_bottom = 53.0
 grow_horizontal = 2
-size_flags_horizontal = 4
+grow_vertical = 2
 size_flags_vertical = 1
-text = "Iniciar juego"
+text = "Preciona ▲ para iniciar
+"
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -15,9 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://b4h06tr3av61k" path="res://maps/mapas medios/map6.tscn" id="7_o8fc1"]
 [ext_resource type="PackedScene" uid="uid://6uhodm3vtat3" path="res://maps/mapas dificiles/map8.tscn" id="9_dss4m"]
 [ext_resource type="PackedScene" uid="uid://bqybbvhaekt0c" path="res://maps/mapas dificiles/map9.tscn" id="10_7t5mc"]
-[ext_resource type="Texture2D" uid="uid://cpn403yc5v6yf" path="res://assets/HUD/controles.png" id="10_dss4m"]
 [ext_resource type="Texture2D" uid="uid://ctt7k3i2xji5r" path="res://assets/HUD/tablero rondas 5r.png" id="11_e3hyu"]
 [ext_resource type="Script" uid="uid://cefemdlqm16qn" path="res://scripts/rounds_results.gd" id="11_q5onr"]
+[ext_resource type="Texture2D" uid="uid://bplqiuk6gfjy" path="res://assets/HUD/controles (1).png" id="13_7iits"]
 [ext_resource type="Texture2D" uid="uid://bha6iuqedau6m" path="res://assets/HUD/iconos.png" id="17_7iits"]
 [ext_resource type="Script" uid="uid://dnt1lw7cngye7" path="res://scripts/fade_area.gd" id="17_pm21f"]
 [ext_resource type="Script" uid="uid://d040v84fg8xhj" path="res://scripts/camera_2d.gd" id="20_2lf6f"]
@@ -98,7 +98,7 @@ grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="GameManager/ControlScreen/MarginContainer"]
 layout_mode = 2
-texture = ExtResource("10_dss4m")
+texture = ExtResource("13_7iits")
 expand_mode = 3
 
 [node name="Timer" type="Timer" parent="GameManager/ControlScreen"]
