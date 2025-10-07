@@ -90,9 +90,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1.0
-offset_right = 279.0
-offset_bottom = 134.0
+offset_right = 280.0
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -353,7 +352,7 @@ shape = SubResource("RectangleShape2D_nnsk1")
 position = Vector2(0, 668)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimitMap/wall2"]
-position = Vector2(160, -491)
+position = Vector2(161, -486)
 scale = Vector2(1, 0.719195)
 shape = SubResource("RectangleShape2D_nnsk1")
 
