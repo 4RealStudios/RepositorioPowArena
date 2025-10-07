@@ -1,7 +1,6 @@
 extends Node2D
 
 const GAME_SCENE_PATH := "res://scenes/world.tscn"
-
 @export var PREVIEWS_PATH: String = "res://assets/players/skins/previews/"
 
 @onready var presstartlabel = $PressStartLabel
@@ -34,6 +33,7 @@ func _ready():
 	
 	_update_cursors()
 	_update_previews()
+	_check_ready_state()
 
 func _process(_delta: float) -> void:
 	if not p1_locked:
@@ -41,7 +41,6 @@ func _process(_delta: float) -> void:
 	if not p2_locked:
 		_handle_input_player(2)
 
-	# Si ambos están lockeados, permitir iniciar partida
 	if p1_locked and p2_locked:
 		if Input.is_action_just_pressed("p1_start") or Input.is_action_just_pressed("p2_start"):
 			_finalize_and_start()
@@ -56,14 +55,8 @@ func _handle_input_player(player:int) -> void:
 			_move_index(player, -1)
 		elif Input.is_action_just_pressed("p1_right"):
 			_move_index(player, 1)
-		elif Input.is_action_just_pressed("p1_up"):
-			_move_index(player, -1)
-		elif Input.is_action_just_pressed("p1_down"):
-			_move_index(player, 1)
 		elif Input.is_action_just_pressed("p1_accept"):
-			_lock_player(player)
-		elif Input.is_action_just_pressed("p1_cancel"):
-			pass
+			_lock_player(1)
 	else:
 		if p2_locked:
 			if Input.is_action_just_pressed("p2_cancel"):
@@ -73,14 +66,8 @@ func _handle_input_player(player:int) -> void:
 			_move_index(player, -1)
 		elif Input.is_action_just_pressed("p2_right"):
 			_move_index(player, 1)
-		elif Input.is_action_just_pressed("p2_up"):
-			_move_index(player, -1)
-		elif Input.is_action_just_pressed("p2_down"):
-			_move_index(player, 1)
 		elif Input.is_action_just_pressed("p2_accept"):
-			_lock_player(player)
-		elif Input.is_action_just_pressed("p2_cancel"):
-			pass
+			_lock_player(2)
 
 func _unlock_player(player:int) -> void:
 	if player == 1 and p1_locked:
@@ -94,20 +81,6 @@ func _unlock_player(player:int) -> void:
 	_update_previews()
 	_check_ready_state()
 
-func _check_ready_state() -> void:
-	# Mostrar u ocultar texto de "Press Start"
-	if has_node("PressStartLabel"):
-		$PressStartLabel.visible = p1_locked and p2_locked
-
-func _move_index(player:int, delta:int) -> void:
-	if player == 1:
-		p1_index = clamp(p1_index + delta, 0, max(0, p1_icons.size() - 1))
-	else:
-		p2_index = clamp(p2_index + delta, 0, max(0, p2_icons.size() - 1))
-
-	_update_cursors()
-	_update_previews()
-
 func _lock_player(player:int) -> void:
 	if player == 1:
 		p1_locked = true
@@ -120,18 +93,18 @@ func _lock_player(player:int) -> void:
 	_update_previews()
 	_check_ready_state()
 
-	# Si ambos están lockeados, iniciamos la cuenta regresiva para empezar
-	if p1_locked and p2_locked:
-		# pequeña pausa visual antes de arrancar
-		_start_match_with_delay()
+func _check_ready_state() -> void:
+	if has_node("PressStartLabel"):
+		$PressStartLabel.visible = p1_locked and p2_locked
 
-func _start_match_with_delay() -> void:
-	# lanzamos una corrutina que solo inicia si ambos siguen lockeados
-	await get_tree().create_timer(0.4).timeout
-	if p1_locked and p2_locked:
-		_finalize_and_start()
+func _move_index(player:int, delta:int) -> void:
+	if player == 1:
+		p1_index = clamp(p1_index + delta, 0, max(0, p1_icons.size() - 1))
 	else:
-		print("Inicio cancelado: uno de los jugadores se desbloqueó.")
+		p2_index = clamp(p2_index + delta, 0, max(0, p2_icons.size() - 1))
+
+	_update_cursors()
+	_update_previews()
 
 func _finalize_and_start() -> void:
 	if not (p1_locked and p2_locked):
@@ -179,19 +152,13 @@ func _update_previews() -> void:
 	# --- Player 1 ---
 	if ResourceLoader.exists(p1_preview_path):
 		player1preview.texture = load(p1_preview_path)
-	elif "texture" in p1_icons[p1_index]:
-		player1preview.texture = p1_icons[p1_index].texture
-
 	# --- Player 2 ---
 	# Si ambos están sobre el mismo personaje y existe alt, mostrar alt (aunque no estén lockeados)
 	if name_p1 == name_p2 and ResourceLoader.exists(p2_alt_path):
 		player2preview.texture = load(p2_alt_path)
 	elif ResourceLoader.exists(p2_preview_path):
 		player2preview.texture = load(p2_preview_path)
-	elif "texture" in p2_icons[p2_index]:
-		player2preview.texture = p2_icons[p2_index].texture
 
-	# Opacidad visual
 	player1preview.modulate = Color(1, 1, 1, 1 if p1_locked else 0.45)
 	player2preview.modulate = Color(1, 1, 1, 1 if p2_locked else 0.45)
 

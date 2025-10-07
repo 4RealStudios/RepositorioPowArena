@@ -51,36 +51,34 @@ func _ready() -> void:
 func apply_selected_skins() -> void:
 	var p1_base = Global.player1_choice
 	var p2_base = Global.player2_choice
-	
+
 	if p1_base == "" and p2_base == "":
 		return
-	
+
 	var frames1: SpriteFrames = null
 	var frames2: SpriteFrames = null
-	
-	if p1_base != "" and p2_base != "" and p1_base == p2_base:
-		frames1 = load_skin_frames(p1_base, "main")
-		frames2 = load_skin_frames(p2_base, "alt")
-		if frames2 == null:
-			frames2 = load_skin_frames(p2_base, "main")
-	else:
-		if p1_base != "":
-			frames1 = load_skin_frames(p1_base, "main")
-		if p2_base != "":
-			frames2 = load_skin_frames(p2_base, "alt")
-	
-	if frames1:
-		if player1.has_node("AnimatedSprite2DP1"):
-			player1.get_node("AnimatedSprite2DP1").sprite_frames = frames1
-		else:
-			push_warning("player1 no tiene an8imatedprite en la ruta esperada")
-	if frames2:
-		if player2.has_node("AnimatedSprite2DP2"):
-			player2.get_node("AnimatedSprite2DP2").sprite_frames = frames2
-		else:
-			push_warning("player2 no tiene an8imatedprite en la ruta esperada")
 
-# carga un SpriteFrames (variant = "main" or "alt")
+	# --- PLAYER 1 ---
+	if p1_base != "":
+		var variant1 = "alt" if Global.player1_alt else "main"
+		frames1 = load_skin_frames(p1_base, variant1)
+
+	# --- PLAYER 2 ---
+	if p2_base != "":
+		var variant2 = "alt" if Global.player2_alt else "main"
+		frames2 = load_skin_frames(p2_base, variant2)
+
+	# --- APLICAR SPRITE FRAMES ---
+	if frames1 and player1.has_node("AnimatedSprite2DP1"):
+		player1.get_node("AnimatedSprite2DP1").sprite_frames = frames1
+	elif not frames1:
+		push_warning("No se pudo cargar spriteframes para Player1")
+
+	if frames2 and player2.has_node("AnimatedSprite2DP2"):
+		player2.get_node("AnimatedSprite2DP2").sprite_frames = frames2
+	elif not frames2:
+		push_warning("No se pudo cargar spriteframes para Player2")
+
 func load_skin_frames(base_name: String, variant: String = "main") -> SpriteFrames:
 	var path := ""
 	if variant == "main":
