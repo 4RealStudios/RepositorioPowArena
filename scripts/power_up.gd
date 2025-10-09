@@ -11,7 +11,7 @@ signal picked_up(player, type)
 
 func _ready() -> void:
 	_set_icon_from_type()
-	connect("body_entered", Callable(self, "_on_body_entered"))
+	#connect("body_entered", Callable(self, "_on_body_entered"))
 
 func _set_icon_from_type() -> void:
 	if atlas_texture == null:

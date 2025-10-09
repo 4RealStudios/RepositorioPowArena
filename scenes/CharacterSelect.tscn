@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dimc45whw7t5a"]
+[gd_scene load_steps=17 format=3 uid="uid://dimc45whw7t5a"]
 
 [ext_resource type="Script" uid="uid://dgkoc1rjveebx" path="res://scripts/character_select.gd" id="1_sr2wn"]
 [ext_resource type="Texture2D" uid="uid://wx7yr7nm23q2" path="res://assets/players/skins/backgrounds/background.png" id="2_rpq25"]
@@ -19,6 +19,10 @@ region = Rect2(62, 0, 29, 27)
 atlas = ExtResource("5_uq28m")
 region = Rect2(31, 0, 29, 27)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwdfs"]
+atlas = ExtResource("5_uq28m")
+region = Rect2(93, 0, 29, 27)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_22h0e"]
 atlas = ExtResource("5_uq28m")
 region = Rect2(0, 0, 29, 27)
@@ -30,6 +34,10 @@ region = Rect2(62, 0, 29, 27)
 [sub_resource type="AtlasTexture" id="AtlasTexture_yyo81"]
 atlas = ExtResource("5_uq28m")
 region = Rect2(31, 0, 29, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbi47"]
+atlas = ExtResource("5_uq28m")
+region = Rect2(93, 0, 29, 27)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1w4ot"]
 atlas = ExtResource("6_d8y2c")
@@ -72,6 +80,11 @@ position = Vector2(133, 163)
 scale = Vector2(0.637931, 0.648148)
 texture = SubResource("AtlasTexture_d8y2c")
 
+[node name="Icon_hunter" type="Sprite2D" parent="GridContainerP1"]
+position = Vector2(152, 163)
+scale = Vector2(0.638, 0.648)
+texture = SubResource("AtlasTexture_kwdfs")
+
 [node name="GridContainerP2" type="Node2D" parent="."]
 
 [node name="Icon_robot" type="Sprite2D" parent="GridContainerP2"]
@@ -88,6 +101,11 @@ texture = SubResource("AtlasTexture_1h2j8")
 position = Vector2(182, 163)
 scale = Vector2(0.638, 0.648)
 texture = SubResource("AtlasTexture_yyo81")
+
+[node name="Icon_hunter" type="Sprite2D" parent="GridContainerP2"]
+position = Vector2(201, 163)
+scale = Vector2(0.638, 0.648)
+texture = SubResource("AtlasTexture_kbi47")
 
 [node name="CursorP1" type="Sprite2D" parent="."]
 position = Vector2(131, 142)

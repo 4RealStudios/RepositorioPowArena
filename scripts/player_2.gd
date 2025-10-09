@@ -15,6 +15,7 @@ extends CharacterBody2D
 # --- Nodos ---
 @onready var shooting_point: Marker2D = $ShootingPointP2
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2DP2
+@onready var shield_effect: Node2D = $shieldEffect if has_node("ShieldEffect") else null
 
 # --- Estado ---
 var can_shoot: bool = true
@@ -24,6 +25,7 @@ var lives: int = 3
 var is_invulnerable: bool = false
 var is_dead: bool = false
 var is_hurt: bool = false
+var has_shield: bool = false
 
 var input_vector: Vector2 = Vector2.ZERO
 var aim_dir: Vector2 = Vector2.RIGHT
@@ -37,11 +39,33 @@ var dash_cooldown_timer: float = 0.0
 var is_shooting: bool = false
 var last_shoot_time: float = -9999.0
 
+var characters := {
+	"robot":{
+		"main": preload("res://assets/players/skins/robot.tres"),
+		"alt": preload("res://assets/players/skins/robot_alt.tres")
+	},
+	"mago": {
+		"main": preload("res://assets/players/skins/mago.tres"),
+		"alt": preload("res://assets/players/skins/mago_alt.tres")
+	},
+	"panda": {
+		"main": preload("res://assets/players/skins/panda.tres"),
+		"alt": preload("res://assets/players/skins/panda_alt.tres")
+	},
+	"hunter": {
+	"main": preload("res://assets/players/skins/hunter.tres"),
+	"alt": preload("res://assets/players/skins/hunter_alt.tres")
+	}
+}
+
 func _ready() -> void:
 	can_move = false
 	anim_sprite.play("idle")
 	spawn_position = global_position
 	shoot_local_offset = shooting_point.position
+	
+	if shield_effect:
+		shield_effect.visible = false
 
 func _physics_process(delta: float) -> void:
 	if not can_move or is_dead:
@@ -159,7 +183,11 @@ func start_dash() -> void:
 func take_damage() -> void:
 	if is_dead or is_invulnerable:
 		return
-
+		
+	if has_shield:
+		desactivate_shield()
+		return
+		
 	lives -= 1
 	get_tree().call_group("ui", "update_lives", player_id, lives)
 
@@ -190,6 +218,23 @@ func start_invulnerability() -> void:
 
 	if not is_dead and anim_sprite.animation == "hurt":
 		anim_sprite.play("idle")
+
+func activate_shield(duration: float = 5.0) -> void:
+	if has_shield:
+		return
+	has_shield = true
+	
+	if shield_effect:
+		shield_effect.visible = true
+		if shield_effect.has_method("play"):
+			shield_effect.play("activate")
+	await get_tree().create_timer(duration).timeout
+	desactivate_shield()
+
+func desactivate_shield() -> void:
+	has_shield = false
+	if shield_effect:
+		shield_effect.visible = false
 
 func reset_for_round() -> void:
 	lives = 3

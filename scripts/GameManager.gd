@@ -231,16 +231,30 @@ func start_round():
 	is_counting_down = false
 
 func spawn_powerup():
+	if match_over or not PowerUpScene:
+		return
+		
 	var p = PowerUpScene.instantiate()
 	p.type = randi() % PowerUp.PowerUpType.size()
 	p.connect("picked_up", Callable(self, "_on_powerup_picked"))
 	add_child(p)
 	p.global_position = get_random_spawn_position()
+	p.add_to_group("powerups")
 
 func _on_powerup_picked(player, type):
 	match type:
 		PowerUp.PowerUpType.BOUNCE:
 			player.extra_bounces = 2
+		PowerUp.PowerUpType.SPEED:
+			player.speed *= 1.5
+			await get_tree().create_timer(8.0).timeout
+			player.speed /= 1.5
+		PowerUp.PowerUpType.HEAL:
+			player.lives = min(player.lives + 1, 3)
+			get_tree().call_group("ui", "update_lives", player.player_id, player.lives)
+		PowerUp.PowerUpType.SHIELD:
+			if player.has_method("activate_shield"):
+				player.activate_shield()
 
 func get_random_spawn_position() -> Vector2:
 	var spawn_area = Rect2(Vector2(16, 16), Vector2(320 - 32, 180))
