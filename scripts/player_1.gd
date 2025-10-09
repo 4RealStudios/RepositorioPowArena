@@ -254,6 +254,7 @@ func reset_for_round() -> void:
 	anim_sprite.visible = true
 	anim_sprite.play("idle")
 	extra_bounces = 0
+	desactivate_shield()
 
 func set_can_move(enable: bool) -> void:
 	can_move = enable

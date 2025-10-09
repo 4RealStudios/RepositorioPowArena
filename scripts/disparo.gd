@@ -18,6 +18,10 @@ func _physics_process(delta: float) -> void:
 		var collider: Node = hit.collider as Node
 		global_position = hit.position
 		if collider and collider.is_in_group("Players"):
+			if "has_shield" in collider and collider.has_shield:
+				_reflect_bullet(hit.normal)
+				return
+		if collider and collider.is_in_group("Players"):
 			if "take_damage" in collider:
 				collider.take_damage()
 			var gm = get_tree().get_first_node_in_group("game")
@@ -33,3 +37,10 @@ func _physics_process(delta: float) -> void:
 			queue_free()
 	else:
 		global_position = to
+
+func _reflect_bullet(normal: Vector2) -> void:
+	direction = direction.bounce(normal).normalized()
+	bounces = 0
+	global_position += direction * 4
+	if has_node("ReflectSound"):
+		get_node("ReflectSound").play()
