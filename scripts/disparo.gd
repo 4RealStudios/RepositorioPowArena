@@ -21,7 +21,9 @@ func _physics_process(delta: float) -> void:
 			if "has_shield" in collider and collider.has_shield:
 				_reflect_bullet(hit.normal)
 				return
-		if collider and collider.is_in_group("Players"):
+			if "is_invulnerable" in collider and collider.is_invulnerable:
+				queue_free()
+				return
 			if "take_damage" in collider:
 				collider.take_damage()
 			var gm = get_tree().get_first_node_in_group("game")

@@ -27,6 +27,10 @@ var is_invulnerable: bool = false
 var is_dead: bool = false
 var is_hurt: bool = false
 var has_shield: bool = false
+var speed_boost_active: bool = false
+var speed_boost_timer: Timer
+var speed_multiplier: float = 1.5
+var speed_boost_duration: float = 5.0
 
 var input_vector: Vector2 = Vector2.ZERO
 var aim_dir: Vector2 = Vector2.RIGHT
@@ -68,9 +72,13 @@ func _ready() -> void:
 	anim_sprite.play("idle")
 	spawn_position = global_position
 	shoot_local_offset = shooting_point.position
-	
 	if shield_effect:
 		shield_effect.visible = false
+	speed_boost_timer = Timer.new()
+	speed_boost_timer.one_shot = true
+	speed_boost_timer.wait_time = speed_boost_duration
+	add_child(speed_boost_timer)
+	speed_boost_timer.timeout.connect(_on_speed_boost_timeout)
 
 func _physics_process(delta: float) -> void:
 	if not can_move or is_dead:
@@ -184,6 +192,9 @@ func start_dash() -> void:
 	is_dashing = true
 	dash_timer = dash_duration
 	anim_sprite.play("dash")
+	is_invulnerable = true
+	await get_tree().create_timer(dash_duration).timeout
+	is_invulnerable = false
 
 func take_damage() -> void:
 	if is_dead or is_invulnerable:
@@ -255,6 +266,24 @@ func reset_for_round() -> void:
 	anim_sprite.play("idle")
 	extra_bounces = 0
 	desactivate_shield()
+	speed = speed
+	speed_boost_active = false
+	if speed_boost_timer:
+		speed_boost_timer.stop()
+
+func activate_speed_boost():
+	if speed_boost_active:
+		# Si ya tiene boost, solo reiniciamos el timer
+		speed_boost_timer.start()
+		return
+		
+	speed_boost_active = true
+	speed *= speed_multiplier
+	speed_boost_timer.start()
+
+func _on_speed_boost_timeout():
+	speed_boost_active = false
+	speed = speed
 
 func set_can_move(enable: bool) -> void:
 	can_move = enable

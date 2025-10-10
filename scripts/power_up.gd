@@ -18,9 +18,7 @@ func _set_icon_from_type() -> void:
 	if atlas_texture == null:
 		push_warning("⚠️ No hay atlas_texture asignado.")
 		return
-
 	var region := Rect2()
-
 	match type:
 		PowerUpType.SPEED:
 			region = Rect2(48, 0, 14, 14)
@@ -30,7 +28,6 @@ func _set_icon_from_type() -> void:
 			region = Rect2(32, 0, 14, 14)
 		PowerUpType.BOUNCE:
 			region = Rect2(0, 0, 14, 14)
-
 	var tex := AtlasTexture.new()
 	tex.atlas = atlas_texture
 	tex.region = region

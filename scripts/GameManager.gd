@@ -233,7 +233,6 @@ func start_round():
 func spawn_powerup():
 	if match_over or not PowerUpScene:
 		return
-		
 	var p = PowerUpScene.instantiate()
 	p.type = randi() % PowerUp.PowerUpType.size()
 	p.connect("picked_up", Callable(self, "_on_powerup_picked"))

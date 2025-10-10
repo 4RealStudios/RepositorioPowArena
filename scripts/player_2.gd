@@ -179,6 +179,9 @@ func start_dash() -> void:
 	is_dashing = true
 	dash_timer = dash_duration
 	anim_sprite.play("dash")
+	is_invulnerable = true
+	await get_tree().create_timer(dash_duration).timeout
+	is_invulnerable = false
 
 func take_damage() -> void:
 	if is_dead or is_invulnerable:
