@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=42 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://bsohmxmgvv25n" path="res://scripts/world.gd" id="1_7iits"]
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://bplqiuk6gfjy" path="res://assets/HUD/controles (1).png" id="13_7iits"]
 [ext_resource type="Texture2D" uid="uid://bha6iuqedau6m" path="res://assets/HUD/iconos.png" id="17_7iits"]
 [ext_resource type="Script" uid="uid://dnt1lw7cngye7" path="res://scripts/fade_area.gd" id="17_pm21f"]
+[ext_resource type="Texture2D" uid="uid://bb17qf4su1565" path="res://assets/PowerUps/power ups.png" id="18_oo54l"]
 [ext_resource type="Script" uid="uid://d040v84fg8xhj" path="res://scripts/camera_2d.gd" id="20_2lf6f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oo54l"]
@@ -29,6 +30,30 @@ region = Rect2(0, 0, 22, 22)
 [sub_resource type="AtlasTexture" id="AtlasTexture_w7kh3"]
 atlas = ExtResource("17_7iits")
 region = Rect2(0, 24, 11, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpybi"]
+atlas = ExtResource("18_oo54l")
+region = Rect2(48, 0, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctatt"]
+atlas = ExtResource("18_oo54l")
+region = Rect2(32, 0, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgqkh"]
+atlas = ExtResource("18_oo54l")
+region = Rect2(0, 0, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nbtd"]
+atlas = ExtResource("18_oo54l")
+region = Rect2(0, 0, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_munwf"]
+atlas = ExtResource("18_oo54l")
+region = Rect2(32, 0, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ts3gi"]
+atlas = ExtResource("18_oo54l")
+region = Rect2(48, 0, 14, 14)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e3hyu"]
 atlas = ExtResource("17_7iits")
@@ -80,12 +105,14 @@ midium_maps = Array[PackedScene]([ExtResource("5_w7kh3"), ExtResource("6_jhx03")
 hard_maps = Array[PackedScene]([ExtResource("6_e3hyu"), ExtResource("9_dss4m"), ExtResource("10_7t5mc")])
 
 [node name="ControlScreen" type="Control" parent="GameManager"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="MarginContainer" type="MarginContainer" parent="GameManager/ControlScreen"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,6 +123,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="GameManager/ControlScreen/MarginContainer"]
+visible = false
 layout_mode = 2
 texture = ExtResource("13_7iits")
 expand_mode = 3
@@ -107,6 +135,7 @@ one_shot = true
 [node name="CountdownTimer" type="Timer" parent="GameManager"]
 
 [node name="CountdownLabel" type="Label" parent="GameManager"]
+visible = false
 offset_left = 142.0
 offset_top = 40.0
 offset_right = 182.0
@@ -117,9 +146,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="player1" parent="GameManager" groups=["Players"] instance=ExtResource("1_nnsk1")]
+visible = false
 position = Vector2(16, 89)
 
 [node name="player2" parent="GameManager" groups=["Players"] instance=ExtResource("2_rwgxs")]
+visible = false
 position = Vector2(299, 90)
 rotation = -1.5708
 
@@ -141,18 +172,18 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Player1_HUD" type="VBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="Icon_Player1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Player1_HUD"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_oo54l")
-stretch_mode = 2
-
 [node name="Vidas_P1" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
+
+[node name="Player1_HUD" type="VBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Icon_Player1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/Player1_HUD"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_oo54l")
+stretch_mode = 2
 
 [node name="Vida1_P1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1"]
 layout_mode = 2
@@ -169,9 +200,45 @@ layout_mode = 2
 texture = SubResource("AtlasTexture_w7kh3")
 stretch_mode = 2
 
+[node name="PowerUpsP1" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="powerup_speed_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_kpybi")
+
+[node name="powerup_shield_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_ctatt")
+
+[node name="powerup_bounce_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_xgqkh")
+
 [node name="Vidas_P2" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
+
+[node name="PowerUpsP2" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="powerup_bounce_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_0nbtd")
+stretch_mode = 2
+
+[node name="powerup_shield_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_munwf")
+stretch_mode = 2
+
+[node name="powerup_speed_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_ts3gi")
+stretch_mode = 2
 
 [node name="Vida1_P2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2"]
 layout_mode = 2
@@ -216,6 +283,7 @@ position = Vector2(274, 6)
 shape = SubResource("RectangleShape2D_pm21f")
 
 [node name="RoundsResults" type="Control" parent="GameManager/HUD" groups=["rounds_ui"]]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
