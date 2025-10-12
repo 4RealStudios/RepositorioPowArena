@@ -117,7 +117,6 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector2.ZERO
 		else:
 			velocity = input_vector * speed
-			# iniciar dash si corresponde
 		if Input.is_action_just_pressed("p1_dash") and dash_cooldown_timer <= 0.0 and input_vector != Vector2.ZERO:
 			start_dash()
 			
@@ -125,7 +124,6 @@ func _physics_process(delta: float) -> void:
 		anim_sprite.rotation = aim_dir.angle() - PI/90
 		
 	_update_animation()
-	
 	move_and_slide()
 	if Input.is_action_just_pressed("p1_shoot"):
 		shoot()
@@ -273,7 +271,6 @@ func reset_for_round() -> void:
 
 func activate_speed_boost():
 	if speed_boost_active:
-		# Si ya tiene boost, solo reiniciamos el timer
 		speed_boost_timer.start()
 		return
 		

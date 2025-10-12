@@ -34,10 +34,32 @@ func _set_icon_from_type() -> void:
 	sprite.texture = tex
 
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("Players"):
-		print("⚡ PowerUp recogido:", type)
-		emit_signal("picked_up", body, type)
-		queue_free()
+	if not body or not body.is_in_group("Players"):
+		return
+	var powerup_name: String = ""
+	match type:
+		PowerUpType.SPEED:
+			powerup_name = "speed"
+		PowerUpType.SHIELD:
+			powerup_name = "shield"
+		PowerUpType.BOUNCE:
+			powerup_name = "bounce"
+
+	var player_id: int = 1
+	var val = body.get("player_id")
+	if val != null:
+		player_id = int(val)
+
+	# Llamar al HUD
+	var hud = get_tree().get_first_node_in_group("ui")
+	if hud:
+		print("[PowerUp] Player", player_id, "picked", powerup_name)
+		hud.show_powerup(player_id, powerup_name, duration)
+	else:
+		print("[PowerUp] ⚠️ HUD no encontrado (group 'ui')")
+
+	emit_signal("picked_up", body, type)
+	queue_free()
 
 func _despawn_after_time() -> void:
 	await get_tree().create_timer(lifetime).timeout

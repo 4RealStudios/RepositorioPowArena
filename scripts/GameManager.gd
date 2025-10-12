@@ -259,7 +259,7 @@ func get_random_spawn_position() -> Vector2:
 	var spawn_area = Rect2(Vector2(16, 16), Vector2(320 - 32, 180))
 	var pos: Vector2
 	var tries := 0
-	while tries < 50:  # límite de intentos
+	while tries < 50:
 		pos = Vector2(
 			randf_range(spawn_area.position.x, spawn_area.end.x),
 			randf_range(spawn_area.position.y, spawn_area.end.y)

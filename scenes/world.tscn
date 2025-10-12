@@ -206,14 +206,17 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 
 [node name="powerup_speed_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1"]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_kpybi")
 
 [node name="powerup_shield_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1"]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_ctatt")
 
 [node name="powerup_bounce_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1"]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_xgqkh")
 
@@ -226,16 +229,19 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="powerup_bounce_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2"]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_0nbtd")
 stretch_mode = 2
 
 [node name="powerup_shield_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2"]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_munwf")
 stretch_mode = 2
 
 [node name="powerup_speed_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2"]
+visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_ts3gi")
 stretch_mode = 2

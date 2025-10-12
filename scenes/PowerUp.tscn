@@ -8,7 +8,7 @@ radius = 4.0
 
 [node name="PowerUp" type="Area2D" groups=["powerups"]]
 script = ExtResource("1_0ocr6")
-type = 2
+type = 0
 atlas_texture = ExtResource("2_0ocr6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
