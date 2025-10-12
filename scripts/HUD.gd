@@ -3,6 +3,18 @@ extends CanvasLayer
 const BLINK_THRESHOLD := 0.25
 const BLINK_SPEED := 0.3
 
+@onready var vidas_p1 = [
+	$"MarginContainer/HBoxContainer/Vidas_P1/Vida1_P1",
+	$"MarginContainer/HBoxContainer/Vidas_P1/Vida2_P1",
+	$"MarginContainer/HBoxContainer/Vidas_P1/Vida3_P1"
+]
+
+@onready var vidas_p2 = [
+	$"MarginContainer/HBoxContainer/Vidas_P2/Vida1_P2",
+	$"MarginContainer/HBoxContainer/Vidas_P2/Vida2_P2",
+	$"MarginContainer/HBoxContainer/Vidas_P2/Vida3_P2"
+]
+
 @onready var powerups_p1 = {
 	"speed": $MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1/powerup_speed_p1,
 	"shield": $MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1/powerup_shield_p1,
@@ -20,7 +32,6 @@ var active_powerups_p2: Dictionary = {}
 
 func _ready() -> void:
 	add_to_group("ui")
-	# Ocultamos todos los iconos al iniciar
 	for icon in powerups_p1.values():
 		icon.visible = false
 		icon.modulate = Color.WHITE
@@ -33,23 +44,25 @@ func _process(delta: float) -> void:
 	update_powerups(active_powerups_p1, powerups_p1, delta)
 	update_powerups(active_powerups_p2, powerups_p2, delta)
 
+func update_lives(player_id: int, lives: int) -> void:
+	var vidas = vidas_p1 if player_id == 1 else vidas_p2
+	for i in range(vidas.size()):
+		vidas[i].visible = i < lives
+
 func update_powerups(active_dict: Dictionary, icons_dict: Dictionary, delta: float) -> void:
 	var to_remove := []
 	for name in active_dict.keys():
 		if not icons_dict.has(name):
 			continue
-
 		var data = active_dict[name]
 		data["time_left"] -= delta
 		var icon: TextureRect = icons_dict[name]
-
 		if data["time_left"] <= 0.0:
 			icon.visible = false
 			stop_blink(icon)
 			icon.modulate = Color.WHITE
 			to_remove.append(name)
 			continue
-
 		var percent_left = data["time_left"] / data["duration"]
 		if percent_left <= BLINK_THRESHOLD and not data["blinking"]:
 			start_blink(icon)
@@ -57,7 +70,6 @@ func update_powerups(active_dict: Dictionary, icons_dict: Dictionary, delta: flo
 		elif percent_left > BLINK_THRESHOLD and data["blinking"]:
 			stop_blink(icon)
 			data["blinking"] = false
-
 	for k in to_remove:
 		active_dict.erase(k)
 

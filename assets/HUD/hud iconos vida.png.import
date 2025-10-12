@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0vchowuun20o"
-path="res://.godot/imported/tablero rondas.png-8e53ff441c73fbca28dc2a810e323b03.ctex"
+uid="uid://bt5nol650knao"
+path="res://.godot/imported/hud iconos vida.png-23a8ac164c3b1528a68305a374ef8003.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/HUD/tablero rondas.png"
-dest_files=["res://.godot/imported/tablero rondas.png-8e53ff441c73fbca28dc2a810e323b03.ctex"]
+source_file="res://assets/HUD/hud iconos vida.png"
+dest_files=["res://.godot/imported/hud iconos vida.png-23a8ac164c3b1528a68305a374ef8003.ctex"]
 
 [params]
 

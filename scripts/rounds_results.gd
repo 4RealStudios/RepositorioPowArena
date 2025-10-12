@@ -5,11 +5,11 @@ extends Control
 
 var rounds_p1 := 0
 var rounds_p2 := 0
-const MAX_ROUNDS := 5
+const MAX_ROUNDS := 10
 
 func _ready() -> void:
 	reset_rounds()
-	visible = false # Arranca oculto
+	visible = false 
 
 func add_round_point(player_id: int) -> void:
 	if player_id == 1 and rounds_p1 < MAX_ROUNDS:

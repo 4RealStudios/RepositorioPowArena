@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctt7k3i2xji5r"
-path="res://.godot/imported/tablero rondas 5r.png-deb1a3277f670642a511e77d8e29514f.ctex"
+uid="uid://bmg0ucw1vsyd4"
+path="res://.godot/imported/rondas.png-e1963ac3fd5e1086184131455b7561d3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/HUD/tablero rondas 5r.png"
-dest_files=["res://.godot/imported/tablero rondas 5r.png-deb1a3277f670642a511e77d8e29514f.ctex"]
+source_file="res://assets/HUD/rondas.png"
+dest_files=["res://.godot/imported/rondas.png-e1963ac3fd5e1086184131455b7561d3.ctex"]
 
 [params]
 

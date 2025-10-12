@@ -21,7 +21,7 @@ const PowerUp = preload("res://scripts/power_up.gd")
 var is_counting_down := false
 var rounds_p1: int = 0
 var rounds_p2: int = 0
-var max_rounds_to_win: int = 5
+var max_rounds_to_win: int = 10
 var countdown_value = 3
 var match_over: bool = false
 
@@ -47,29 +47,22 @@ func _ready() -> void:
 func apply_selected_skins() -> void:
 	var p1_base = Global.player1_choice
 	var p2_base = Global.player2_choice
-
 	if p1_base == "" and p2_base == "":
 		return
-
 	var frames1: SpriteFrames = null
 	var frames2: SpriteFrames = null
-
 	# --- PLAYER 1 ---
 	if p1_base != "":
 		var variant1 = "alt" if Global.player1_alt else "main"
 		frames1 = load_skin_frames(p1_base, variant1)
-
 	# --- PLAYER 2 ---
 	if p2_base != "":
 		var variant2 = "alt" if Global.player2_alt else "main"
 		frames2 = load_skin_frames(p2_base, variant2)
-
-	# --- APLICAR SPRITE FRAMES ---
 	if frames1 and player1.has_node("AnimatedSprite2DP1"):
 		player1.get_node("AnimatedSprite2DP1").sprite_frames = frames1
 	elif not frames1:
 		push_warning("No se pudo cargar spriteframes para Player1")
-
 	if frames2 and player2.has_node("AnimatedSprite2DP2"):
 		player2.get_node("AnimatedSprite2DP2").sprite_frames = frames2
 	elif not frames2:
@@ -94,14 +87,12 @@ func load_skin_frames(base_name: String, variant: String = "main") -> SpriteFram
 func player_died(winner_id: int) -> void:
 	if match_over:
 		return
-		
 	if winner_id == 1:
 		rounds_p1 += 1
 	elif winner_id == 2:
 		rounds_p2 += 1
 	get_tree().call_group("rounds_ui", "show_results", winner_id)
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
-
 	if check_match_winner():
 		end_match()
 	else:
@@ -120,7 +111,6 @@ func end_match() -> void:
 	_safe_set_can_move(player2, false)
 	_safe_set_can_shoot(player1, false)
 	_safe_set_can_shoot(player2, false)
-	
 	var winner := 1 if rounds_p1 > rounds_p2 else 2
 	show_gameover(winner)
 
@@ -140,16 +130,13 @@ func restart_match() -> void:
 	rounds_p2 = 0
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
 	get_tree().call_group("rounds_ui", "reset_rounds")
-
 	apply_selected_skins()
-
 	start_round()
 
 func load_map(round_number: int) -> void:
 	if current_map and is_instance_valid(current_map):
 		current_map.queue_free()
 		current_map = null
-		
 	var pool: Array[PackedScene] = []
 	if round_number < 3:
 		pool = easy_maps
@@ -166,21 +153,16 @@ func load_map(round_number: int) -> void:
 	current_map.z_index = -1
 
 func reset_round():
-		#reinicia las vidas de los jugadores
 	player1.lives = 3
 	player2.lives = 3
-	
 	for PowerUp in get_tree().get_nodes_in_group("powerups"):
 		PowerUp.queue_free()
-	
 	if player1.has_method("reset_for_round"):
 		player1.reset_for_round()
 	if player2.has_method("reset_for_round"):
 		player2.reset_for_round()
-		
 	var spawn_p1 = current_map.get_node("SpawnP1")
 	var spawn_p2 = current_map.get_node("SpawnP2")
-	
 	if spawn_p1:
 		player1.global_position = spawn_p1.global_position
 	else:
@@ -189,7 +171,6 @@ func reset_round():
 		player2.global_position = spawn_p2.global_position
 	else:
 		push_warning("SpawnP2 no encontrado en el mapa actual")
-
 	get_tree().call_group("ui", "update_lives", 1, player1.lives)
 	get_tree().call_group("ui", "update_lives", 2, player2.lives)
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
@@ -201,29 +182,23 @@ func start_round():
 	if is_counting_down:
 		return
 	is_counting_down = true
-	
 	_safe_set_can_move(player1, false)
 	_safe_set_can_move(player2, false)
 	_safe_set_can_shoot(player1, false)
 	_safe_set_can_shoot(player2, false)
-
 	countdown_label.visible = true
-
 	for i in range(3,0,-1): 
 		countdown_label.text = str(i)
 		await get_tree().create_timer(1.0).timeout
 	countdown_label.text = "POW!"
 	await  get_tree().create_timer(0.5).timeout
 	countdown_label.visible = false
-	
 	load_map(rounds_p1 + rounds_p2)
 	await get_tree().process_frame
 	reset_round()
-	
 	hud.visible = true
 	for player in players:
 		player.visible = true
-	
 	_safe_set_can_move(player1, true)
 	_safe_set_can_move(player2, true)
 	_safe_set_can_shoot(player1, true)

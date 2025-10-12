@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=43 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://bsohmxmgvv25n" path="res://scripts/world.gd" id="1_7iits"]
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
@@ -15,21 +15,22 @@
 [ext_resource type="PackedScene" uid="uid://b4h06tr3av61k" path="res://maps/mapas medios/map6.tscn" id="7_o8fc1"]
 [ext_resource type="PackedScene" uid="uid://6uhodm3vtat3" path="res://maps/mapas dificiles/map8.tscn" id="9_dss4m"]
 [ext_resource type="PackedScene" uid="uid://bqybbvhaekt0c" path="res://maps/mapas dificiles/map9.tscn" id="10_7t5mc"]
-[ext_resource type="Texture2D" uid="uid://ctt7k3i2xji5r" path="res://assets/HUD/tablero rondas 5r.png" id="11_e3hyu"]
 [ext_resource type="Script" uid="uid://cefemdlqm16qn" path="res://scripts/rounds_results.gd" id="11_q5onr"]
 [ext_resource type="Texture2D" uid="uid://bplqiuk6gfjy" path="res://assets/HUD/controles (1).png" id="13_7iits"]
 [ext_resource type="Texture2D" uid="uid://bha6iuqedau6m" path="res://assets/HUD/iconos.png" id="17_7iits"]
 [ext_resource type="Script" uid="uid://dnt1lw7cngye7" path="res://scripts/fade_area.gd" id="17_pm21f"]
+[ext_resource type="Texture2D" uid="uid://bt5nol650knao" path="res://assets/HUD/hud iconos vida.png" id="18_kpybi"]
 [ext_resource type="Texture2D" uid="uid://bb17qf4su1565" path="res://assets/PowerUps/power ups.png" id="18_oo54l"]
 [ext_resource type="Script" uid="uid://d040v84fg8xhj" path="res://scripts/camera_2d.gd" id="20_2lf6f"]
+[ext_resource type="Texture2D" uid="uid://bmg0ucw1vsyd4" path="res://assets/HUD/rondas.png" id="21_oo54l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oo54l"]
 atlas = ExtResource("17_7iits")
 region = Rect2(0, 0, 22, 22)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w7kh3"]
-atlas = ExtResource("17_7iits")
-region = Rect2(0, 24, 11, 11)
+atlas = ExtResource("18_kpybi")
+region = Rect2(0, 96, 11, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kpybi"]
 atlas = ExtResource("18_oo54l")
@@ -56,8 +57,8 @@ atlas = ExtResource("18_oo54l")
 region = Rect2(48, 0, 14, 14)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e3hyu"]
-atlas = ExtResource("17_7iits")
-region = Rect2(0, 24, 11, 11)
+atlas = ExtResource("18_kpybi")
+region = Rect2(0, 96, 11, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7r4gi"]
 atlas = ExtResource("17_7iits")
@@ -70,7 +71,7 @@ size = Vector2(92, 34)
 size = Vector2(92, 34)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q5onr"]
-atlas = ExtResource("11_e3hyu")
+atlas = ExtResource("21_oo54l")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jhx03"]
 atlas = ExtResource("17_7iits")
@@ -289,7 +290,6 @@ position = Vector2(274, 6)
 shape = SubResource("RectangleShape2D_pm21f")
 
 [node name="RoundsResults" type="Control" parent="GameManager/HUD" groups=["rounds_ui"]]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -325,27 +325,27 @@ stretch_mode = 2
 [node name="iconP1" type="TextureRect" parent="GameManager/HUD/RoundsResults/RoundsPanel"]
 layout_mode = 0
 offset_left = 5.0
-offset_top = 27.0
+offset_top = 3.0
 offset_right = 19.0
-offset_bottom = 45.0
+offset_bottom = 21.0
 texture = SubResource("AtlasTexture_jhx03")
 stretch_mode = 2
 
 [node name="iconP2" type="TextureRect" parent="GameManager/HUD/RoundsResults/RoundsPanel"]
 layout_mode = 0
 offset_left = 5.0
-offset_top = 3.0
+offset_top = 27.0
 offset_right = 19.0
-offset_bottom = 21.0
+offset_bottom = 45.0
 texture = SubResource("AtlasTexture_o8fc1")
 stretch_mode = 2
 
 [node name="P1Rounds" type="HBoxContainer" parent="GameManager/HUD/RoundsResults"]
 layout_mode = 0
-offset_left = 144.0
-offset_top = 74.0
-offset_right = 200.0
-offset_bottom = 82.0
+offset_left = 114.0
+offset_top = 98.0
+offset_right = 170.0
+offset_bottom = 106.0
 
 [node name="Slot1" type="TextureRect" parent="GameManager/HUD/RoundsResults/P1Rounds"]
 layout_mode = 2
@@ -382,12 +382,47 @@ size_flags_vertical = 4
 texture = SubResource("AtlasTexture_xo05s")
 stretch_mode = 2
 
+[node name="Slot6" type="TextureRect" parent="GameManager/HUD/RoundsResults/P1Rounds"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_xo05s")
+stretch_mode = 2
+
+[node name="Slot7" type="TextureRect" parent="GameManager/HUD/RoundsResults/P1Rounds"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_xo05s")
+stretch_mode = 2
+
+[node name="Slot8" type="TextureRect" parent="GameManager/HUD/RoundsResults/P1Rounds"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_xo05s")
+stretch_mode = 2
+
+[node name="Slot9" type="TextureRect" parent="GameManager/HUD/RoundsResults/P1Rounds"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_xo05s")
+stretch_mode = 2
+
+[node name="Slot10" type="TextureRect" parent="GameManager/HUD/RoundsResults/P1Rounds"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_xo05s")
+stretch_mode = 2
+
 [node name="P2Rounds" type="HBoxContainer" parent="GameManager/HUD/RoundsResults"]
 layout_mode = 0
-offset_left = 144.0
-offset_top = 98.0
-offset_right = 200.0
-offset_bottom = 106.0
+offset_left = 114.0
+offset_top = 74.0
+offset_right = 170.0
+offset_bottom = 82.0
 
 [node name="Slot1" type="TextureRect" parent="GameManager/HUD/RoundsResults/P2Rounds"]
 layout_mode = 2
@@ -410,6 +445,31 @@ texture = SubResource("AtlasTexture_dss4m")
 stretch_mode = 2
 
 [node name="Slot5" type="TextureRect" parent="GameManager/HUD/RoundsResults/P2Rounds"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_dss4m")
+stretch_mode = 2
+
+[node name="Slot6" type="TextureRect" parent="GameManager/HUD/RoundsResults/P2Rounds"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_dss4m")
+stretch_mode = 2
+
+[node name="Slot7" type="TextureRect" parent="GameManager/HUD/RoundsResults/P2Rounds"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_dss4m")
+stretch_mode = 2
+
+[node name="Slot8" type="TextureRect" parent="GameManager/HUD/RoundsResults/P2Rounds"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_dss4m")
+stretch_mode = 2
+
+[node name="Slot9" type="TextureRect" parent="GameManager/HUD/RoundsResults/P2Rounds"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_dss4m")
+stretch_mode = 2
+
+[node name="Slot10" type="TextureRect" parent="GameManager/HUD/RoundsResults/P2Rounds"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_dss4m")
 stretch_mode = 2
