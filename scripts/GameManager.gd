@@ -1,6 +1,5 @@
 extends Node2D
 
-
 @export var PowerUpScene: PackedScene
 @export var easy_maps: Array[PackedScene]
 @export var midium_maps: Array[PackedScene]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=39 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://bsohmxmgvv25n" path="res://scripts/world.gd" id="1_7iits"]
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
@@ -23,10 +23,6 @@
 [ext_resource type="Texture2D" uid="uid://bb17qf4su1565" path="res://assets/PowerUps/power ups.png" id="18_oo54l"]
 [ext_resource type="Script" uid="uid://d040v84fg8xhj" path="res://scripts/camera_2d.gd" id="20_2lf6f"]
 [ext_resource type="Texture2D" uid="uid://bmg0ucw1vsyd4" path="res://assets/HUD/rondas.png" id="21_oo54l"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oo54l"]
-atlas = ExtResource("17_7iits")
-region = Rect2(0, 0, 22, 22)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w7kh3"]
 atlas = ExtResource("18_kpybi")
@@ -60,10 +56,6 @@ region = Rect2(48, 0, 14, 14)
 atlas = ExtResource("18_kpybi")
 region = Rect2(0, 96, 11, 11)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7r4gi"]
-atlas = ExtResource("17_7iits")
-region = Rect2(24, 0, 22, 22)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2lf6f"]
 size = Vector2(92, 34)
 
@@ -72,14 +64,6 @@ size = Vector2(92, 34)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q5onr"]
 atlas = ExtResource("21_oo54l")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jhx03"]
-atlas = ExtResource("17_7iits")
-region = Rect2(144, 0, 14, 18)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o8fc1"]
-atlas = ExtResource("17_7iits")
-region = Rect2(160, 0, 14, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xo05s"]
 atlas = ExtResource("17_7iits")
@@ -183,7 +167,6 @@ size_flags_vertical = 0
 
 [node name="Icon_Player1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/Player1_HUD"]
 layout_mode = 2
-texture = SubResource("AtlasTexture_oo54l")
 stretch_mode = 2
 
 [node name="Vida1_P1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1"]
@@ -270,7 +253,6 @@ size_flags_vertical = 0
 [node name="Icon_Player2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2/Player2_HUD"]
 layout_mode = 2
 size_flags_horizontal = 8
-texture = SubResource("AtlasTexture_7r4gi")
 stretch_mode = 2
 
 [node name="FadeArea" type="Area2D" parent="GameManager/HUD/MarginContainer/HBoxContainer" node_paths=PackedStringArray("hud_root")]
@@ -328,7 +310,6 @@ offset_left = 5.0
 offset_top = 3.0
 offset_right = 19.0
 offset_bottom = 21.0
-texture = SubResource("AtlasTexture_jhx03")
 stretch_mode = 2
 
 [node name="iconP2" type="TextureRect" parent="GameManager/HUD/RoundsResults/RoundsPanel"]
@@ -337,7 +318,6 @@ offset_left = 5.0
 offset_top = 27.0
 offset_right = 19.0
 offset_bottom = 45.0
-texture = SubResource("AtlasTexture_o8fc1")
 stretch_mode = 2
 
 [node name="P1Rounds" type="HBoxContainer" parent="GameManager/HUD/RoundsResults"]

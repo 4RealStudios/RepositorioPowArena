@@ -2,6 +2,19 @@ extends CanvasLayer
 
 const BLINK_THRESHOLD := 0.25
 const BLINK_SPEED := 0.3
+const ICON_ATLAS := preload("res://assets/HUD/hud iconos vida.png")
+const ICON_SIZE := Vector2(22, 22)
+const ICON_MAP := {
+	"robot": Vector2(0, 0),
+	"mago": Vector2(0, 22),
+	"panda": Vector2(0, 44),
+	"hunter": Vector2(0, 66),
+}
+
+@onready var icono_jugador1 = $MarginContainer/HBoxContainer/Vidas_P1/Player1_HUD/Icon_Player1
+@onready var icono_jugador2 = $MarginContainer/HBoxContainer/Vidas_P2/Player2_HUD/Icon_Player2
+@onready var icono_resultado1 = $RoundsResults/RoundsPanel/iconP1
+@onready var icono_resultado2 = $RoundsResults/RoundsPanel/iconP2
 
 @onready var vidas_p1 = [
 	$"MarginContainer/HBoxContainer/Vidas_P1/Vida1_P1",
@@ -48,6 +61,36 @@ func update_lives(player_id: int, lives: int) -> void:
 	var vidas = vidas_p1 if player_id == 1 else vidas_p2
 	for i in range(vidas.size()):
 		vidas[i].visible = i < lives
+
+func get_icon_texture(row: int, column: int) -> Texture2D:
+	var atlas_texture := AtlasTexture.new()
+	atlas_texture.atlas = ICON_ATLAS
+	atlas_texture.region = Rect2(column * ICON_SIZE.x, row * ICON_SIZE.y, ICON_SIZE.x, ICON_SIZE.y)
+	return atlas_texture
+
+func set_player_icon(player_id: int, skin_name: String) -> void:
+	if not ICON_MAP.has(skin_name):
+		print("[HUD] ⚠️ Skin sin ícono definido:", skin_name)
+		return
+
+	var region = ICON_MAP[skin_name]
+	var tex := AtlasTexture.new()
+	tex.atlas = ICON_ATLAS
+	tex.region = Rect2(region, ICON_SIZE)
+
+	if player_id == 1:
+		$MarginContainer/HBoxContainer/Vidas_P1/Icono.texture = tex
+	else:
+		$MarginContainer/HBoxContainer/Vidas_P2/Icono.texture = tex
+
+
+func row_for_skin(skin_name: String) -> int:
+	match skin_name:
+		"robot": return 0
+		"mago": return 1
+		"panda": return 2
+		"hunter": return 3
+		_: return 0
 
 func update_powerups(active_dict: Dictionary, icons_dict: Dictionary, delta: float) -> void:
 	var to_remove := []
