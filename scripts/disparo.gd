@@ -7,6 +7,10 @@ var direction: Vector2 = Vector2.ZERO
 var max_bounces := 1
 var bounces := 0
 
+func _ready() -> void:
+	if owner and owner.has_meta("bullet_texture"):
+		$Sprite2D.texture = owner.get_meta("bullet_texture")
+
 func _physics_process(delta: float) -> void:
 	var from := global_position
 	var to := from + direction * speed * delta

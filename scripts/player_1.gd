@@ -4,10 +4,30 @@ extends CharacterBody2D
 @export var DISPARO: PackedScene = preload("res://scenes/disparo.tscn")
 @export var player_id: int = 1
 @export var character_name: String = "robot"
+@export var skin_type: String = "default" 
 @export var dash_speed: float = 250.0
 @export var dash_duration: float = 0.3
 @export var dash_cooldown: float = 1.5
 @export var shoot_cooldown := 0.5
+@export var bullet_atlas: Texture2D
+@export var bullet_regions := {
+	"robot": {
+		"default": Rect2(0, 0, 4, 4),
+		"alt": Rect2(5, 0, 4, 4)
+	},
+	"mago": {
+		"default": Rect2(10, 0, 4, 4),
+		"alt": Rect2(15, 0, 4, 4)
+	},
+	"panda": {
+		"default": Rect2(20, 0, 4, 4),
+		"alt": Rect2(25, 0, 4, 4)
+	},
+	"hunter": {
+		"default": Rect2(30, 0, 3, 5),
+		"alt": Rect2(34, 0, 3, 5)
+	}
+}
 
 # invulnerabilidad / parpadeo
 @export var invuln_time: float = 2.0
@@ -64,6 +84,13 @@ var characters := {
 }
 
 func _ready() -> void:
+	if bullet_atlas and bullet_regions.has(character_name):
+		var skin_data = bullet_regions[character_name]
+		if skin_data.has(skin_type):
+			var bullet_tex = AtlasTexture.new()
+			bullet_tex.atlas = bullet_atlas
+			bullet_tex.region = skin_data[skin_type]
+			set_meta("bullet_texture", bullet_tex)
 	if player_id == 1:
 		anim_sprite.sprite_frames = characters[character_name]["main"]
 	else:
@@ -128,6 +155,23 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("p1_shoot"):
 		shoot()
 
+func set_bullet_sprite(skin_name: String, is_alt: bool = false):
+	if not Global.BULLET_SPRITES.has(skin_name):
+		printerr("[PLAYER] No se encontró sprite de bala para:", skin_name)
+		return
+
+	var region_key = "alternate" if is_alt else "default"
+	var region = Global.BULLET_SPRITES[skin_name].get(region_key)
+	var atlas_texture = AtlasTexture.new()
+	atlas_texture.atlas = Global.BULLET_ATLAS
+	atlas_texture.region = region
+
+	var sprite = $Sprite2D
+	if sprite:
+		sprite.texture = atlas_texture
+	else:
+		printerr("[PLAYER] ⚠️ No se encontró Sprite2D en la escena del disparo.")
+
 func shoot() -> void:
 	if not can_shoot or is_dead:
 		return
@@ -145,6 +189,14 @@ func shoot() -> void:
 	disparo.rotation = dir.angle()
 	
 	disparo.max_bounces += extra_bounces
+	
+	if bullet_atlas and bullet_regions.has(character_name):
+		var skin_data = bullet_regions[character_name]
+		if skin_data.has(skin_type):
+			var bullet_tex = AtlasTexture.new()
+			bullet_tex.atlas = bullet_atlas
+			bullet_tex.region = skin_data[skin_type]
+			disparo.set_meta("bullet_texture", bullet_tex)
 	
 	get_tree().current_scene.add_child(disparo)
 	is_shooting = true

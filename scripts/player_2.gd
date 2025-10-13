@@ -3,10 +3,31 @@ extends CharacterBody2D
 @export var speed: float = 85.0
 @export var DISPARO: PackedScene = preload("res://scenes/disparo.tscn")
 @export var player_id: int = 2
+@export var character_name: String = "panda"
+@export var skin_type: String = "alt" 
 @export var dash_speed: float = 250.0
 @export var dash_duration: float = 0.3
 @export var dash_cooldown: float = 1.5
 @export var shoot_cooldown := 0.5
+@export var bullet_atlas: Texture2D
+@export var bullet_regions := {
+	"robot": {
+		"default": Rect2(0, 0, 4, 4),
+		"alt": Rect2(5, 0, 4, 4)
+	},
+	"mago": {
+		"default": Rect2(10, 0, 4, 4),
+		"alt": Rect2(15, 0, 4, 4)
+	},
+	"panda": {
+		"default": Rect2(20, 0, 4, 4),
+		"alt": Rect2(25, 0, 4, 4)
+	},
+	"hunter": {
+		"default": Rect2(30, 0, 3, 5),
+		"alt": Rect2(34, 0, 3, 5)
+	}
+}
 
 # invulnerabilidad / parpadeo
 @export var invuln_time: float = 2.0
@@ -26,6 +47,10 @@ var is_invulnerable: bool = false
 var is_dead: bool = false
 var is_hurt: bool = false
 var has_shield: bool = false
+var speed_boost_active: bool = false
+var speed_boost_timer: Timer
+var speed_multiplier: float = 1.5
+var speed_boost_duration: float = 5.0
 
 var input_vector: Vector2 = Vector2.ZERO
 var aim_dir: Vector2 = Vector2.RIGHT
@@ -59,13 +84,28 @@ var characters := {
 }
 
 func _ready() -> void:
+	if bullet_atlas and bullet_regions.has(character_name):
+		var skin_data = bullet_regions[character_name]
+		if skin_data.has(skin_type):
+			var bullet_tex = AtlasTexture.new()
+			bullet_tex.atlas = bullet_atlas
+			bullet_tex.region = skin_data[skin_type]
+			set_meta("bullet_texture", bullet_tex)
+	if player_id == 2:
+		anim_sprite.sprite_frames = characters[character_name]["main"]
+	else:
+		anim_sprite.sprite_frames = characters[character_name]["alt"]
 	can_move = false
 	anim_sprite.play("idle")
 	spawn_position = global_position
 	shoot_local_offset = shooting_point.position
-	
 	if shield_effect:
 		shield_effect.visible = false
+	speed_boost_timer = Timer.new()
+	speed_boost_timer.one_shot = true
+	speed_boost_timer.wait_time = speed_boost_duration
+	add_child(speed_boost_timer)
+	speed_boost_timer.timeout.connect(_on_speed_boost_timeout)
 
 func _physics_process(delta: float) -> void:
 	if not can_move or is_dead:
@@ -132,9 +172,14 @@ func shoot() -> void:
 	disparo.global_position = global_position + rotated_offset
 	disparo.direction = dir
 	disparo.rotation = dir.angle()
-	
 	disparo.max_bounces += extra_bounces
-	
+	if bullet_atlas and bullet_regions.has(character_name):
+		var skin_data = bullet_regions[character_name]
+		if skin_data.has(skin_type):
+			var bullet_tex = AtlasTexture.new()
+			bullet_tex.atlas = bullet_atlas
+			bullet_tex.region = skin_data[skin_type]
+			disparo.set_meta("bullet_texture", bullet_tex)
 	get_tree().current_scene.add_child(disparo)
 	is_shooting = true
 	anim_sprite.play("shooting")
@@ -253,6 +298,10 @@ func reset_for_round() -> void:
 	anim_sprite.play("idle")
 	extra_bounces = 0
 	desactivate_shield()
+
+func _on_speed_boost_timeout():
+	speed_boost_active = false
+	speed = speed
 
 func set_can_move(enable: bool) -> void:
 	can_move = enable
