@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmg0ucw1vsyd4"
-path="res://.godot/imported/rondas.png-e1963ac3fd5e1086184131455b7561d3.ctex"
+uid="uid://dhfip1btqp16"
+path="res://.godot/imported/hud iconos rondas.png-0be91a31b0922b2667cf3e0f2a3341a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/HUD/rondas.png"
-dest_files=["res://.godot/imported/rondas.png-e1963ac3fd5e1086184131455b7561d3.ctex"]
+source_file="res://assets/HUD/hud iconos rondas.png"
+dest_files=["res://.godot/imported/hud iconos rondas.png-0be91a31b0922b2667cf3e0f2a3341a5.ctex"]
 
 [params]
 

@@ -3,13 +3,22 @@ extends CanvasLayer
 const BLINK_THRESHOLD := 0.25
 const BLINK_SPEED := 0.3
 const ICON_ATLAS := preload("res://assets/HUD/hud iconos vida.png")
+const ROUND_ICON_ATLAS := preload("res://assets/HUD/hud iconos rondas.png")
 const ICON_SIZE := Vector2(22, 22)
 const ICON_MAP := {
-	"robot": Vector2(0, 0),
-	"mago": Vector2(0, 22),
-	"panda": Vector2(0, 44),
-	"hunter": Vector2(0, 66),
+	"robot": {"default": Vector2(0, 0), "alternate": Vector2(24, 0)},
+	"panda": {"default": Vector2(0, 24), "alternate": Vector2(24, 24)},
+	"mago": {"default": Vector2(0, 48), "alternate": Vector2(24, 48)},
+	"hunter": {"default": Vector2(0, 72), "alternate": Vector2(24, 72)},
 }
+
+const ROUND_ICON_SIZE := Vector2(23, 23)
+const ROUND_ICON_MAP := {
+	"robot": {"default": Vector2(0, 0), "alternate": Vector2(23, 0)},
+	"panda": {"default": Vector2(0, 24), "alternate": Vector2(23, 24)},
+	"mago": {"default": Vector2(0, 48), "alternate": Vector2(23, 48)},
+	"hunter": {"default": Vector2(0, 72), "alternate": Vector2(23, 72)},
+} 
 
 @onready var icono_jugador1 = $MarginContainer/HBoxContainer/Vidas_P1/Player1_HUD/Icon_Player1
 @onready var icono_jugador2 = $MarginContainer/HBoxContainer/Vidas_P2/Player2_HUD/Icon_Player2
@@ -52,6 +61,10 @@ func _ready() -> void:
 		icon.visible = false
 		icon.modulate = Color.WHITE
 	print("[HUD] Script cargado correctamente.")
+	set_player_icon(1, Global.player1_choice, Global.player1_alt)
+	set_player_icon(2, Global.player2_choice, Global.player2_alt)
+	set_round_result_icon(1, Global.player1_choice, Global.player1_alt)
+	set_round_result_icon(2, Global.player2_choice, Global.player2_alt)
 
 func _process(delta: float) -> void:
 	update_powerups(active_powerups_p1, powerups_p1, delta)
@@ -68,21 +81,45 @@ func get_icon_texture(row: int, column: int) -> Texture2D:
 	atlas_texture.region = Rect2(column * ICON_SIZE.x, row * ICON_SIZE.y, ICON_SIZE.x, ICON_SIZE.y)
 	return atlas_texture
 
-func set_player_icon(player_id: int, skin_name: String) -> void:
+func set_player_icon(player_id: int, skin_name: String, is_alternate: bool = false) -> void:
 	if not ICON_MAP.has(skin_name):
 		print("[HUD] ⚠️ Skin sin ícono definido:", skin_name)
 		return
-
-	var region = ICON_MAP[skin_name]
+	var region = ICON_MAP[skin_name].get("default")
+	if is_alternate:
+		region = ICON_MAP[skin_name].get("alternate")
 	var tex := AtlasTexture.new()
 	tex.atlas = ICON_ATLAS
 	tex.region = Rect2(region, ICON_SIZE)
-
 	if player_id == 1:
-		$MarginContainer/HBoxContainer/Vidas_P1/Icono.texture = tex
+		icono_jugador1.texture = tex
 	else:
-		$MarginContainer/HBoxContainer/Vidas_P2/Icono.texture = tex
+		icono_jugador2.texture = tex
 
+func update_player_icons(player1_skin: String, player2_skin: String) -> void:
+	var player1_alternate = false
+	var player2_alternate = false
+	if player1_skin == player2_skin:
+		player2_alternate = true  
+		set_player_icon(1, player1_skin, false)
+		set_player_icon(2, player2_skin, player2_alternate)
+
+func set_round_result_icon(player_id: int, skin_name: String, is_alternate: bool = false) -> void:
+	if not ROUND_ICON_MAP.has(skin_name):
+		print("[HUD] ⚠️ Skin sin ícono definido para resultados:", skin_name)
+		return
+	var region = ROUND_ICON_MAP[skin_name].get("default")
+	if is_alternate:
+		region = ROUND_ICON_MAP[skin_name].get("alternate")
+	
+	var tex := AtlasTexture.new()
+	tex.atlas = ROUND_ICON_ATLAS
+	tex.region = Rect2(region, ICON_SIZE)
+	
+	if player_id == 1:
+		icono_resultado1.texture = tex
+	else:
+		icono_resultado2.texture = tex
 
 func row_for_skin(skin_name: String) -> int:
 	match skin_name:
