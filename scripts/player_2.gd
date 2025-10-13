@@ -9,25 +9,6 @@ extends CharacterBody2D
 @export var dash_duration: float = 0.3
 @export var dash_cooldown: float = 1.5
 @export var shoot_cooldown := 0.5
-@export var bullet_atlas: Texture2D
-@export var bullet_regions := {
-	"robot": {
-		"default": Rect2(0, 0, 4, 4),
-		"alt": Rect2(5, 0, 4, 4)
-	},
-	"mago": {
-		"default": Rect2(10, 0, 4, 4),
-		"alt": Rect2(15, 0, 4, 4)
-	},
-	"panda": {
-		"default": Rect2(20, 0, 4, 4),
-		"alt": Rect2(25, 0, 4, 4)
-	},
-	"hunter": {
-		"default": Rect2(30, 0, 3, 5),
-		"alt": Rect2(34, 0, 3, 5)
-	}
-}
 
 # invulnerabilidad / parpadeo
 @export var invuln_time: float = 2.0
@@ -84,13 +65,43 @@ var characters := {
 }
 
 func _ready() -> void:
-	if bullet_atlas and bullet_regions.has(character_name):
-		var skin_data = bullet_regions[character_name]
-		if skin_data.has(skin_type):
-			var bullet_tex = AtlasTexture.new()
-			bullet_tex.atlas = bullet_atlas
-			bullet_tex.region = skin_data[skin_type]
+	# ----------------------------
+	# 1) Sincronizar character_name y skin_type con Global (si están disponibles)
+	# ----------------------------
+	# Si Global tiene elecciones guardadas, las usamos. Si no, mantenemos los export defaults.
+	if Global.player1_choice != "" and player_id == 1:
+		character_name = Global.player1_choice
+		# el flag 'alt' lo setea Global (player1_alt / player2_alt)
+		skin_type = "alt" if Global.player1_alt else "main"
+	elif Global.player2_choice != "" and player_id == 2:
+		character_name = Global.player2_choice
+		skin_type = "alt" if Global.player2_alt else "main"
+	# Nota: si tu GameManager ya setea player.character_name antes de _ready,
+	# esta sección no cambiará nada (solo actúa como fallback).
+
+	# Debug: confirmar qué valores usa este Player
+	print("[PLAYER _ready] id:", player_id, " character:", character_name, " skin:", skin_type)
+
+	# ----------------------------
+	# 2) Crear la AtlasTexture única desde Global.bullet_atlas / bullet_regions
+	# ----------------------------
+	if Global.bullet_atlas and Global.bullet_regions.has(character_name):
+		var region_map = Global.bullet_regions[character_name]
+		# usa "main" / "alt" como llaves (coincidir con tu Global)
+		var key := "main" if skin_type == "main" else "alt"
+		if region_map.has(key):
+			var region = region_map[key]
+			var bullet_tex := AtlasTexture.new()
+			bullet_tex.atlas = Global.bullet_atlas
+			bullet_tex.region = region
 			set_meta("bullet_texture", bullet_tex)
+			print("[PLAYER] Seteada bullet texture ->", character_name, key, region)
+		else:
+			printerr("[PLAYER] Global.bullet_regions[", character_name, "] no tiene key:", key)
+	else:
+		printerr("[PLAYER] Global.bullet_atlas o bullet_regions no configurado o falta character:", character_name)
+
+	
 	if player_id == 2:
 		anim_sprite.sprite_frames = characters[character_name]["main"]
 	else:
@@ -173,13 +184,10 @@ func shoot() -> void:
 	disparo.direction = dir
 	disparo.rotation = dir.angle()
 	disparo.max_bounces += extra_bounces
-	if bullet_atlas and bullet_regions.has(character_name):
-		var skin_data = bullet_regions[character_name]
-		if skin_data.has(skin_type):
-			var bullet_tex = AtlasTexture.new()
-			bullet_tex.atlas = bullet_atlas
-			bullet_tex.region = skin_data[skin_type]
-			disparo.set_meta("bullet_texture", bullet_tex)
+	
+	if has_meta("bullet_texture"):
+		disparo.set_meta("bullet_texture", get_meta("bullet_texture"))
+	
 	get_tree().current_scene.add_child(disparo)
 	is_shooting = true
 	anim_sprite.play("shooting")

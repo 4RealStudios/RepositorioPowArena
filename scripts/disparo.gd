@@ -8,8 +8,14 @@ var max_bounces := 1
 var bounces := 0
 
 func _ready() -> void:
+	if has_meta("bullet_texture"):
+		$Sprite2D.texture = get_meta("bullet_texture")
+		return
 	if owner and owner.has_meta("bullet_texture"):
 		$Sprite2D.texture = owner.get_meta("bullet_texture")
+		
+	if has_meta("bullet_rotation"):
+		$Sprite2D.rotation = get_meta("bullet_rotation")
 
 func _physics_process(delta: float) -> void:
 	var from := global_position
@@ -43,6 +49,7 @@ func _physics_process(delta: float) -> void:
 			queue_free()
 	else:
 		global_position = to
+	$Sprite2D.rotation = direction.angle() + deg_to_rad(90)
 
 func _reflect_bullet(normal: Vector2) -> void:
 	direction = direction.bounce(normal).normalized()
