@@ -103,6 +103,7 @@ func player_died(winner_id: int) -> void:
 	if check_match_winner():
 		end_match()
 	else:
+		await get_tree().create_timer(2.5).timeout
 		start_round()
 
 func check_match_winner() -> bool:
@@ -145,9 +146,9 @@ func load_map(round_number: int) -> void:
 		current_map.queue_free()
 		current_map = null
 	var pool: Array[PackedScene] = []
-	if round_number < 3:
+	if round_number < 6:
 		pool = easy_maps
-	elif round_number < 6:
+	elif round_number < 13:
 		pool = midium_maps
 	else:
 		pool = hard_maps

@@ -29,10 +29,6 @@
 atlas = ExtResource("14_ctatt")
 region = Rect2(144, 0, 90, 57)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w7kh3"]
-atlas = ExtResource("18_kpybi")
-region = Rect2(0, 96, 11, 11)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_kpybi"]
 atlas = ExtResource("18_oo54l")
 region = Rect2(48, 0, 14, 14)
@@ -45,6 +41,14 @@ region = Rect2(32, 0, 14, 14)
 atlas = ExtResource("18_oo54l")
 region = Rect2(0, 0, 14, 14)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7kh3"]
+atlas = ExtResource("18_kpybi")
+region = Rect2(0, 96, 11, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3hyu"]
+atlas = ExtResource("18_kpybi")
+region = Rect2(0, 96, 11, 11)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_0nbtd"]
 atlas = ExtResource("18_oo54l")
 region = Rect2(0, 0, 14, 14)
@@ -56,10 +60,6 @@ region = Rect2(32, 0, 14, 14)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ts3gi"]
 atlas = ExtResource("18_oo54l")
 region = Rect2(48, 0, 14, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e3hyu"]
-atlas = ExtResource("18_kpybi")
-region = Rect2(0, 96, 11, 11)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2lf6f"]
 size = Vector2(92, 34)
@@ -155,105 +155,121 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Vidas_P1" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer"]
+[node name="P1_HUD" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Player1_HUD" type="VBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1"]
+[node name="P1_ICON" type="VBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer/P1_HUD"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Icon_Player1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/Player1_HUD"]
+[node name="Icon_Player1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P1_HUD/P1_ICON"]
 layout_mode = 2
 stretch_mode = 2
 
-[node name="Vida1_P1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_w7kh3")
-stretch_mode = 2
-
-[node name="Vida2_P1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_w7kh3")
-stretch_mode = 2
-
-[node name="Vida3_P1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_w7kh3")
-stretch_mode = 2
-
-[node name="PowerUpsP1" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1"]
+[node name="PowerUpsP1" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer/P1_HUD/P1_ICON"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
-[node name="powerup_speed_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1"]
+[node name="powerup_speed_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P1_HUD/P1_ICON/PowerUpsP1"]
 visible = false
+custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 texture = SubResource("AtlasTexture_kpybi")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="powerup_shield_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1"]
+[node name="powerup_shield_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P1_HUD/P1_ICON/PowerUpsP1"]
 visible = false
+custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 texture = SubResource("AtlasTexture_ctatt")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="powerup_bounce_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1"]
+[node name="powerup_bounce_p1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P1_HUD/P1_ICON/PowerUpsP1"]
 visible = false
+custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 texture = SubResource("AtlasTexture_xgqkh")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Vidas_P2" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer"]
+[node name="Vida1_P1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P1_HUD"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_w7kh3")
+stretch_mode = 2
+
+[node name="Vida2_P1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P1_HUD"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_w7kh3")
+stretch_mode = 2
+
+[node name="Vida3_P1" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P1_HUD"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_w7kh3")
+stretch_mode = 2
+
+[node name="P2_HUD" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="PowerUpsP2" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2"]
-layout_mode = 2
-size_flags_vertical = 8
-
-[node name="powerup_bounce_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2"]
-visible = false
-layout_mode = 2
-texture = SubResource("AtlasTexture_0nbtd")
-stretch_mode = 2
-
-[node name="powerup_shield_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2"]
-visible = false
-layout_mode = 2
-texture = SubResource("AtlasTexture_munwf")
-stretch_mode = 2
-
-[node name="powerup_speed_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2"]
-visible = false
-layout_mode = 2
-texture = SubResource("AtlasTexture_ts3gi")
-stretch_mode = 2
-
-[node name="Vida1_P2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2"]
+[node name="Vida1_P2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P2_HUD"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_e3hyu")
 stretch_mode = 2
 
-[node name="Vida2_P2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2"]
+[node name="Vida2_P2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P2_HUD"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_e3hyu")
 stretch_mode = 2
 
-[node name="Vida3_P2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2"]
+[node name="Vida3_P2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P2_HUD"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_e3hyu")
 stretch_mode = 4
 
-[node name="Player2_HUD" type="VBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2"]
+[node name="P2_ICON" type="VBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer/P2_HUD"]
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 0
 
-[node name="Icon_Player2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/Vidas_P2/Player2_HUD"]
+[node name="Icon_Player2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P2_HUD/P2_ICON"]
 layout_mode = 2
 size_flags_horizontal = 8
 stretch_mode = 2
 
+[node name="PowerUpsP2" type="HBoxContainer" parent="GameManager/HUD/MarginContainer/HBoxContainer/P2_HUD/P2_ICON"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="powerup_bounce_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P2_HUD/P2_ICON/PowerUpsP2"]
+visible = false
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+texture = SubResource("AtlasTexture_0nbtd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="powerup_shield_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P2_HUD/P2_ICON/PowerUpsP2"]
+visible = false
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+texture = SubResource("AtlasTexture_munwf")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="powerup_speed_p2" type="TextureRect" parent="GameManager/HUD/MarginContainer/HBoxContainer/P2_HUD/P2_ICON/PowerUpsP2"]
+visible = false
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+texture = SubResource("AtlasTexture_ts3gi")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="FadeArea" type="Area2D" parent="GameManager/HUD/MarginContainer/HBoxContainer" node_paths=PackedStringArray("hud_root")]
+position = Vector2(5, 6)
 script = ExtResource("17_pm21f")
 hud_root = NodePath("..")
 
@@ -262,6 +278,7 @@ position = Vector2(36, 6)
 shape = SubResource("RectangleShape2D_2lf6f")
 
 [node name="FadeArea2" type="Area2D" parent="GameManager/HUD/MarginContainer/HBoxContainer" node_paths=PackedStringArray("hud_root")]
+position = Vector2(-5, 6)
 script = ExtResource("17_pm21f")
 hud_root = NodePath("..")
 

@@ -20,33 +20,33 @@ const ROUND_ICON_MAP := {
 	"hunter": {"default": Vector2(0, 72), "alternate": Vector2(23, 72)},
 } 
 
-@onready var icono_jugador1 = $MarginContainer/HBoxContainer/Vidas_P1/Player1_HUD/Icon_Player1
-@onready var icono_jugador2 = $MarginContainer/HBoxContainer/Vidas_P2/Player2_HUD/Icon_Player2
+@onready var icono_jugador1 = $MarginContainer/HBoxContainer/P1_HUD/P1_ICON/Icon_Player1
+@onready var icono_jugador2 = $MarginContainer/HBoxContainer/P2_HUD/P2_ICON/Icon_Player2
 @onready var icono_resultado1 = $RoundsResults/RoundsPanel/iconP1
 @onready var icono_resultado2 = $RoundsResults/RoundsPanel/iconP2
 
 @onready var vidas_p1 = [
-	$"MarginContainer/HBoxContainer/Vidas_P1/Vida1_P1",
-	$"MarginContainer/HBoxContainer/Vidas_P1/Vida2_P1",
-	$"MarginContainer/HBoxContainer/Vidas_P1/Vida3_P1"
+	$"MarginContainer/HBoxContainer/P1_HUD/Vida1_P1",
+	$"MarginContainer/HBoxContainer/P1_HUD/Vida2_P1",
+	$"MarginContainer/HBoxContainer/P1_HUD/Vida3_P1"
 ]
 
 @onready var vidas_p2 = [
-	$"MarginContainer/HBoxContainer/Vidas_P2/Vida1_P2",
-	$"MarginContainer/HBoxContainer/Vidas_P2/Vida2_P2",
-	$"MarginContainer/HBoxContainer/Vidas_P2/Vida3_P2"
+	$"MarginContainer/HBoxContainer/P2_HUD/Vida1_P2",
+	$"MarginContainer/HBoxContainer/P2_HUD/Vida2_P2",
+	$"MarginContainer/HBoxContainer/P2_HUD/Vida3_P2"
 ]
 
 @onready var powerups_p1 = {
-	"speed": $MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1/powerup_speed_p1,
-	"shield": $MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1/powerup_shield_p1,
-	"bounce": $MarginContainer/HBoxContainer/Vidas_P1/PowerUpsP1/powerup_bounce_p1,
+	"speed": $MarginContainer/HBoxContainer/P1_HUD/P1_ICON/PowerUpsP1/powerup_speed_p1,
+	"shield": $MarginContainer/HBoxContainer/P1_HUD/P1_ICON/PowerUpsP1/powerup_shield_p1,
+	"bounce": $MarginContainer/HBoxContainer/P1_HUD/P1_ICON/PowerUpsP1/powerup_bounce_p1,
 }
 
 @onready var powerups_p2 = {
-	"speed": $MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2/powerup_speed_p2,
-	"shield": $MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2/powerup_shield_p2,
-	"bounce": $MarginContainer/HBoxContainer/Vidas_P2/PowerUpsP2/powerup_bounce_p2,
+	"speed": $MarginContainer/HBoxContainer/P2_HUD/P2_ICON/PowerUpsP2/powerup_speed_p2,
+	"shield": $MarginContainer/HBoxContainer/P2_HUD/P2_ICON/PowerUpsP2/powerup_shield_p2,
+	"bounce": $MarginContainer/HBoxContainer/P2_HUD/P2_ICON/PowerUpsP2/powerup_bounce_p2,
 }
 
 var active_powerups_p1: Dictionary = {}
