@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fv4284nsx3ku"
-path="res://.godot/imported/Panda.png-6ffc88f25332d2416d952e7096bd2c71.ctex"
+uid="uid://ocii7ipq2mw4"
+path="res://.godot/imported/bloque_electrico.png-62963ebf117896c2284f83a81bd0541e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/players/skins/Panda.png"
-dest_files=["res://.godot/imported/Panda.png-6ffc88f25332d2416d952e7096bd2c71.ctex"]
+source_file="res://assets/TileMaps/bloque_electrico.png"
+dest_files=["res://.godot/imported/bloque_electrico.png-62963ebf117896c2284f83a81bd0541e.ctex"]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=41 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://bsohmxmgvv25n" path="res://scripts/world.gd" id="1_7iits"]
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
@@ -17,12 +17,17 @@
 [ext_resource type="PackedScene" uid="uid://bqybbvhaekt0c" path="res://maps/mapas dificiles/map9.tscn" id="10_7t5mc"]
 [ext_resource type="Script" uid="uid://cefemdlqm16qn" path="res://scripts/rounds_results.gd" id="11_q5onr"]
 [ext_resource type="Texture2D" uid="uid://bplqiuk6gfjy" path="res://assets/HUD/controles (1).png" id="13_7iits"]
+[ext_resource type="Texture2D" uid="uid://c34rqh7b5ogb" path="res://assets/HUD/321 pow.png" id="14_ctatt"]
 [ext_resource type="Texture2D" uid="uid://bha6iuqedau6m" path="res://assets/HUD/iconos.png" id="17_7iits"]
 [ext_resource type="Script" uid="uid://dnt1lw7cngye7" path="res://scripts/fade_area.gd" id="17_pm21f"]
 [ext_resource type="Texture2D" uid="uid://bt5nol650knao" path="res://assets/HUD/hud iconos vida.png" id="18_kpybi"]
 [ext_resource type="Texture2D" uid="uid://bb17qf4su1565" path="res://assets/PowerUps/power ups.png" id="18_oo54l"]
 [ext_resource type="Script" uid="uid://d040v84fg8xhj" path="res://scripts/camera_2d.gd" id="20_2lf6f"]
 [ext_resource type="Texture2D" uid="uid://by13eojriotqp" path="res://assets/HUD/tablero rondas.png" id="21_kpybi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37qwj"]
+atlas = ExtResource("14_ctatt")
+region = Rect2(144, 0, 90, 57)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w7kh3"]
 atlas = ExtResource("18_kpybi")
@@ -119,16 +124,9 @@ one_shot = true
 
 [node name="CountdownTimer" type="Timer" parent="GameManager"]
 
-[node name="CountdownLabel" type="Label" parent="GameManager"]
-visible = false
-offset_left = 142.0
-offset_top = 40.0
-offset_right = 182.0
-offset_bottom = 63.0
-size_flags_horizontal = 4
-size_flags_vertical = 0
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="CountdownSprite" type="Sprite2D" parent="GameManager"]
+position = Vector2(160, 90)
+texture = SubResource("AtlasTexture_37qwj")
 
 [node name="player1" parent="GameManager" groups=["Players"] instance=ExtResource("1_nnsk1")]
 visible = false

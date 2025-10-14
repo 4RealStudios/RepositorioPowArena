@@ -22,7 +22,7 @@ var bullet_regions := {
 		"alt": Rect2(25, 0, 4, 4)
 	},
 	"hunter": {
-		"main": Rect2(30, 0, 3, 5),
-		"alt": Rect2(35, 0, 3, 5)
+		"main": Rect2(48, 0, 4, 4),
+		"alt": Rect2(53, 0, 4, 4)
 	}
 }

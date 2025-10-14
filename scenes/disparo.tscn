@@ -1,6 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bexylu8mxo8fl"]
+[gd_scene load_steps=5 format=3 uid="uid://bexylu8mxo8fl"]
 
 [ext_resource type="Script" uid="uid://bech2dsheinxj" path="res://scripts/disparo.gd" id="1_6jt3u"]
+[ext_resource type="Texture2D" uid="uid://da54r8a0oqwr7" path="res://assets/players/balas.png" id="2_6jt3u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_leoo1"]
+atlas = ExtResource("2_6jt3u")
+region = Rect2(53, 0, 4, 4)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6jt3u"]
 radius = 2.0
@@ -9,6 +14,7 @@ radius = 2.0
 script = ExtResource("1_6jt3u")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_leoo1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_6jt3u")

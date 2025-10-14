@@ -4,13 +4,21 @@ extends Node2D
 @export var easy_maps: Array[PackedScene]
 @export var midium_maps: Array[PackedScene]
 @export var hard_maps: Array[PackedScene]
+@export var countdown_atlas = preload("res://assets/HUD/321 pow.png")
+
+var countdown_regions = {
+	3: Rect2(0, 0, 42, 56),
+	2: Rect2(44, 0, 51, 56),
+	1: Rect2(97, 0, 45, 56),
+	"pow": Rect2(144, 0, 90, 57)
+}
 
 var current_map: Node = null
 const PowerUp = preload("res://scripts/power_up.gd")
 
 @onready var player1 = $player1
 @onready var player2 = $player2
-@onready var countdown_label = $CountdownLabel
+@onready var countdown_sprite = $CountdownSprite
 @onready var control_screen = $ControlScreen
 @onready var control_timer = $ControlScreen/Timer
 @onready var hud = $HUD
@@ -185,13 +193,25 @@ func start_round():
 	_safe_set_can_move(player2, false)
 	_safe_set_can_shoot(player1, false)
 	_safe_set_can_shoot(player2, false)
-	countdown_label.visible = true
-	for i in range(3,0,-1): 
-		countdown_label.text = str(i)
+	
+	countdown_sprite.visible = true
+
+	for i in range(3, 0, -1):
+		var tex := AtlasTexture.new()
+		tex.atlas = countdown_atlas
+		tex.region = countdown_regions[i]
+		countdown_sprite.texture = tex
 		await get_tree().create_timer(1.0).timeout
-	countdown_label.text = "POW!"
-	await  get_tree().create_timer(0.5).timeout
-	countdown_label.visible = false
+
+	# POW!
+	var tex_pow := AtlasTexture.new()
+	tex_pow.atlas = countdown_atlas
+	tex_pow.region = countdown_regions["pow"]
+	countdown_sprite.texture = tex_pow
+	await get_tree().create_timer(0.5).timeout
+
+	countdown_sprite.visible = false
+	
 	load_map(rounds_p1 + rounds_p2)
 	await get_tree().process_frame
 	reset_round()
