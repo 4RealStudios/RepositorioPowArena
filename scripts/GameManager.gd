@@ -100,10 +100,14 @@ func player_died(winner_id: int) -> void:
 		rounds_p2 += 1
 	get_tree().call_group("rounds_ui", "show_results", winner_id)
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
+	
+	freeze_game()
+	
 	if check_match_winner():
 		end_match()
 	else:
 		await get_tree().create_timer(2.5).timeout
+		unfreeze_game()
 		start_round()
 
 func check_match_winner() -> bool:
@@ -186,7 +190,9 @@ func reset_round():
 func start_round():
 	if match_over:
 		return
-		
+	
+	get_tree().paused = false
+	
 	if is_counting_down:
 		return
 	is_counting_down = true
@@ -280,6 +286,37 @@ func _safe_set_can_move(player: Node,enable: bool) -> void:
 func _safe_set_can_shoot(player: Node, enable: bool) -> void:
 	if player and player.has_method("set_can_shoot"):
 		player.set_can_shoot(enable)
+
+func freeze_game() -> void:
+	for player in players:
+		_safe_set_can_move(player, false)
+		_safe_set_can_shoot(player, false)
+	
+	if powerup_timer:
+		powerup_timer.stop()
+	
+	for bullet in get_tree().get_nodes_in_group("balas"):
+		if bullet.has_method("set_process"):
+			bullet.set_process(false)
+		if bullet.has_method("set_physics_process"):
+			bullet.set_physics_process(false)
+			
+	hud.process_mode = Node.PROCESS_MODE_ALWAYS
+	countdown_sprite.process_mode = Node.PROCESS_MODE_ALWAYS
+
+func unfreeze_game() -> void:
+	for player in players:
+		_safe_set_can_move(player, true)
+		_safe_set_can_shoot(player, true)
+
+	if powerup_timer and not powerup_timer.is_stopped():
+		powerup_timer.start()
+	
+	for bullet in get_tree().get_nodes_in_group("balas"):
+		if bullet.has_method("set_process"):
+			bullet.set_process(true)
+		if bullet.has_method("set_physics_process"):
+			bullet.set_physics_process(true)
 
 func _on_timer_timeout() -> void:
 	if match_over:

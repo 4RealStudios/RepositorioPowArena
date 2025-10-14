@@ -13,7 +13,6 @@ func _ready() -> void:
 		return
 	if owner and owner.has_meta("bullet_texture"):
 		$Sprite2D.texture = owner.get_meta("bullet_texture")
-		
 	if has_meta("bullet_rotation"):
 		$Sprite2D.rotation = get_meta("bullet_rotation")
 
