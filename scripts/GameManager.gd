@@ -151,11 +151,11 @@ func load_map(round_number: int) -> void:
 		current_map = null
 	var pool: Array[PackedScene] = []
 	if round_number < 6:
-		pool = easy_maps
+		pool = hard_maps
 	elif round_number < 13:
 		pool = midium_maps
 	else:
-		pool = hard_maps
+		pool = easy_maps
 	if  pool.is_empty():
 		push_warning("Pool de mapas vacio para la ronda %d" % round_number)
 		return
