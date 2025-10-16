@@ -10,7 +10,6 @@ extends CharacterBody2D
 @export var dash_cooldown: float = 1.5
 @export var shoot_cooldown := 0.5
 
-
 # invulnerabilidad / parpadeo
 @export var invuln_time: float = 2.0
 @export var blink_interval: float = 0.10  
@@ -19,6 +18,10 @@ extends CharacterBody2D
 @onready var shooting_point: Marker2D = $ShootingPointP1
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2DP1
 @onready var shield_effect: Node2D = $shieldEffect if has_node("ShieldEffect") else null
+@onready var disparo_sfx = $DisparoSFX
+@onready var daño_sfx = $DanoSFX
+@onready var dash_sfx = $DashSFX
+@onready var muerte_sfx = $MuerteSFX
 
 # --- Estado ---
 var can_shoot: bool = true
@@ -38,11 +41,9 @@ var input_vector: Vector2 = Vector2.ZERO
 var aim_dir: Vector2 = Vector2.RIGHT
 var spawn_position: Vector2
 var shoot_local_offset: Vector2
-
 var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
-
 var is_shooting: bool = false
 var last_shoot_time: float = -9999.0
 
@@ -62,6 +63,33 @@ var characters := {
 	"hunter": {
 	"main": preload("res://assets/players/skins/hunter.tres"),
 	"alt": preload("res://assets/players/skins/hunter_alt.tres")
+	}
+}
+
+var character_sounds := {
+	"robot":{
+		"shoot": preload("res://fx/players/robot/Disparo_robot_op1.wav"),
+		"dash": preload("res://fx/players/Dash_op1.wav"),
+		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
+		"death": preload("res://fx/players/Sonido_Dano.wav")
+	},
+	"mago": {
+		"shoot": preload("res://fx/players/mago/Disparo_mago_op2.wav"),
+		"dash": preload("res://fx/players/Dash_op1.wav"),
+		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
+		"death": preload("res://fx/players/Sonido_Dano.wav")
+	},
+	"panda": {
+		"shoot": preload("res://fx/players/panda/Disparo_panda_op1.wav"),
+		"dash": preload("res://fx/players/Dash_op1.wav"),
+		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
+		"death": preload("res://fx/players/Sonido_Dano.wav")
+	},
+	"hunter": {
+		"shoot": preload("res://fx/players/panda/Disparo_panda_op1.wav"),
+		"dash": preload("res://fx/players/Dash_op1.wav"),
+		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
+		"death": preload("res://fx/players/Sonido_Dano.wav")
 	}
 }
 
@@ -87,7 +115,21 @@ func _ready() -> void:
 			printerr("[PLAYER] Global.bullet_regions[", character_name, "] no tiene key:", key)
 	else:
 		printerr("[PLAYER] Global.bullet_atlas o bullet_regions no configurado o falta character:", character_name)
-
+	
+	if character_sounds.has(character_name):
+		var sounds = character_sounds[character_name]
+		if disparo_sfx:
+			disparo_sfx.stream = sounds["shoot"]
+		if daño_sfx:
+			daño_sfx.stream = sounds["hurt"]
+		# Creamos un audio temporal para la muerte si querés reproducirlo en el momento exacto
+		if not has_node("DeathSFX"):
+			var death_sfx = AudioStreamPlayer2D.new()
+			death_sfx.name = "DeathSFX"
+			add_child(death_sfx)
+		else:
+			var death_sfx = $DeathSFX
+			death_sfx.stream = sounds["death"]
 	
 	if player_id == 1:
 		anim_sprite.sprite_frames = characters[character_name]["main"]
@@ -195,6 +237,7 @@ func shoot() -> void:
 	get_tree().current_scene.add_child(disparo)
 	is_shooting = true
 	anim_sprite.play("shooting")
+	disparo_sfx.play()
 
 func _on_animated_sprite_2dp_1_animation_finished() -> void:
 	if anim_sprite.animation == "shooting":
@@ -236,6 +279,7 @@ func start_dash() -> void:
 	is_dashing = true
 	dash_timer = dash_duration
 	anim_sprite.play("dash")
+	dash_sfx.play()
 	is_invulnerable = true
 	await get_tree().create_timer(dash_duration).timeout
 	is_invulnerable = false
@@ -252,11 +296,15 @@ func take_damage() -> void:
 		is_dead = true
 		can_move = false
 		anim_sprite.play("die")
+		if has_node("DeathSFX"):
+			$MuerteSFX.play()
+			
 		get_tree().call_group("game", "player_died", player_id)
 		return
 	is_invulnerable = true
 	is_hurt = true
 	anim_sprite.play("hurt")
+	daño_sfx.play()
 	start_invulnerability()
 
 func start_invulnerability() -> void:

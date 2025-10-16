@@ -18,6 +18,10 @@ extends CharacterBody2D
 @onready var shooting_point: Marker2D = $ShootingPointP2
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2DP2
 @onready var shield_effect: Node2D = $shieldEffect if has_node("ShieldEffect") else null
+@onready var disparo_sfx = $DisparoSFX
+@onready var daño_sfx = $"DañoSFX"
+@onready var dash_sfx = $DashSFX
+@onready var muerte_sfx = $MuerteSFX
 
 # --- Estado ---
 var can_shoot: bool = true
@@ -191,6 +195,7 @@ func shoot() -> void:
 	get_tree().current_scene.add_child(disparo)
 	is_shooting = true
 	anim_sprite.play("shooting")
+	disparo_sfx.play()
 
 func _on_animated_sprite_2dp_2_animation_finished() -> void:
 	if anim_sprite.animation == "shooting":
@@ -257,6 +262,7 @@ func take_damage() -> void:
 	is_invulnerable = true
 	is_hurt = true
 	anim_sprite.play("hurt")
+	daño_sfx.play()
 	start_invulnerability()
 
 func start_invulnerability() -> void:

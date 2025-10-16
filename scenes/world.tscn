@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=42 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://bsohmxmgvv25n" path="res://scripts/world.gd" id="1_7iits"]
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://cefemdlqm16qn" path="res://scripts/rounds_results.gd" id="11_q5onr"]
 [ext_resource type="Texture2D" uid="uid://bplqiuk6gfjy" path="res://assets/HUD/controles (1).png" id="13_7iits"]
 [ext_resource type="Texture2D" uid="uid://c34rqh7b5ogb" path="res://assets/HUD/321 pow.png" id="14_ctatt"]
+[ext_resource type="PackedScene" uid="uid://bexylu8mxo8fl" path="res://scenes/disparo.tscn" id="16_xgqkh"]
 [ext_resource type="Texture2D" uid="uid://bha6iuqedau6m" path="res://assets/HUD/iconos.png" id="17_7iits"]
 [ext_resource type="Script" uid="uid://dnt1lw7cngye7" path="res://scripts/fade_area.gd" id="17_pm21f"]
 [ext_resource type="Texture2D" uid="uid://bt5nol650knao" path="res://assets/HUD/hud iconos vida.png" id="18_kpybi"]
@@ -131,6 +132,17 @@ texture = SubResource("AtlasTexture_37qwj")
 [node name="player1" parent="GameManager" groups=["Players"] instance=ExtResource("1_nnsk1")]
 visible = false
 position = Vector2(16, 89)
+speed = 85.0
+DISPARO = ExtResource("16_xgqkh")
+player_id = 1
+character_name = "robot"
+skin_type = "main"
+dash_speed = 250.0
+dash_duration = 0.3
+dash_cooldown = 1.5
+shoot_cooldown = 0.5
+invuln_time = 2.0
+blink_interval = 0.1
 
 [node name="player2" parent="GameManager" groups=["Players"] instance=ExtResource("2_rwgxs")]
 visible = false

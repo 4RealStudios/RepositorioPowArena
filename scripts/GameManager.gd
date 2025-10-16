@@ -66,14 +66,17 @@ func apply_selected_skins() -> void:
 	if p2_base != "":
 		var variant2 = "alt" if Global.player2_alt else "main"
 		frames2 = load_skin_frames(p2_base, variant2)
+
 	if frames1 and player1.has_node("AnimatedSprite2DP1"):
 		player1.get_node("AnimatedSprite2DP1").sprite_frames = frames1
 	elif not frames1:
 		push_warning("No se pudo cargar spriteframes para Player1")
+		
 	if frames2 and player2.has_node("AnimatedSprite2DP2"):
 		player2.get_node("AnimatedSprite2DP2").sprite_frames = frames2
 	elif not frames2:
 		push_warning("No se pudo cargar spriteframes para Player2")
+
 
 func load_skin_frames(base_name: String, variant: String = "main") -> SpriteFrames:
 	var path := ""

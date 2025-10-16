@@ -23,4 +23,12 @@ gizmo_extents = 1.0
 rotation = 1.57079
 shape = SubResource("CircleShape2D_gneq0")
 
+[node name="DisparoSFX" type="AudioStreamPlayer2D" parent="."]
+
+[node name="DashSFX" type="AudioStreamPlayer2D" parent="."]
+
+[node name="MuerteSFX" type="AudioStreamPlayer2D" parent="."]
+
+[node name="DanoSFX" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="animation_finished" from="AnimatedSprite2DP1" to="." method="_on_animated_sprite_2dp_1_animation_finished"]
