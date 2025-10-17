@@ -244,21 +244,18 @@ func start_dash() -> void:
 func take_damage() -> void:
 	if is_dead or is_invulnerable:
 		return
-		
 	if has_shield:
 		desactivate_shield()
 		return
-		
 	lives -= 1
 	get_tree().call_group("ui", "update_lives", player_id, lives)
-
 	if lives <= 0:
 		is_dead = true
 		can_move = false
 		anim_sprite.play("die")
-		get_tree().call_group("game", "player_died", player_id)
+		
+		get_tree().call_group("game", "on_player_died", player_id)
 		return
-
 	is_invulnerable = true
 	is_hurt = true
 	anim_sprite.play("hurt")

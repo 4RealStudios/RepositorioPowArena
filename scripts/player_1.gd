@@ -299,8 +299,9 @@ func take_damage() -> void:
 		if has_node("DeathSFX"):
 			$MuerteSFX.play()
 			
-		get_tree().call_group("game", "player_died", player_id)
+		get_tree().call_group("game", "on_player_died", player_id)
 		return
+		
 	is_invulnerable = true
 	is_hurt = true
 	anim_sprite.play("hurt")

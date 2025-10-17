@@ -42,6 +42,7 @@ project/assembly_name="Pow!Arena"
 
 folder_colors={
 "res://assets/players/skins/": "blue",
+"res://assets/players/skins/preview_wins/": "orange",
 "res://assets/players/skins/previews/": "orange"
 }
 

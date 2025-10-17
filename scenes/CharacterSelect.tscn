@@ -1,11 +1,11 @@
 [gd_scene load_steps=17 format=3 uid="uid://dimc45whw7t5a"]
 
 [ext_resource type="Script" uid="uid://dgkoc1rjveebx" path="res://scripts/character_select.gd" id="1_sr2wn"]
-[ext_resource type="Texture2D" uid="uid://wx7yr7nm23q2" path="res://assets/players/skins/backgrounds/background.png" id="2_rpq25"]
+[ext_resource type="Texture2D" uid="uid://c3ajcngxcs64f" path="res://assets/players/skins/backgrounds/Fondosel.png" id="2_d8y2c"]
 [ext_resource type="Texture2D" uid="uid://dvupgraikno8e" path="res://assets/players/skins/previews/robot_preview.png" id="3_nb21n"]
 [ext_resource type="Texture2D" uid="uid://bgvt6cash2rjo" path="res://assets/players/skins/previews/robot_preview_alt.png" id="4_uq28m"]
 [ext_resource type="Texture2D" uid="uid://16k8bjjo36dd" path="res://assets/players/skins/icons/iconssel.png" id="5_uq28m"]
-[ext_resource type="Texture2D" uid="uid://1ih8blvn1fje" path="res://assets/players/skins/icons/cuadrosel.png" id="6_d8y2c"]
+[ext_resource type="Texture2D" uid="uid://cc25vj6l4qr6u" path="res://assets/HUD/cuadrosel.png" id="6_7rt4t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uq28m"]
 atlas = ExtResource("5_uq28m")
@@ -40,11 +40,11 @@ atlas = ExtResource("5_uq28m")
 region = Rect2(93, 0, 29, 27)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1w4ot"]
-atlas = ExtResource("6_d8y2c")
+atlas = ExtResource("6_7rt4t")
 region = Rect2(0, 0, 31, 33)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qwdye"]
-atlas = ExtResource("6_d8y2c")
+atlas = ExtResource("6_7rt4t")
 region = Rect2(33, 0, 31, 33)
 
 [node name="CharacterSelect" type="Node2D"]
@@ -52,7 +52,7 @@ script = ExtResource("1_sr2wn")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(160, 90)
-texture = ExtResource("2_rpq25")
+texture = ExtResource("2_d8y2c")
 
 [node name="preview_player1" type="Sprite2D" parent="."]
 position = Vector2(160, 90)
@@ -108,12 +108,12 @@ scale = Vector2(0.638, 0.648)
 texture = SubResource("AtlasTexture_kbi47")
 
 [node name="CursorP1" type="Sprite2D" parent="."]
-position = Vector2(131, 142)
+position = Vector2(131, 141)
 scale = Vector2(0.669355, 0.659091)
 texture = SubResource("AtlasTexture_1w4ot")
 
 [node name="CursorP2" type="Sprite2D" parent="."]
-position = Vector2(180, 142)
+position = Vector2(180, 141)
 scale = Vector2(0.669, 0.659)
 texture = SubResource("AtlasTexture_qwdye")
 
@@ -122,9 +122,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 71.0
-offset_top = 4.0
+offset_top = 11.0
 offset_right = 248.0
-offset_bottom = 53.0
+offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 1

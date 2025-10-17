@@ -28,9 +28,10 @@ const PowerUp = preload("res://scripts/power_up.gd")
 var is_counting_down := false
 var rounds_p1: int = 0
 var rounds_p2: int = 0
-var max_rounds_to_win: int = 10
+var max_rounds_to_win: int = 2
 var countdown_value = 3
 var match_over: bool = false
+var last_scene: PackedScene = null
 
 const GAMEOVER_SCENE := "res://scenes/GameOverMenu.tscn"
 
@@ -77,7 +78,6 @@ func apply_selected_skins() -> void:
 	elif not frames2:
 		push_warning("No se pudo cargar spriteframes para Player2")
 
-
 func load_skin_frames(base_name: String, variant: String = "main") -> SpriteFrames:
 	var path := ""
 	if variant == "main":
@@ -113,6 +113,12 @@ func player_died(winner_id: int) -> void:
 		unfreeze_game()
 		start_round()
 
+func on_player_died(dead_id: int) -> void:
+	if match_over:
+		return
+	var winner_id = 1 if dead_id == 2 else 2
+	player_died(winner_id)
+
 func check_match_winner() -> bool:
 	if rounds_p1 == max_rounds_to_win:
 		return true
@@ -126,16 +132,26 @@ func end_match() -> void:
 	_safe_set_can_move(player2, false)
 	_safe_set_can_shoot(player1, false)
 	_safe_set_can_shoot(player2, false)
+	
 	var winner := 1 if rounds_p1 > rounds_p2 else 2
+	
 	show_gameover(winner)
 
-func show_gameover(winner:int) -> void:
+func show_gameover(winner: int) -> void:
+	print("Ganador en GameManager: ", winner)
+	if hud:
+		hud.visible = false
+	if countdown_sprite:
+		countdown_sprite.visible = false
+	
 	var scene_res = ResourceLoader.load(GAMEOVER_SCENE)
 	if scene_res == null:
 		push_error("No se encontro " + GAMEOVER_SCENE)
 		return
+		
 	var menu = scene_res.instantiate()
 	add_child(menu)
+	
 	if menu.has_method("setup"):
 		menu.setup(winner)
 
@@ -153,16 +169,26 @@ func load_map(round_number: int) -> void:
 		current_map.queue_free()
 		current_map = null
 	var pool: Array[PackedScene] = []
-	if round_number < 6:
+	if round_number < 2:
 		pool = hard_maps
-	elif round_number < 13:
+	elif round_number < 4:
 		pool = midium_maps
 	else:
 		pool = easy_maps
 	if  pool.is_empty():
 		push_warning("Pool de mapas vacio para la ronda %d" % round_number)
 		return
-	var scene := pool[randi() % pool.size()]
+	var scene: PackedScene = null
+	if pool.size() == 1:
+		scene = pool[0]
+	else:
+		while true:
+			var candidate = pool[randi() % pool.size()]
+			if candidate != last_scene:
+				scene = candidate
+				break
+				
+	last_scene = scene
 	current_map = scene.instantiate()
 	add_child(current_map)
 	current_map.z_index = -1
