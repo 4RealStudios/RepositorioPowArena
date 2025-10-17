@@ -6,6 +6,7 @@ extends Node2D
 @onready var rematch_button = $RematchButton
 @onready var change_characters_button = $ChangeCharacterButton
 @onready var mainmenu_button = $MainMenuButton
+@onready var input_timer := Timer.new()
 
 @export var atlas_botones_p1: Texture2D
 @export var atlas_botones_p2: Texture2D
@@ -14,6 +15,7 @@ const MAIN_MENU_SCENE := "res://scenes/MainMenu.tscn"
 const CHARACTER_SELECT_SCENE := "res://scenes/CharacterSelect.tscn"
 
 var selected_index := 0
+var input_enabled := false
 var buttons := []
 
 var regiones_botones := {
@@ -44,22 +46,39 @@ func setup(winner: int) -> void:
 		alt_variant = Global.player2_alt
 	
 	var suffix := "_preview_alt" if alt_variant else "_preview"
-	var preview_path := "res://assets/players/skins/previews/%s%s.png" % [winner_name, suffix]
+	var preview_path := "res://assets/players/skins/preview_wins/%s%s.png" % [winner_name, suffix]
 	
 	if ResourceLoader.exists(preview_path):
 		winner_preview.texture = load(preview_path)
+		print("Ruta preview:", preview_path)
 	else:
 		push_warning("no se encontro prewviews")
 	
 	if winner == 1:
 		winner_preview.flip_h = false
-		winner_preview.position = Vector2(80, 90)
+		winner_preview.position = Vector2(160, 90)
+		winner_text.position = Vector2(240, 50)
 	else:
 		winner_preview.flip_h = true
-		winner_preview.position = Vector2(240, 90)
+		winner_preview.position = Vector2(160, 90)
+		winner_text.position = Vector2(80, 50)
 		
 	_aplicar_atlas_botones(winner)
 	_show_with_animation()
+	_agregar_timer_input()
+	
+	print("Preview cargado:", winner_preview.texture != null)
+	winner_preview.visible = true
+	winner_preview.modulate = Color(1, 1, 1, 1)
+	winner_preview.scale = Vector2(1, 1)
+
+func _agregar_timer_input() -> void:
+	input_timer.wait_time = 2.5 
+	input_timer.one_shot = true
+	add_child(input_timer)
+	input_timer.start()
+	await input_timer.timeout
+	input_enabled = true
 
 func _aplicar_atlas_botones(winner: int) -> void:
 	var atlas_actual: Texture2D = atlas_botones_p1 if winner == 1 else atlas_botones_p2
@@ -80,13 +99,13 @@ func _aplicar_atlas_botones(winner: int) -> void:
 	mainmenu_button.texture = menu_tex
 	
 	if winner == 1:
-		rematch_button.position = Vector2(242, 120)
-		change_characters_button.position = Vector2(242, 135)
-		mainmenu_button.position = Vector2(242, 150)
+		rematch_button.position = Vector2(240, 100)
+		change_characters_button.position = Vector2(240, 115)
+		mainmenu_button.position = Vector2(240, 130)
 	else:
-		rematch_button.position = Vector2(60, 140)
-		change_characters_button.position = Vector2(60, 155)
-		mainmenu_button.position = Vector2(60, 170)
+		rematch_button.position = Vector2(80, 100)
+		change_characters_button.position = Vector2(80, 115)
+		mainmenu_button.position = Vector2(80, 130)
 
 func _show_with_animation():
 	winner_preview.modulate.a = 0
@@ -95,10 +114,13 @@ func _show_with_animation():
 	tween.tween_property(winner_preview, "scale", Vector2(1.05, 1.05), 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not input_enabled:
+		return
+	
 	if event.is_action_pressed("p1_down") or event.is_action_pressed("p2_down"):
 		selected_index = (selected_index + 1) % buttons.size()
 		_update_button_focus()
-	elif event.is_action_pressed("p1_up") or event.is_action_pressed("p1_up"):
+	elif event.is_action_pressed("p1_up") or event.is_action_pressed("p2_up"):
 		selected_index = (selected_index - 1 + buttons.size()) % buttons.size()
 		_update_button_focus()
 	elif event.is_action_pressed("p1_accept") or event.is_action_pressed("p2_accept"):

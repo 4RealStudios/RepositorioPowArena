@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cop1k1xaivaem"
-path="res://.godot/imported/p1 (3).png-cfe6ee325e0222120e85b12d724b1652.ctex"
+uid="uid://vr4opy6qmdw6"
+path="res://.godot/imported/panda_preview_alt.png-2777d3b0121f5aeec76a9ae2c8913d41.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/players/skins/preview_wins/p1 (3).png"
-dest_files=["res://.godot/imported/p1 (3).png-cfe6ee325e0222120e85b12d724b1652.ctex"]
+source_file="res://assets/players/skins/preview_wins/panda_preview_alt.png"
+dest_files=["res://.godot/imported/panda_preview_alt.png-2777d3b0121f5aeec76a9ae2c8913d41.ctex"]
 
 [params]
 

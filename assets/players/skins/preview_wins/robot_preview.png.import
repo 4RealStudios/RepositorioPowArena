@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b42t0fudljlf4"
-path="res://.godot/imported/M2.png-0dd01fc1753c0ab347ea2232048df233.ctex"
+uid="uid://dagyo2lfejd5c"
+path="res://.godot/imported/robot_preview.png-afe6ee3d2ea682b7a2c5e3825dc21b04.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/players/skins/preview_wins/M2.png"
-dest_files=["res://.godot/imported/M2.png-0dd01fc1753c0ab347ea2232048df233.ctex"]
+source_file="res://assets/players/skins/preview_wins/robot_preview.png"
+dest_files=["res://.godot/imported/robot_preview.png-afe6ee3d2ea682b7a2c5e3825dc21b04.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dctkpfmww8r27"
-path="res://.godot/imported/r2.png-73071a2c5610fc555cc109ce84ade953.ctex"
+uid="uid://ctlnlksmu8a06"
+path="res://.godot/imported/hunter_preview.png-7187608dbd9fd84abc8294b73a115657.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/players/skins/preview_wins/r2.png"
-dest_files=["res://.godot/imported/r2.png-73071a2c5610fc555cc109ce84ade953.ctex"]
+source_file="res://assets/players/skins/preview_wins/hunter_preview.png"
+dest_files=["res://.godot/imported/hunter_preview.png-7187608dbd9fd84abc8294b73a115657.ctex"]
 
 [params]
 

@@ -13,7 +13,6 @@ atlas_botones_p2 = ExtResource("3_0ob6d")
 position = Vector2(160, 90)
 
 [node name="WinnerPreview" type="Sprite2D" parent="."]
-position = Vector2(160, 90)
 
 [node name="RematchButton" type="Sprite2D" parent="."]
 position = Vector2(220, 107)
@@ -25,4 +24,3 @@ position = Vector2(222, 126)
 position = Vector2(223, 145)
 
 [node name="WinnerText" type="Sprite2D" parent="."]
-position = Vector2(240, 69)

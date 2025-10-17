@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8j6r1joefsvy"
-path="res://.godot/imported/H2.png-74b6a409db6c86606ad7d568167c1844.ctex"
+uid="uid://wqp8xhyru4h3"
+path="res://.godot/imported/botones menu.png-006db9cd98b8db8b17de75d80b8a6af4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/players/skins/preview_wins/H2.png"
-dest_files=["res://.godot/imported/H2.png-74b6a409db6c86606ad7d568167c1844.ctex"]
+source_file="res://assets/botones menu.png"
+dest_files=["res://.godot/imported/botones menu.png-006db9cd98b8db8b17de75d80b8a6af4.ctex"]
 
 [params]
 
