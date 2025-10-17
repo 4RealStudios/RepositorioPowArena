@@ -1,30 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3ckvrihoqotb"]
+[gd_scene load_steps=6 format=3 uid="uid://b3ckvrihoqotb"]
 
 [ext_resource type="Script" uid="uid://32pt4tp6gi3b" path="res://scripts/main_menu.gd" id="1_yqorp"]
+[ext_resource type="Texture2D" uid="uid://o106qvb68kir" path="res://assets/menu principal nologo.png" id="2_0ykhv"]
+[ext_resource type="Texture2D" uid="uid://wqp8xhyru4h3" path="res://assets/botones menu.png" id="2_ow34m"]
+[ext_resource type="Texture2D" uid="uid://bt3sbu4yfiiy5" path="res://assets/logo menu principal.png" id="3_2wh52"]
+[ext_resource type="Texture2D" uid="uid://b2xoo50b7w2bg" path="res://assets/controles.png" id="5_l72w3"]
 
-[node name="MainMenu" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MainMenu" type="Node2D"]
 script = ExtResource("1_yqorp")
+atlas_botones = ExtResource("2_ow34m")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(160, 90)
+texture = ExtResource("2_0ykhv")
 
-[node name="JUGAR" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "jugar (X)"
+[node name="Logo" type="Sprite2D" parent="."]
+position = Vector2(160, 90)
+texture = ExtResource("3_2wh52")
 
-[node name="SALIR" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "salir (O)"
+[node name="BotonJugar" type="Sprite2D" parent="."]
+
+[node name="BotonSalir" type="Sprite2D" parent="."]
+
+[node name="BotonControles" type="Sprite2D" parent="."]
+
+[node name="ControlesPanel" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(160, 90)
+texture = ExtResource("5_l72w3")
