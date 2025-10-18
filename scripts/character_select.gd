@@ -12,6 +12,9 @@ const GAME_SCENE_PATH := "res://scenes/world.tscn"
 @onready var p1_cursor = $CursorP1
 @onready var p2_cursor = $CursorP2
 
+@export var GRID_COLUMNS := 2
+@export var GRID_ROWS := 2
+
 var p1_index: int = 0
 var p2_index: int = 0
 var p1_locked: bool = false
@@ -59,13 +62,16 @@ func _handle_input_player(player:int) -> void:
 				return
 		else:
 			if Input.is_action_just_pressed("p1_left"):
-				_move_index(player, -1)
+				_move_index(1, -1, 0)
 			elif Input.is_action_just_pressed("p1_right"):
-				_move_index(player, 1)
+				_move_index(1, 1, 0)
+			elif Input.is_action_just_pressed("p1_up"):
+				_move_index(1, 0, -1)
+			elif Input.is_action_just_pressed("p1_down"):
+				_move_index(1, 0, 1)
 			elif Input.is_action_just_pressed("p1_accept"):
 				_lock_player(1)
-				
-	elif player == 2:
+	else:
 		if p2_locked:
 			if Input.is_action_just_pressed("p2_cancel"):
 				_unlock_player(2)
@@ -73,9 +79,13 @@ func _handle_input_player(player:int) -> void:
 				return
 		else:
 			if Input.is_action_just_pressed("p2_left"):
-				_move_index(player, -1)
+				_move_index(2, -1, 0)
 			elif Input.is_action_just_pressed("p2_right"):
-				_move_index(player, 1)
+				_move_index(2, 1, 0)
+			elif Input.is_action_just_pressed("p2_up"):
+				_move_index(2, 0, -1)
+			elif Input.is_action_just_pressed("p2_down"):
+				_move_index(2, 0, 1)
 			elif Input.is_action_just_pressed("p2_accept"):
 				_lock_player(2)
 
@@ -86,16 +96,40 @@ func _lock_player(player:int) -> void:
 		Global.player1_alt = false
 		player1preview.modulate = Color(1,1,1,1)
 		p1_cursor.visible = false
+		_play_preview_zoom(player1preview)
 	else:
 		p2_locked = true
 		Global.player2_choice = _icon_base_name(p2_icons[p2_index])
 		Global.player2_alt = false
 		player2preview.modulate = Color(1,1,1,1)
 		p2_cursor.visible = false
+		_play_preview_zoom(player2preview)
 	
 	_update_cursors()
 	_update_previews()
 	_check_ready_state()
+
+func _play_preview_zoom(node: Node2D) -> void:
+	if node == null:
+		return
+	
+	node.get_tree().create_tween().kill()
+	
+	if not node.has_meta("base_scale"):
+		node.set_meta("base_scale", node.scale)
+	var base_scale: Vector2 = node.get_meta("base_scale")
+	
+	node.scale = base_scale
+	
+	var tween := get_tree().create_tween()
+	var original_scale = node.scale
+	var zoom_scale = original_scale * 1.2
+	
+	tween.tween_property(node, "scale", zoom_scale, 0.12).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(node, "scale", original_scale, 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	
+	tween.parallel().tween_property(node, "modulate", Color(1.3,1.3,1.3,1), 0.1)
+	tween.tween_property(node, "modulate", Color(1,1,1,1), 0.1)
 
 func _unlock_player(player:int) -> void:
 	if player == 1 and p1_locked:
@@ -125,11 +159,37 @@ func _check_ready_state() -> void:
 	else:
 		presstartlabel.play_hide_animation()
 
-func _move_index(player:int, delta:int) -> void:
+func _move_index(player:int, delta_x:int, delta_y:int) -> void:
+	var index := 0
+	var icons := []
 	if player == 1:
-		p1_index = clamp(p1_index + delta, 0, max(0, p1_icons.size() - 1))
+		index = p1_index
+		icons = p1_icons
 	else:
-		p2_index = clamp(p2_index + delta, 0, max(0, p2_icons.size() - 1))
+		index = p2_index
+		icons = p2_icons
+
+	if icons.size() == 0:
+		return
+
+	# Calcular posición actual dentro de la grilla
+	var col := index % GRID_COLUMNS
+	var row := index / GRID_COLUMNS
+
+	# Mover dentro de los límites
+	col = clamp(col + delta_x, 0, GRID_COLUMNS - 1)
+	row = clamp(row + delta_y, 0, GRID_ROWS - 1)
+
+	# Calcular el nuevo índice
+	var new_index := row * GRID_COLUMNS + col
+
+	# Asegurarse de no pasarse del número de íconos disponibles
+	new_index = clamp(new_index, 0, icons.size() - 1)
+
+	if player == 1:
+		p1_index = new_index
+	else:
+		p2_index = new_index
 
 	_update_cursors()
 	_update_previews()
