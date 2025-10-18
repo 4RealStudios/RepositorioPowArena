@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dimc45whw7t5a"]
+[gd_scene load_steps=40 format=3 uid="uid://dimc45whw7t5a"]
 
 [ext_resource type="Script" uid="uid://dgkoc1rjveebx" path="res://scripts/character_select.gd" id="1_sr2wn"]
 [ext_resource type="Texture2D" uid="uid://c3ajcngxcs64f" path="res://assets/players/skins/backgrounds/Fondosel.png" id="2_d8y2c"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://bgvt6cash2rjo" path="res://assets/players/skins/previews/robot_preview_alt.png" id="4_uq28m"]
 [ext_resource type="Texture2D" uid="uid://16k8bjjo36dd" path="res://assets/players/skins/icons/iconssel.png" id="5_uq28m"]
 [ext_resource type="Texture2D" uid="uid://cc25vj6l4qr6u" path="res://assets/HUD/cuadrosel.png" id="6_7rt4t"]
+[ext_resource type="Script" uid="uid://wlg1cm4h3uc5" path="res://scripts/press_start_label.gd" id="7_7rt4t"]
+[ext_resource type="Texture2D" uid="uid://gnqger2i8uro" path="res://assets/cartel inicial.png" id="7_22h0e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uq28m"]
 atlas = ExtResource("5_uq28m")
@@ -46,6 +48,159 @@ region = Rect2(0, 0, 31, 33)
 [sub_resource type="AtlasTexture" id="AtlasTexture_qwdye"]
 atlas = ExtResource("6_7rt4t")
 region = Rect2(33, 0, 31, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nxj2a"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(0, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wj2x"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(320, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yr32b"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(640, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujawh"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(960, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujuo1"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(1280, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfget"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(1600, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6ht0"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(1920, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qium"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(2240, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8a5w"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(2560, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uox3d"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(2880, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpqtu"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(2880, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v11r6"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(2560, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wou2j"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(2240, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uemon"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(1920, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhgcb"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(1600, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x260n"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(1280, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wilpt"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(960, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0xekt"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(640, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mavs5"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(320, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ofu5t"]
+atlas = ExtResource("7_22h0e")
+region = Rect2(0, 0, 320, 180)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_22h0e"]
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_nxj2a")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_0wj2x")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_yr32b")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ujawh")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ujuo1")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_kfget")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_g6ht0")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_6qium")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_y8a5w")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_uox3d")
+}],
+"loop": false,
+"name": &"enter",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_dpqtu")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_v11r6")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_wou2j")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_uemon")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_jhgcb")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_x260n")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_wilpt")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_0xekt")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_mavs5")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ofu5t")
+}],
+"loop": false,
+"name": &"exit",
+"speed": 5.0
+}]
 
 [node name="CharacterSelect" type="Node2D"]
 script = ExtResource("1_sr2wn")
@@ -117,18 +272,10 @@ position = Vector2(180, 141)
 scale = Vector2(0.669, 0.659)
 texture = SubResource("AtlasTexture_qwdye")
 
-[node name="PressStartLabel" type="Label" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 71.0
-offset_top = 11.0
-offset_right = 248.0
-offset_bottom = 60.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 1
-text = "Preciona ▲ para iniciar
-"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="PressStartLabel" type="AnimatedSprite2D" parent="."]
+position = Vector2(160, 90)
+sprite_frames = SubResource("SpriteFrames_22h0e")
+animation = &"exit"
+script = ExtResource("7_7rt4t")
+
+[connection signal="animation_finished" from="PressStartLabel" to="PressStartLabel" method="_on_animation_finished"]

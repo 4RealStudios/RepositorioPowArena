@@ -36,6 +36,8 @@ func _ready():
 	_check_ready_state()
 
 func _process(_delta: float) -> void:
+	get_viewport().set_input_as_handled()
+	
 	if not p1_locked:
 		_handle_input_player(1)
 	if not p2_locked:
@@ -47,35 +49,45 @@ func _process(_delta: float) -> void:
 
 func _handle_input_player(player:int) -> void:
 	if player == 1:
+		# Si el jugador 1 está bloqueado, puede cancelar
 		if p1_locked:
 			if Input.is_action_just_pressed("p1_cancel"):
+				print("Jugador 1 canceló su selección")
 				_unlock_player(1)
-			return
+			return # Importante: salir para que no pueda moverse ni volver a aceptar
+		# Movimiento y selección
 		if Input.is_action_just_pressed("p1_left"):
-			_move_index(player, -1)
+			_move_index(1, -1)
 		elif Input.is_action_just_pressed("p1_right"):
-			_move_index(player, 1)
+			_move_index(1, 1)
 		elif Input.is_action_just_pressed("p1_accept"):
+			print("Jugador 1 confirmó selección")
 			_lock_player(1)
-	else:
+	elif player == 2:
+		# Si el jugador 2 está bloqueado, puede cancelar
 		if p2_locked:
 			if Input.is_action_just_pressed("p2_cancel"):
+				print("Jugador 2 canceló su selección")
 				_unlock_player(2)
 			return
+		# Movimiento y selección
 		if Input.is_action_just_pressed("p2_left"):
-			_move_index(player, -1)
+			_move_index(2, -1)
 		elif Input.is_action_just_pressed("p2_right"):
-			_move_index(player, 1)
+			_move_index(2, 1)
 		elif Input.is_action_just_pressed("p2_accept"):
+			print("Jugador 2 confirmó selección")
 			_lock_player(2)
 
 func _unlock_player(player:int) -> void:
 	if player == 1 and p1_locked:
 		p1_locked = false
 		player1preview.modulate = Color(1,1,1,0.45)
+		p1_cursor.visible = true
 	elif player == 2 and p2_locked:
 		p2_locked = false
 		player2preview.modulate = Color(1,1,1,0.45)
+		p2_cursor.visible = true
 	
 	_update_cursors()
 	_update_previews()
@@ -85,17 +97,24 @@ func _lock_player(player:int) -> void:
 	if player == 1:
 		p1_locked = true
 		player1preview.modulate = Color(1,1,1,1)
+		p1_cursor.visible = false
 	else:
 		p2_locked = true
 		player2preview.modulate = Color(1,1,1,1)
+		p2_cursor.visible = false
 	
 	_update_cursors()
 	_update_previews()
 	_check_ready_state()
 
 func _check_ready_state() -> void:
-	if is_instance_valid(presstartlabel):
-		presstartlabel.visible = p1_locked and p2_locked
+	if not is_instance_valid(presstartlabel):
+		return
+	
+	if p1_locked and p2_locked:
+		presstartlabel.play_show_animation()
+	else:
+		presstartlabel.play_hide_animation()
 
 func _move_index(player:int, delta:int) -> void:
 	if player == 1:
@@ -110,6 +129,8 @@ func _finalize_and_start() -> void:
 	if not (p1_locked and p2_locked):
 		print("No se puede iniciar: faltan jugadores lockeados")
 		return
+	
+	await get_tree().create_timer(0.5).timeout
 	
 	var name1 = _icon_base_name(p1_icons[p1_index])
 	var name2 = _icon_base_name(p2_icons[p2_index])
