@@ -36,72 +36,81 @@ func _ready():
 	_check_ready_state()
 
 func _process(_delta: float) -> void:
-	get_viewport().set_input_as_handled()
+	#get_viewport().set_input_as_handled()
+	_handle_input_player(1)
+	_handle_input_player(2)
 	
-	if not p1_locked:
-		_handle_input_player(1)
-	if not p2_locked:
-		_handle_input_player(2)
-
 	if p1_locked and p2_locked:
 		if Input.is_action_just_pressed("p1_start") or Input.is_action_just_pressed("p2_start"):
 			_finalize_and_start()
+	
+	
+	if Input.is_action_just_pressed("p1_cancel"):
+		print("Detectado p1_cancel")
+	if Input.is_action_just_pressed("p2_cancel"):
+		print("Detectado p2_cancel")
 
 func _handle_input_player(player:int) -> void:
 	if player == 1:
-		# Si el jugador 1 está bloqueado, puede cancelar
 		if p1_locked:
 			if Input.is_action_just_pressed("p1_cancel"):
-				print("Jugador 1 canceló su selección")
 				_unlock_player(1)
-			return # Importante: salir para que no pueda moverse ni volver a aceptar
-		# Movimiento y selección
-		if Input.is_action_just_pressed("p1_left"):
-			_move_index(1, -1)
-		elif Input.is_action_just_pressed("p1_right"):
-			_move_index(1, 1)
-		elif Input.is_action_just_pressed("p1_accept"):
-			print("Jugador 1 confirmó selección")
-			_lock_player(1)
+				print("Jugador 1 canceló su selección")
+				return
+		else:
+			if Input.is_action_just_pressed("p1_left"):
+				_move_index(player, -1)
+			elif Input.is_action_just_pressed("p1_right"):
+				_move_index(player, 1)
+			elif Input.is_action_just_pressed("p1_accept"):
+				_lock_player(1)
+				
 	elif player == 2:
-		# Si el jugador 2 está bloqueado, puede cancelar
 		if p2_locked:
 			if Input.is_action_just_pressed("p2_cancel"):
-				print("Jugador 2 canceló su selección")
 				_unlock_player(2)
-			return
-		# Movimiento y selección
-		if Input.is_action_just_pressed("p2_left"):
-			_move_index(2, -1)
-		elif Input.is_action_just_pressed("p2_right"):
-			_move_index(2, 1)
-		elif Input.is_action_just_pressed("p2_accept"):
-			print("Jugador 2 confirmó selección")
-			_lock_player(2)
+				print("Jugador 2 canceló su selección")
+				return
+		else:
+			if Input.is_action_just_pressed("p2_left"):
+				_move_index(player, -1)
+			elif Input.is_action_just_pressed("p2_right"):
+				_move_index(player, 1)
+			elif Input.is_action_just_pressed("p2_accept"):
+				_lock_player(2)
 
-func _unlock_player(player:int) -> void:
-	if player == 1 and p1_locked:
-		p1_locked = false
-		player1preview.modulate = Color(1,1,1,0.45)
-		p1_cursor.visible = true
-	elif player == 2 and p2_locked:
-		p2_locked = false
-		player2preview.modulate = Color(1,1,1,0.45)
-		p2_cursor.visible = true
+func _lock_player(player:int) -> void:
+	if player == 1:
+		p1_locked = true
+		Global.player1_choice = _icon_base_name(p1_icons[p1_index])
+		Global.player1_alt = false
+		player1preview.modulate = Color(1,1,1,1)
+		p1_cursor.visible = false
+	else:
+		p2_locked = true
+		Global.player2_choice = _icon_base_name(p2_icons[p2_index])
+		Global.player2_alt = false
+		player2preview.modulate = Color(1,1,1,1)
+		p2_cursor.visible = false
 	
 	_update_cursors()
 	_update_previews()
 	_check_ready_state()
 
-func _lock_player(player:int) -> void:
-	if player == 1:
-		p1_locked = true
-		player1preview.modulate = Color(1,1,1,1)
-		p1_cursor.visible = false
-	else:
-		p2_locked = true
-		player2preview.modulate = Color(1,1,1,1)
-		p2_cursor.visible = false
+func _unlock_player(player:int) -> void:
+	if player == 1 and p1_locked:
+		p1_locked = false
+		Global.reset_player_choice(1)
+		player1preview.modulate = Color(1,1,1,0.45)
+		p1_cursor.visible = true
+	elif player == 2 and p2_locked:
+		p2_locked = false
+		Global.reset_player_choice(2)
+		player2preview.modulate = Color(1,1,1,0.45)
+		p2_cursor.visible = true
+	
+	if is_instance_valid(presstartlabel):
+		presstartlabel.play_hide_animation()
 	
 	_update_cursors()
 	_update_previews()
