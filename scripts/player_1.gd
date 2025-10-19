@@ -122,7 +122,6 @@ func _ready() -> void:
 			disparo_sfx.stream = sounds["shoot"]
 		if daño_sfx:
 			daño_sfx.stream = sounds["hurt"]
-		# Creamos un audio temporal para la muerte si querés reproducirlo en el momento exacto
 		if not has_node("DeathSFX"):
 			var death_sfx = AudioStreamPlayer2D.new()
 			death_sfx.name = "DeathSFX"

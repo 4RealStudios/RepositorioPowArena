@@ -74,6 +74,10 @@ func _toggle_controles_panel() -> void:
 		controles_panel.visible = true
 
 func _on_button_pressed(button: Sprite2D) -> void:
+	_flash_button(button)
+	# Ejecuta la acción del botón después de un pequeño delay para que se vea el parpadeo
+	await get_tree().create_timer(0.60).timeout
+	
 	match button:
 		jugar_button:
 			get_tree().change_scene_to_file(CHARACTER_SELECT_SCENE)
@@ -81,3 +85,17 @@ func _on_button_pressed(button: Sprite2D) -> void:
 			get_tree().quit()
 		controles_button:
 			_toggle_controles_panel()
+
+func _flash_button(button: Sprite2D) -> void:
+	if button == null:
+		return
+	
+	var tween := create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	
+	# Parpadeo rápido (baja y sube el alpha)
+	tween.tween_property(button, "modulate:a", 0.2, 0.1)
+	tween.tween_property(button, "modulate:a", 1.0, 0.1)
+	tween.tween_property(button, "modulate:a", 0.2, 0.1)
+	tween.tween_property(button, "modulate:a", 1.0, 0.1)

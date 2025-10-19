@@ -106,6 +106,7 @@ func player_died(winner_id: int) -> void:
 	get_tree().call_group("ui", "update_rounds", rounds_p1, rounds_p2)
 	
 	freeze_game()
+	clear_projectiles()
 	
 	if check_match_winner():
 		end_match()
@@ -312,6 +313,8 @@ func _on_powerup_picked(player, type):
 	match type:
 		PowerUp.PowerUpType.BOUNCE:
 			player.extra_bounces = 2
+			await get_tree().create_timer(8.0).timeout
+			player.extra_bounces = 0
 		PowerUp.PowerUpType.SPEED:
 			player.speed *= 1.5
 			await get_tree().create_timer(8.0).timeout

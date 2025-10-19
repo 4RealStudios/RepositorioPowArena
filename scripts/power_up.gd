@@ -50,14 +50,12 @@ func _on_body_entered(body: Node) -> void:
 	if val != null:
 		player_id = int(val)
 
-	# Llamar al HUD
 	var hud = get_tree().get_first_node_in_group("ui")
 	if hud:
 		print("[PowerUp] Player", player_id, "picked", powerup_name)
 		hud.show_powerup(player_id, powerup_name, duration)
 	else:
 		print("[PowerUp] ⚠️ HUD no encontrado (group 'ui')")
-
 	emit_signal("picked_up", body, type)
 	queue_free()
 
