@@ -28,7 +28,7 @@ const PowerUp = preload("res://scripts/power_up.gd")
 var is_counting_down := false
 var rounds_p1: int = 0
 var rounds_p2: int = 0
-var max_rounds_to_win: int = 1
+var max_rounds_to_win: int = 5
 var countdown_value = 3
 var match_over: bool = false
 var last_scene: PackedScene = null
@@ -170,11 +170,11 @@ func load_map(round_number: int) -> void:
 		current_map = null
 	var pool: Array[PackedScene] = []
 	if round_number < 2:
-		pool = hard_maps
+		pool = easy_maps
 	elif round_number < 4:
 		pool = midium_maps
 	else:
-		pool = easy_maps
+		pool = hard_maps
 	if  pool.is_empty():
 		push_warning("Pool de mapas vacio para la ronda %d" % round_number)
 		return
