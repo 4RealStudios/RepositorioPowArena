@@ -24,11 +24,12 @@ const PowerUp = preload("res://scripts/power_up.gd")
 @onready var hud = $HUD
 @onready var players = [player1, player2]
 @onready var powerup_timer: Timer = Timer.new()
+@onready var white_flash = $CanvasLayer/WhiteFlash
 
 var is_counting_down := false
 var rounds_p1: int = 0
 var rounds_p2: int = 0
-var max_rounds_to_win: int = 5
+var max_rounds_to_win: int = 1
 var countdown_value = 3
 var match_over: bool = false
 var last_scene: PackedScene = null
@@ -119,6 +120,11 @@ func on_player_died(dead_id: int) -> void:
 	var winner_id = 1 if dead_id == 2 else 2
 	player_died(winner_id)
 
+func clear_projectiles():
+	for b in get_tree().get_nodes_in_group("balas"):
+		if is_instance_valid(b):
+			b.queue_free()
+
 func check_match_winner() -> bool:
 	if rounds_p1 == max_rounds_to_win:
 		return true
@@ -133,11 +139,43 @@ func end_match() -> void:
 	_safe_set_can_shoot(player1, false)
 	_safe_set_can_shoot(player2, false)
 	
+	clear_projectiles()
+	
 	var winner := 1 if rounds_p1 > rounds_p2 else 2
 	
+	trigger_victory_transition(winner)
+
+func trigger_victory_transition(winner: int) -> void:
+	# 🔹 Cámara lenta breve
+	var slow_tween = create_tween()
+	slow_tween.tween_property(Engine, "time_scale", 0.2, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+	# 🔹 Fade in (blanco aparece)
+	white_flash.visible = true
+	white_flash.modulate = Color(1, 1, 1, 0.0)
+
+	var fade_in_tween = create_tween()
+	fade_in_tween.tween_property(white_flash, "modulate:a", 0.8, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await fade_in_tween.finished
+
+	# 🔹 Restaura tiempo normal
+	var restore_tween = create_tween()
+	restore_tween.tween_property(Engine, "time_scale", 1.0, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
+	# 🔹 🔥 Mostramos la pantalla de ganador *mientras sigue todo blanco*
 	show_gameover(winner)
 
+	# 🔹 Fade out (el blanco desaparece dejando ver la pantalla de ganador)
+	var fade_out_tween = create_tween()
+	fade_out_tween.tween_property(white_flash, "modulate:a", 0.0, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	await fade_out_tween.finished
+
+	white_flash.visible = false
+
 func show_gameover(winner: int) -> void:
+	white_flash.visible = false
+	white_flash.modulate.a = 0.0
+	
 	print("Ganador en GameManager: ", winner)
 	if hud:
 		hud.visible = false

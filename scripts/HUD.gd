@@ -56,11 +56,21 @@ func _ready() -> void:
 	add_to_group("ui")
 	for icon in powerups_p1.values():
 		icon.visible = false
-		icon.modulate = Color.WHITE
+		icon.modulate = Color(1, 1, 1, 0.5)
 	for icon in powerups_p2.values():
 		icon.visible = false
-		icon.modulate = Color.WHITE
-	print("[HUD] Script cargado correctamente.")
+		icon.modulate = Color(1, 1, 1, 0.5)
+	
+	for vida in vidas_p1:
+		vida.modulate = Color(1, 1, 1, 0.6)
+	for vida in vidas_p2:
+		vida.modulate = Color(1, 1, 1, 0.6)
+	
+	icono_jugador1.modulate = Color(1, 1, 1, 0.6)
+	icono_jugador2.modulate = Color(1, 1, 1, 0.6)
+	icono_resultado1.modulate = Color(1, 1, 1, 0.6)
+	icono_resultado2.modulate = Color(1, 1, 1, 0.6)
+	
 	set_player_icon(1, Global.player1_choice, Global.player1_alt)
 	set_player_icon(2, Global.player2_choice, Global.player2_alt)
 	set_round_result_icon(1, Global.player1_choice, Global.player1_alt)
@@ -186,7 +196,7 @@ func show_powerup(player_id: int, powerup_name: String, duration: float):
 		return
 
 	icon.visible = true
-	icon.modulate = Color(1, 1, 1, 1)
+	icon.modulate = Color(1, 1, 1, 0.5)
 
 	active_dict[powerup_name] = {
 		"duration": duration,

@@ -8,6 +8,8 @@ var max_bounces := 1
 var bounces := 0
 
 func _ready() -> void:
+	add_to_group("balas")
+	
 	if has_meta("bullet_texture"):
 		$Sprite2D.texture = get_meta("bullet_texture")
 		return
