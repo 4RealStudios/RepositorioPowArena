@@ -6,12 +6,15 @@ enum PowerUpType { SPEED, HEAL, SHIELD, BOUNCE }
 @export var duration: float = 8.0
 @export var atlas_texture: Texture2D
 @export var lifetime: float = 20.0
+
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var fx_sprites: AnimatedSprite2D = $AnimatedSprite2D
 
 signal picked_up(player, type)
 
 func _ready() -> void:
 	_set_icon_from_type()
+	connect("body_entered", Callable(self, "_on_body_entered"))
 	_despawn_after_time()
 
 func _set_icon_from_type() -> void:
@@ -36,6 +39,10 @@ func _set_icon_from_type() -> void:
 func _on_body_entered(body: Node) -> void:
 	if not body or not body.is_in_group("Players"):
 		return
+	
+	emit_signal("picked_up", body, type)
+	_play_pickup_animation(body)
+	
 	var powerup_name: String = ""
 	match type:
 		PowerUpType.SPEED:
@@ -56,11 +63,22 @@ func _on_body_entered(body: Node) -> void:
 		hud.show_powerup(player_id, powerup_name, duration)
 	else:
 		print("[PowerUp] ⚠️ HUD no encontrado (group 'ui')")
-	emit_signal("picked_up", body, type)
+
+func _play_pickup_animation(player: Node) -> void:
+	var fx := AnimatedSprite2D.new()
+	fx.sprite_frames = fx_sprites.sprite_frames
+	match type:
+		PowerUpType.SPEED: fx.animation = "speed_pick"
+		PowerUpType.HEAL:  fx.animation = "heal_pick"
+		PowerUpType.SHIELD: fx.animation = "shield_pick"
+		PowerUpType.BOUNCE: fx.animation = "bounce_pick"
+	
+	player.add_child(fx)
+	fx.position = Vector2.ZERO
+	fx.play()
 	queue_free()
 
 func _despawn_after_time() -> void:
 	await get_tree().create_timer(lifetime).timeout
-	
 	if is_instance_valid(self):
 		queue_free()
