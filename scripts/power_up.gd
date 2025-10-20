@@ -72,11 +72,16 @@ func _play_pickup_animation(player: Node) -> void:
 		PowerUpType.HEAL:  fx.animation = "heal_pick"
 		PowerUpType.SHIELD: fx.animation = "shield_pick"
 		PowerUpType.BOUNCE: fx.animation = "bounce_pick"
-	
 	player.add_child(fx)
 	fx.position = Vector2.ZERO
 	fx.play()
+	
+	match type:
+		PowerUpType.SHIELD:
+			player.activate_shield(duration)
+	
 	queue_free()
+
 
 func _despawn_after_time() -> void:
 	await get_tree().create_timer(lifetime).timeout

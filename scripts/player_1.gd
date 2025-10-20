@@ -17,7 +17,7 @@ extends CharacterBody2D
 # --- Nodos ---
 @onready var shooting_point: Marker2D = $ShootingPointP1
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2DP1
-@onready var shield_effect: Node2D = $shieldEffect if has_node("ShieldEffect") else null
+@onready var shield_effect: AnimatedSprite2D = $ShieldEffect if has_node("ShieldEffect") else null
 @onready var disparo_sfx = $DisparoSFX
 @onready var daño_sfx = $DanoSFX
 @onready var dash_sfx = $DashSFX
@@ -32,6 +32,8 @@ var is_invulnerable: bool = false
 var is_dead: bool = false
 var is_hurt: bool = false
 var has_shield: bool = false
+var shield_node: AnimatedSprite2D = null  #----
+var shield_timer: Timer = null  #----
 var speed_boost_active: bool = false
 var speed_boost_timer: Timer
 var speed_multiplier: float = 1.5
@@ -152,15 +154,12 @@ func _physics_process(delta: float) -> void:
 		_update_animation()
 		move_and_slide()
 		return
-
 	input_vector.x = Input.get_action_strength("p1_right") - Input.get_action_strength("p1_left")
 	input_vector.y = Input.get_action_strength("p1_down")  - Input.get_action_strength("p1_up")
 	input_vector = input_vector.normalized()
-
 	var blocking := Input.is_action_pressed("p1_block")
 	if input_vector != Vector2.ZERO:
 		aim_dir = input_vector
-
 	# --- dash cooldown y dash ---
 	if dash_cooldown_timer > 0.0:
 		dash_cooldown_timer -= delta
@@ -193,6 +192,23 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	if Input.is_action_just_pressed("p1_shoot"):
 		shoot()
+
+func _check_collision(body):
+	if body.is_in_group("bullets"):
+		if has_shield:
+			# Reflejar UNA sola bala y romper el escudo al instante
+			if body.has_variable("direction"):
+				body.direction = -body.direction
+				body.rotation = body.direction.angle()
+			# Reproducir animación de ruptura si existe
+			if shield_effect and is_instance_valid(shield_effect):
+				shield_effect.play("shield_break")
+				await shield_effect.animation_finished
+				shield_effect.visible = false
+			# Desactivar escudo inmediatamente
+			await desactivate_shield()
+		else:
+			take_damage()
 
 func set_bullet_sprite(skin_name: String, is_alt: bool = false):
 	if not Global.BULLET_SPRITES.has(skin_name):
@@ -237,6 +253,11 @@ func shoot() -> void:
 	is_shooting = true
 	anim_sprite.play("shooting")
 	disparo_sfx.play()
+
+func _break_shield() -> void:
+	has_shield = false
+	if has_node("ShieldTimer"):
+		$ShieldTimer.stop()
 
 func _on_animated_sprite_2dp_1_animation_finished() -> void:
 	if anim_sprite.animation == "shooting":
@@ -287,8 +308,9 @@ func take_damage() -> void:
 	if is_dead or is_invulnerable:
 		return
 	if has_shield:
-		desactivate_shield()
+		await desactivate_shield()
 		return
+		
 	lives -= 1
 	get_tree().call_group("ui", "update_lives", player_id, lives)
 	if lives <= 0:
@@ -297,7 +319,6 @@ func take_damage() -> void:
 		anim_sprite.play("die")
 		if has_node("DeathSFX"):
 			$MuerteSFX.play()
-			
 		get_tree().call_group("game", "on_player_died", player_id)
 		return
 		
@@ -324,21 +345,96 @@ func start_invulnerability() -> void:
 		anim_sprite.play("idle")
 
 func activate_shield(duration: float = 5.0) -> void:
-	if has_shield:
+	if not $ShieldEffect: 
 		return
-	has_shield = true
 	
-	if shield_effect:
-		shield_effect.visible = true
-		if shield_effect.has_method("play"):
-			shield_effect.play("activate")
-	await get_tree().create_timer(duration).timeout
-	desactivate_shield()
+	has_shield = true
+	if $ShieldEffect:
+		$ShieldEffect.visible = true
+		$ShieldEffect.play("shield_idle")
+
+	if has_node("ShieldTimer"):
+		$ShieldTimer.stop()
+	else:
+		var timer = Timer.new()
+		timer.name = "ShieldTimer"
+		add_child(timer)
+		timer.one_shot = true
+		timer.connect("timeout", Callable(self, "_on_shield_timeout"))
+	$ShieldTimer.start(duration)
+
+func apply_shield(frames: SpriteFrames, duration: float = 5.0) -> void:
+	if has_shield:
+		# si ya tiene escudo, reiniciamos el timer (si querés)
+		if shield_timer and is_instance_valid(shield_timer):
+			shield_timer.wait_time = duration
+			shield_timer.start()
+		return
+
+	has_shield = true
+
+	# Si el nodo ShieldEffect ya existe en la escena, lo usamos; sino instanciamos uno dinámico
+	if shield_effect and is_instance_valid(shield_effect):
+		shield_node = shield_effect
+		# Si el shield_effect está en la escena, asumimos que tiene sprite_frames asignado
+		if shield_node.sprite_frames == null and frames != null:
+			shield_node.sprite_frames = frames
+	else:
+		# instanciamos uno nuevo y lo agregamos como hijo
+		shield_node = AnimatedSprite2D.new()
+		if frames != null:
+			shield_node.sprite_frames = frames
+		shield_node.animation = "shield_idle" if shield_node.sprite_frames and shield_node.sprite_frames.has_animation("shield") else ""
+		shield_node.z_index = -1
+		add_child(shield_node)
+
+	# mostrar y reproducir animación de escudo (idle)
+	shield_node.visible = true
+	if shield_node.animation != "" :
+		shield_node.play(shield_node.animation if shield_node.animation != "" else "shield")
+
+	# timer para duración
+	if shield_timer and is_instance_valid(shield_timer):
+		shield_timer.queue_free()
+	shield_timer = Timer.new()
+	shield_timer.one_shot = true
+	shield_timer.wait_time = duration
+	add_child(shield_timer)
+	shield_timer.start()
+	await shield_timer.timeout
+	# al expirar, rompemos el escudo
+	if has_shield:
+		await desactivate_shield()
 
 func desactivate_shield() -> void:
+	if not has_shield:
+		return
 	has_shield = false
-	if shield_effect:
-		shield_effect.visible = false
+
+	# si hay timer, eliminarlo
+	if shield_timer and is_instance_valid(shield_timer):
+		shield_timer.queue_free()
+		shield_timer = null
+
+	if shield_node and is_instance_valid(shield_node):
+		# reproducir animación de quiebre si existe
+		if shield_node.sprite_frames and shield_node.sprite_frames.has_animation("shield_break"):
+			shield_node.play("shield_break")
+			await shield_node.animation_finished
+		# ocultar o borrar el nodo instanciado dinámicamente
+		# si shield_effect era un nodo preexistente, solo lo ocultamos
+		if shield_effect and is_instance_valid(shield_effect):
+			shield_node.visible = false
+		else:
+			shield_node.queue_free()
+		shield_node = null
+
+func _on_shield_timeout() -> void:
+	has_shield = false
+	if $ShieldEffect:
+		$ShieldEffect.play("shield_break")
+		await $ShieldEffect.animation_finished
+		$ShieldEffect.visible = false
 
 func reset_for_round() -> void:
 	lives = 3
