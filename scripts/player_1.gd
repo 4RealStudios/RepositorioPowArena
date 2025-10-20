@@ -73,25 +73,25 @@ var character_sounds := {
 		"shoot": preload("res://fx/players/robot/Disparo_robot_op1.wav"),
 		"dash": preload("res://fx/players/Dash_op1.wav"),
 		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
-		"death": preload("res://fx/players/Sonido_Dano.wav")
+		"death": preload("res://fx/players/Sonido_Muerte_op3.wav")
 	},
 	"mago": {
 		"shoot": preload("res://fx/players/mago/Disparo_mago_op2.wav"),
 		"dash": preload("res://fx/players/Dash_op1.wav"),
 		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
-		"death": preload("res://fx/players/Sonido_Dano.wav")
+		"death": preload("res://fx/players/Sonido_Muerte_op3.wav")
 	},
 	"panda": {
 		"shoot": preload("res://fx/players/panda/Disparo_panda_op1.wav"),
 		"dash": preload("res://fx/players/Dash_op1.wav"),
 		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
-		"death": preload("res://fx/players/Sonido_Dano.wav")
+		"death": preload("res://fx/players/Sonido_Muerte_op3.wav")
 	},
 	"hunter": {
-		"shoot": preload("res://fx/players/panda/Disparo_panda_op1.wav"),
+		"shoot": preload("res://fx/players/hunter/Disparo_hunter.wav"),
 		"dash": preload("res://fx/players/Dash_op1.wav"),
 		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
-		"death": preload("res://fx/players/Sonido_Dano.wav")
+		"death": preload("res://fx/players/Sonido_Muerte_op3.wav")
 	}
 }
 
@@ -129,7 +129,7 @@ func _ready() -> void:
 			death_sfx.name = "DeathSFX"
 			add_child(death_sfx)
 		else:
-			var death_sfx = $DeathSFX
+			var death_sfx = $MuerteSFX
 			death_sfx.stream = sounds["death"]
 	
 	if player_id == 1:
@@ -184,6 +184,7 @@ func _physics_process(delta: float) -> void:
 			velocity = input_vector * speed
 		if Input.is_action_just_pressed("p1_dash") and dash_cooldown_timer <= 0.0 and input_vector != Vector2.ZERO:
 			start_dash()
+			dash_sfx.play()
 			
 	if aim_dir != Vector2.ZERO:
 		anim_sprite.rotation = aim_dir.angle() - PI/90
@@ -318,7 +319,7 @@ func take_damage() -> void:
 		can_move = false
 		anim_sprite.play("die")
 		if has_node("DeathSFX"):
-			$MuerteSFX.play()
+			muerte_sfx.play()
 		get_tree().call_group("game", "on_player_died", player_id)
 		return
 		

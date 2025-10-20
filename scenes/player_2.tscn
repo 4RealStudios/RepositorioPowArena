@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cktvsan1pxk0e"]
+[gd_scene load_steps=5 format=3 uid="uid://cktvsan1pxk0e"]
 
 [ext_resource type="Script" uid="uid://dj4khbfnc5pjm" path="res://scripts/player_2.gd" id="1_s551d"]
 [ext_resource type="SpriteFrames" uid="uid://bvgnvdpjg31p0" path="res://assets/players/skins/hunter.tres" id="2_s551d"]
+[ext_resource type="SpriteFrames" uid="uid://mdc18738m3u0" path="res://assets/PowerUps/efectos/shield_fx.tres" id="3_yjax8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s551d"]
 radius = 9.0
@@ -16,6 +17,11 @@ rotation = -1.57079
 sprite_frames = ExtResource("2_s551d")
 animation = &"dash"
 
+[node name="ShieldEffect" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = ExtResource("3_yjax8")
+animation = &"shield_break"
+
 [node name="ShootingPointP2" type="Marker2D" parent="."]
 position = Vector2(-12, -5)
 gizmo_extents = 1.0
@@ -26,11 +32,15 @@ rotation = -1.57081
 shape = SubResource("CircleShape2D_s551d")
 
 [node name="DisparoSFX" type="AudioStreamPlayer2D" parent="."]
+volume_db = -5.0
 
 [node name="DañoSFX" type="AudioStreamPlayer2D" parent="."]
+volume_db = -5.0
 
 [node name="DashSFX" type="AudioStreamPlayer2D" parent="."]
+volume_db = -5.0
 
 [node name="MuerteSFX" type="AudioStreamPlayer2D" parent="."]
+volume_db = -5.0
 
 [connection signal="animation_finished" from="AnimatedSprite2DP2" to="." method="_on_animated_sprite_2dp_2_animation_finished"]

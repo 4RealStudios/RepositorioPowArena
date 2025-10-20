@@ -25,11 +25,14 @@ const PowerUp = preload("res://scripts/power_up.gd")
 @onready var players = [player1, player2]
 @onready var powerup_timer: Timer = Timer.new()
 @onready var white_flash = $CanvasLayer/WhiteFlash
+@onready var music_player: AudioStreamPlayer2D = $MusicPlayer
+@onready var countdown_audio: AudioStreamPlayer2D = $CountdownPow
+
 
 var is_counting_down := false
 var rounds_p1: int = 0
 var rounds_p2: int = 0
-var max_rounds_to_win: int = 1
+var max_rounds_to_win: int = 3
 var countdown_value = 3
 var match_over: bool = false
 var last_scene: PackedScene = null
@@ -135,6 +138,8 @@ func check_match_winner() -> bool:
 
 func end_match() -> void:
 	match_over = true
+	if music_player and music_player.playing:
+		music_player.stop()
 	_safe_set_can_move(player1, false)
 	_safe_set_can_move(player2, false)
 	_safe_set_can_shoot(player1, false)
@@ -270,22 +275,24 @@ func start_round():
 	_safe_set_can_shoot(player2, false)
 	
 	countdown_sprite.visible = true
-
+	
+	if countdown_audio:
+		countdown_audio.play()
 	for i in range(3, 0, -1):
 		var tex := AtlasTexture.new()
 		tex.atlas = countdown_atlas
 		tex.region = countdown_regions[i]
 		countdown_sprite.texture = tex
 		await get_tree().create_timer(1.0).timeout
-
 	# POW!
 	var tex_pow := AtlasTexture.new()
 	tex_pow.atlas = countdown_atlas
 	tex_pow.region = countdown_regions["pow"]
 	countdown_sprite.texture = tex_pow
 	await get_tree().create_timer(0.5).timeout
-
 	countdown_sprite.visible = false
+	if music_player and not music_player.playing:
+		music_player.play()
 	
 	load_map(rounds_p1 + rounds_p2)
 	await get_tree().process_frame

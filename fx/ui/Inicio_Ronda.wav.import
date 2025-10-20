@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cebityb8f6c6i"
-path="res://.godot/imported/Dash_op1.wav-d5999cabafee6e2d970f3a0823253c73.sample"
+uid="uid://dhxyekk0rse5w"
+path="res://.godot/imported/Inicio_Ronda.wav-f6d8922ffe341504f940c21d0a18d4b9.sample"
 
 [deps]
 
-source_file="res://fx/players/Dash_op1.wav"
-dest_files=["res://.godot/imported/Dash_op1.wav-d5999cabafee6e2d970f3a0823253c73.sample"]
+source_file="res://fx/ui/Inicio_Ronda.wav"
+dest_files=["res://.godot/imported/Inicio_Ronda.wav-f6d8922ffe341504f940c21d0a18d4b9.sample"]
 
 [params]
 

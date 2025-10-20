@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=43 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://bsohmxmgvv25n" path="res://scripts/world.gd" id="1_7iits"]
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
@@ -24,6 +24,8 @@
 [ext_resource type="Texture2D" uid="uid://bb17qf4su1565" path="res://assets/PowerUps/power ups.png" id="18_oo54l"]
 [ext_resource type="Script" uid="uid://d040v84fg8xhj" path="res://scripts/camera_2d.gd" id="20_2lf6f"]
 [ext_resource type="Texture2D" uid="uid://caf7uto4qrwfr" path="res://assets/HUD/tablero rondas 5r.png" id="22_ctatt"]
+[ext_resource type="AudioStream" uid="uid://dhxyekk0rse5w" path="res://fx/ui/Inicio_Ronda.wav" id="25_munwf"]
+[ext_resource type="AudioStream" uid="uid://cgd57y6y7avll" path="res://fx/music/MusicaCombate.ogg" id="25_xgqkh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_37qwj"]
 atlas = ExtResource("14_ctatt")
@@ -418,6 +420,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="GameManager"]
+stream = ExtResource("25_xgqkh")
+volume_db = -15.721
+parameters/looping = true
+
+[node name="CountdownPow" type="AudioStreamPlayer2D" parent="GameManager"]
+stream = ExtResource("25_munwf")
+pitch_scale = 1.17
 
 [node name="LimitMap" type="Node2D" parent="."]
 

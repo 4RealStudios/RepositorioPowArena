@@ -32,6 +32,8 @@ var is_invulnerable: bool = false
 var is_dead: bool = false
 var is_hurt: bool = false
 var has_shield: bool = false
+var shield_node: AnimatedSprite2D = null  #----
+var shield_timer: Timer = null  #----
 var speed_boost_active: bool = false
 var speed_boost_timer: Timer
 var speed_multiplier: float = 1.5
@@ -68,30 +70,43 @@ var characters := {
 	}
 }
 
+var character_sounds := {
+	"robot":{
+		"shoot": preload("res://fx/players/robot/Disparo_robot_op1.wav"),
+		"dash": preload("res://fx/players/Dash_op1.wav"),
+		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
+		"death": preload("res://fx/players/Sonido_Muerte_op3.wav")
+	},
+	"mago": {
+		"shoot": preload("res://fx/players/mago/Disparo_mago_op2.wav"),
+		"dash": preload("res://fx/players/Dash_op1.wav"),
+		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
+		"death": preload("res://fx/players/Sonido_Muerte_op3.wav")
+	},
+	"panda": {
+		"shoot": preload("res://fx/players/panda/Disparo_panda_op1.wav"),
+		"dash": preload("res://fx/players/Dash_op1.wav"),
+		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
+		"death": preload("res://fx/players/Sonido_Muerte_op3.wav")
+	},
+	"hunter": {
+		"shoot": preload("res://fx/players/hunter/Disparo_hunter.wav"),
+		"dash": preload("res://fx/players/Dash_op1.wav"),
+		"hurt": preload("res://fx/players/Sonido_Dano.wav"),
+		"death": preload("res://fx/players/Sonido_Muerte_op3.wav")
+	}
+}
+
 func _ready() -> void:
-	# ----------------------------
-	# 1) Sincronizar character_name y skin_type con Global (si están disponibles)
-	# ----------------------------
-	# Si Global tiene elecciones guardadas, las usamos. Si no, mantenemos los export defaults.
 	if Global.player1_choice != "" and player_id == 1:
 		character_name = Global.player1_choice
-		# el flag 'alt' lo setea Global (player1_alt / player2_alt)
 		skin_type = "alt" if Global.player1_alt else "main"
 	elif Global.player2_choice != "" and player_id == 2:
 		character_name = Global.player2_choice
 		skin_type = "alt" if Global.player2_alt else "main"
-	# Nota: si tu GameManager ya setea player.character_name antes de _ready,
-	# esta sección no cambiará nada (solo actúa como fallback).
-
-	# Debug: confirmar qué valores usa este Player
 	print("[PLAYER _ready] id:", player_id, " character:", character_name, " skin:", skin_type)
-
-	# ----------------------------
-	# 2) Crear la AtlasTexture única desde Global.bullet_atlas / bullet_regions
-	# ----------------------------
 	if Global.bullet_atlas and Global.bullet_regions.has(character_name):
 		var region_map = Global.bullet_regions[character_name]
-		# usa "main" / "alt" como llaves (coincidir con tu Global)
 		var key := "main" if skin_type == "main" else "alt"
 		if region_map.has(key):
 			var region = region_map[key]
@@ -104,7 +119,20 @@ func _ready() -> void:
 			printerr("[PLAYER] Global.bullet_regions[", character_name, "] no tiene key:", key)
 	else:
 		printerr("[PLAYER] Global.bullet_atlas o bullet_regions no configurado o falta character:", character_name)
-
+	
+	if character_sounds.has(character_name):
+		var sounds = character_sounds[character_name]
+		if disparo_sfx:
+			disparo_sfx.stream = sounds["shoot"]
+		if daño_sfx:
+			daño_sfx.stream = sounds["hurt"]
+		if not has_node("DeathSFX"):
+			var death_sfx = AudioStreamPlayer2D.new()
+			death_sfx.name = "DeathSFX"
+			add_child(death_sfx)
+		else:
+			var death_sfx = $MuerteSFX
+			death_sfx.stream = sounds["death"]
 	
 	if player_id == 2:
 		anim_sprite.sprite_frames = characters[character_name]["main"]
@@ -172,6 +200,40 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("p2_shoot"):
 		shoot()
 
+func _check_collision(body):
+	if body.is_in_group("bullets"):
+		if has_shield:
+			# Reflejar UNA sola bala y romper el escudo al instante
+			if body.has_variable("direction"):
+				body.direction = -body.direction
+				body.rotation = body.direction.angle()
+			# Reproducir animación de ruptura si existe
+			if shield_effect and is_instance_valid(shield_effect):
+				shield_effect.play("shield_break")
+				await shield_effect.animation_finished
+				shield_effect.visible = false
+			# Desactivar escudo inmediatamente
+			await desactivate_shield()
+		else:
+			take_damage()
+
+func set_bullet_sprite(skin_name: String, is_alt: bool = false):
+	if not Global.BULLET_SPRITES.has(skin_name):
+		printerr("[PLAYER] No se encontró sprite de bala para:", skin_name)
+		return
+
+	var region_key = "alternate" if is_alt else "default"
+	var region = Global.BULLET_SPRITES[skin_name].get(region_key)
+	var atlas_texture = AtlasTexture.new()
+	atlas_texture.atlas = Global.BULLET_ATLAS
+	atlas_texture.region = region
+
+	var sprite = $Sprite2D
+	if sprite:
+		sprite.texture = atlas_texture
+	else:
+		printerr("[PLAYER] ⚠️ No se encontró Sprite2D en la escena del disparo.")
+
 func shoot() -> void:
 	if not can_shoot or is_dead:
 		return
@@ -196,6 +258,11 @@ func shoot() -> void:
 	is_shooting = true
 	anim_sprite.play("shooting")
 	disparo_sfx.play()
+
+func _break_shield() -> void:
+	has_shield = false
+	if has_node("ShieldTimer"):
+		$ShieldTimer.stop()
 
 func _on_animated_sprite_2dp_2_animation_finished() -> void:
 	if anim_sprite.animation == "shooting":
@@ -279,21 +346,96 @@ func start_invulnerability() -> void:
 		anim_sprite.play("idle")
 
 func activate_shield(duration: float = 5.0) -> void:
-	if has_shield:
+	if not $ShieldEffect: 
 		return
-	has_shield = true
 	
-	if shield_effect:
-		shield_effect.visible = true
-		if shield_effect.has_method("play"):
-			shield_effect.play("activate")
-	await get_tree().create_timer(duration).timeout
-	desactivate_shield()
+	has_shield = true
+	if $ShieldEffect:
+		$ShieldEffect.visible = true
+		$ShieldEffect.play("shield_idle")
+
+	if has_node("ShieldTimer"):
+		$ShieldTimer.stop()
+	else:
+		var timer = Timer.new()
+		timer.name = "ShieldTimer"
+		add_child(timer)
+		timer.one_shot = true
+		timer.connect("timeout", Callable(self, "_on_shield_timeout"))
+	$ShieldTimer.start(duration)
+
+func apply_shield(frames: SpriteFrames, duration: float = 5.0) -> void:
+	if has_shield:
+		# si ya tiene escudo, reiniciamos el timer (si querés)
+		if shield_timer and is_instance_valid(shield_timer):
+			shield_timer.wait_time = duration
+			shield_timer.start()
+		return
+
+	has_shield = true
+
+	# Si el nodo ShieldEffect ya existe en la escena, lo usamos; sino instanciamos uno dinámico
+	if shield_effect and is_instance_valid(shield_effect):
+		shield_node = shield_effect
+		# Si el shield_effect está en la escena, asumimos que tiene sprite_frames asignado
+		if shield_node.sprite_frames == null and frames != null:
+			shield_node.sprite_frames = frames
+	else:
+		# instanciamos uno nuevo y lo agregamos como hijo
+		shield_node = AnimatedSprite2D.new()
+		if frames != null:
+			shield_node.sprite_frames = frames
+		shield_node.animation = "shield_idle" if shield_node.sprite_frames and shield_node.sprite_frames.has_animation("shield") else ""
+		shield_node.z_index = -1
+		add_child(shield_node)
+
+	# mostrar y reproducir animación de escudo (idle)
+	shield_node.visible = true
+	if shield_node.animation != "" :
+		shield_node.play(shield_node.animation if shield_node.animation != "" else "shield")
+
+	# timer para duración
+	if shield_timer and is_instance_valid(shield_timer):
+		shield_timer.queue_free()
+	shield_timer = Timer.new()
+	shield_timer.one_shot = true
+	shield_timer.wait_time = duration
+	add_child(shield_timer)
+	shield_timer.start()
+	await shield_timer.timeout
+	# al expirar, rompemos el escudo
+	if has_shield:
+		await desactivate_shield()
 
 func desactivate_shield() -> void:
+	if not has_shield:
+		return
 	has_shield = false
-	if shield_effect:
-		shield_effect.visible = false
+
+	# si hay timer, eliminarlo
+	if shield_timer and is_instance_valid(shield_timer):
+		shield_timer.queue_free()
+		shield_timer = null
+
+	if shield_node and is_instance_valid(shield_node):
+		# reproducir animación de quiebre si existe
+		if shield_node.sprite_frames and shield_node.sprite_frames.has_animation("shield_break"):
+			shield_node.play("shield_break")
+			await shield_node.animation_finished
+		# ocultar o borrar el nodo instanciado dinámicamente
+		# si shield_effect era un nodo preexistente, solo lo ocultamos
+		if shield_effect and is_instance_valid(shield_effect):
+			shield_node.visible = false
+		else:
+			shield_node.queue_free()
+		shield_node = null
+
+func _on_shield_timeout() -> void:
+	has_shield = false
+	if $ShieldEffect:
+		$ShieldEffect.play("shield_break")
+		await $ShieldEffect.animation_finished
+		$ShieldEffect.visible = false
 
 func reset_for_round() -> void:
 	lives = 3
@@ -309,6 +451,15 @@ func reset_for_round() -> void:
 	anim_sprite.play("idle")
 	extra_bounces = 0
 	desactivate_shield()
+
+func activate_speed_boost():
+	if speed_boost_active:
+		speed_boost_timer.start()
+		return
+		
+	speed_boost_active = true
+	speed *= speed_multiplier
+	speed_boost_timer.start()
 
 func _on_speed_boost_timeout():
 	speed_boost_active = false
