@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhkidw16jmgu8"]
+[gd_scene load_steps=8 format=3 uid="uid://bhkidw16jmgu8"]
 
 [ext_resource type="Script" uid="uid://1pmmyw8djety" path="res://scripts/player_1.gd" id="1_gneq0"]
-[ext_resource type="SpriteFrames" uid="uid://b3211xivgr0xg" path="res://assets/players/skins/panda.tres" id="2_gneq0"]
+[ext_resource type="SpriteFrames" uid="uid://bvgnvdpjg31p0" path="res://assets/players/skins/hunter.tres" id="2_f2c3w"]
 [ext_resource type="SpriteFrames" uid="uid://mdc18738m3u0" path="res://assets/PowerUps/efectos/shield_fx.tres" id="3_f7tsm"]
+[ext_resource type="AudioStream" uid="uid://cebityb8f6c6i" path="res://fx/players/Dash_op1.wav" id="4_f2c3w"]
+[ext_resource type="AudioStream" uid="uid://dksfb8hje0ujd" path="res://fx/players/Sonido_Muerte_op3.wav" id="5_jkihx"]
+[ext_resource type="AudioStream" uid="uid://bvxfmti6fhx2v" path="res://fx/players/Sonido_Dano.wav" id="6_qgfdq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gneq0"]
 radius = 9.0
@@ -13,8 +16,10 @@ script = ExtResource("1_gneq0")
 
 [node name="AnimatedSprite2DP1" type="AnimatedSprite2D" parent="."]
 rotation = -1.57079
-sprite_frames = ExtResource("2_gneq0")
-animation = &"walk"
+sprite_frames = ExtResource("2_f2c3w")
+animation = &"die"
+frame = 6
+frame_progress = 1.0
 
 [node name="ShieldEffect" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -34,12 +39,15 @@ shape = SubResource("CircleShape2D_gneq0")
 volume_db = -5.0
 
 [node name="DashSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_f2c3w")
 volume_db = -5.0
 
 [node name="MuerteSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_jkihx")
 volume_db = -5.0
 
 [node name="DanoSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_qgfdq")
 volume_db = -5.0
 
 [connection signal="animation_finished" from="AnimatedSprite2DP1" to="." method="_on_animated_sprite_2dp_1_animation_finished"]

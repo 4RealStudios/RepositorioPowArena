@@ -311,7 +311,6 @@ func take_damage() -> void:
 	if has_shield:
 		await desactivate_shield()
 		return
-		
 	lives -= 1
 	get_tree().call_group("ui", "update_lives", player_id, lives)
 	if lives <= 0:
@@ -322,7 +321,6 @@ func take_damage() -> void:
 			muerte_sfx.play()
 		get_tree().call_group("game", "on_player_died", player_id)
 		return
-		
 	is_invulnerable = true
 	is_hurt = true
 	anim_sprite.play("hurt")
@@ -345,7 +343,7 @@ func start_invulnerability() -> void:
 	if not is_dead and anim_sprite.animation == "hurt":
 		anim_sprite.play("idle")
 
-func activate_shield(duration: float = 5.0) -> void:
+func activate_shield(duration: float = 3.0) -> void:
 	if not $ShieldEffect: 
 		return
 	
@@ -364,7 +362,7 @@ func activate_shield(duration: float = 5.0) -> void:
 		timer.connect("timeout", Callable(self, "_on_shield_timeout"))
 	$ShieldTimer.start(duration)
 
-func apply_shield(frames: SpriteFrames, duration: float = 5.0) -> void:
+func apply_shield(frames: SpriteFrames, duration: float = 3.0) -> void:
 	if has_shield:
 		# si ya tiene escudo, reiniciamos el timer (si querés)
 		if shield_timer and is_instance_valid(shield_timer):

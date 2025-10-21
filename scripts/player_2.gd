@@ -156,19 +156,14 @@ func _physics_process(delta: float) -> void:
 		_update_animation()
 		move_and_slide()
 		return
-
 	input_vector.x = Input.get_action_strength("p2_right") - Input.get_action_strength("p2_left")
 	input_vector.y = Input.get_action_strength("p2_down")  - Input.get_action_strength("p2_up")
 	input_vector = input_vector.normalized()
-
 	var blocking := Input.is_action_pressed("p2_block")
 	if input_vector != Vector2.ZERO:
 		aim_dir = input_vector
-
-	# --- dash cooldown y dash ---
 	if dash_cooldown_timer > 0.0:
 		dash_cooldown_timer -= delta
-
 	if is_dashing:
 		velocity = input_vector * dash_speed
 		dash_timer -= delta
@@ -187,15 +182,12 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector2.ZERO
 		else:
 			velocity = input_vector * speed
-			# iniciar dash si corresponde
 		if Input.is_action_just_pressed("p2_dash") and dash_cooldown_timer <= 0.0 and input_vector != Vector2.ZERO:
 			start_dash()
 			
 	if aim_dir != Vector2.ZERO:
 		anim_sprite.rotation = aim_dir.angle() - PI/1
-		
 	_update_animation()
-	
 	move_and_slide()
 	if Input.is_action_just_pressed("p2_shoot"):
 		shoot()
@@ -304,6 +296,7 @@ func start_dash() -> void:
 	is_dashing = true
 	dash_timer = dash_duration
 	anim_sprite.play("dash")
+	dash_sfx.play()
 	is_invulnerable = true
 	await get_tree().create_timer(dash_duration).timeout
 	is_invulnerable = false
@@ -312,17 +305,20 @@ func take_damage() -> void:
 	if is_dead or is_invulnerable:
 		return
 	if has_shield:
-		desactivate_shield()
+		await desactivate_shield()
 		return
+		
 	lives -= 1
 	get_tree().call_group("ui", "update_lives", player_id, lives)
 	if lives <= 0:
 		is_dead = true
 		can_move = false
 		anim_sprite.play("die")
-		
+		if has_node("MuerteSFX"):
+			muerte_sfx.play()
 		get_tree().call_group("game", "on_player_died", player_id)
 		return
+		
 	is_invulnerable = true
 	is_hurt = true
 	anim_sprite.play("hurt")
@@ -345,7 +341,7 @@ func start_invulnerability() -> void:
 	if not is_dead and anim_sprite.animation == "hurt":
 		anim_sprite.play("idle")
 
-func activate_shield(duration: float = 5.0) -> void:
+func activate_shield(duration: float = 3.0) -> void:
 	if not $ShieldEffect: 
 		return
 	
@@ -364,7 +360,7 @@ func activate_shield(duration: float = 5.0) -> void:
 		timer.connect("timeout", Callable(self, "_on_shield_timeout"))
 	$ShieldTimer.start(duration)
 
-func apply_shield(frames: SpriteFrames, duration: float = 5.0) -> void:
+func apply_shield(frames: SpriteFrames, duration: float = 3.0) -> void:
 	if has_shield:
 		# si ya tiene escudo, reiniciamos el timer (si querés)
 		if shield_timer and is_instance_valid(shield_timer):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://l5jts8o0sprl"]
+[gd_scene load_steps=44 format=3 uid="uid://l5jts8o0sprl"]
 
 [ext_resource type="Script" uid="uid://bsohmxmgvv25n" path="res://scripts/world.gd" id="1_7iits"]
 [ext_resource type="Script" uid="uid://c6slmgmnxfx4s" path="res://scripts/GameManager.gd" id="1_71j4m"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://caf7uto4qrwfr" path="res://assets/HUD/tablero rondas 5r.png" id="22_ctatt"]
 [ext_resource type="AudioStream" uid="uid://dhxyekk0rse5w" path="res://fx/ui/Inicio_Ronda.wav" id="25_munwf"]
 [ext_resource type="AudioStream" uid="uid://cgd57y6y7avll" path="res://fx/music/MusicaCombate.ogg" id="25_xgqkh"]
+[ext_resource type="AudioStream" uid="uid://d0efs00ehwybv" path="res://fx/powerups/PowerUp_op1.wav" id="26_ts3gi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_37qwj"]
 atlas = ExtResource("14_ctatt")
@@ -429,6 +430,9 @@ parameters/looping = true
 [node name="CountdownPow" type="AudioStreamPlayer2D" parent="GameManager"]
 stream = ExtResource("25_munwf")
 pitch_scale = 1.17
+
+[node name="PowerupPick" type="AudioStreamPlayer2D" parent="GameManager"]
+stream = ExtResource("26_ts3gi")
 
 [node name="LimitMap" type="Node2D" parent="."]
 

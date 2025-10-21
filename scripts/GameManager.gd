@@ -27,6 +27,7 @@ const PowerUp = preload("res://scripts/power_up.gd")
 @onready var white_flash = $CanvasLayer/WhiteFlash
 @onready var music_player: AudioStreamPlayer2D = $MusicPlayer
 @onready var countdown_audio: AudioStreamPlayer2D = $CountdownPow
+@onready var powerup_sound: AudioStreamPlayer2D = $PowerupPick
 
 
 var is_counting_down := false
@@ -49,7 +50,7 @@ func _ready() -> void:
 	for player in players:
 		player.visible = false
 	control_timer.start()
-	powerup_timer.wait_time = 8.0
+	powerup_timer.wait_time = 5.0
 	powerup_timer.one_shot = false
 	powerup_timer.autostart = true
 	add_child(powerup_timer)
@@ -317,6 +318,9 @@ func spawn_powerup():
 	p.add_to_group("powerups")
 
 func _on_powerup_picked(player, type):
+	if powerup_sound:
+		powerup_sound.play()
+	
 	match type:
 		PowerUp.PowerUpType.BOUNCE:
 			player.extra_bounces = 2
@@ -385,8 +389,8 @@ func unfreeze_game() -> void:
 	for player in players:
 		_safe_set_can_move(player, true)
 		_safe_set_can_shoot(player, true)
-
-	if powerup_timer and not powerup_timer.is_stopped():
+		
+	if powerup_timer:
 		powerup_timer.start()
 	
 	for bullet in get_tree().get_nodes_in_group("balas"):
